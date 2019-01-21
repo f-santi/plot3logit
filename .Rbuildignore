@@ -1,0 +1,7 @@
+^.git$
+^.gitignore$
+^flavio$
+^README.Rmd$
+^cran-comments.md$
+^.DS_Store$
+^.Rapp.history$

@@ -1,0 +1,19 @@
+
+citHeader("To cite package 'plot3logit' in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste('R package version', meta$Version)
+
+citEntry(entry = 'Manual',
+  title       = 'plot3logit: Ternary Plots for 3-logit Models',
+  author      = personList(person('F.', 'Santi'),
+                  person('M. M.', 'Dickson'),
+                  person('G.', 'Espa')),
+  year = year,
+  note = vers,
+  textVersion =
+    paste('Santi, F., M. M. Dickson and G. Espa (',
+      year, ') "plot3logit: Ternary Plots for 3-logit Models". ',
+      vers, '.', sep = ''
+    )
+)
