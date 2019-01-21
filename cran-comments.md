@@ -1,20 +1,29 @@
 
-
 ## Test environments
 
 * local OS X install, R 3.5.1
-* ubuntu 12.04 (on travis-ci), R 3.1.2
-* win-builder (devel and release)
+* local ubuntu 18.04 LTS (bionic), R 3.5.2
+* win-builder (oldrelease, release, and devel)
 
 
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs. 
+There were no ERRORs, WARNINGs, or NOTEs. 
 
-There was 1 NOTE:
 
-* checking dependencies in R code ... NOTE
-  Namespace in Imports field not imported from: 'R6'
+Win-builder prompt 1 NOTE:
 
-  R6 is a build-time dependency.
+Possibly mis-spelled words in DESCRIPTION:
+  Espa (19:9)
+  Santi (18:65)
+  Trinomial (3:26)
+  trinomial (18:21)
+
+
+Win-builder prompt 1 further NOTE ONLY with the oldrelease version:
+
+Author field differs from that derived from Authors@R
+  Author:    'Flavio Santi [cre, aut] (<https://orcid.org/0000-0002-2014-1981>), Maria Michela Dickson [aut] (<https://orcid.org/0000-0002-4307-0469>), Giuseppe Espa [aut] (<https://orcid.org/0000-0002-0331-3630>)'
+  Authors@R: 'Flavio Santi [cre, aut] (0000-0002-2014-1981), Maria Michela Dickson [aut] (0000-0002-4307-0469), Giuseppe Espa [aut] (0000-0002-0331-3630)'
+
