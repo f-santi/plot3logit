@@ -5,7 +5,7 @@ year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste('R package version', meta$Version)
 
 citEntry(entry = 'Manual',
-  title       = 'plot3logit: Ternary Plots for Trinomial Regression Models',
+  title       = paste('plot3logit:', meta$Title),
   author      = personList(person('F.', 'Santi'),
                   person('M. M.', 'Dickson'),
                   person('G.', 'Espa')),
@@ -13,7 +13,7 @@ citEntry(entry = 'Manual',
   note = vers,
   textVersion =
     paste('Santi, F., M. M. Dickson and G. Espa (',
-      year, ') "plot3logit: Ternary Plots for Trinomial Regression Models". ',
+      year, ') "plot3logit: ', meta$Title, '". ',
       vers, '.', sep = ''
     )
 )

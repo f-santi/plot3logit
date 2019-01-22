@@ -8,7 +8,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "README-",
+  eval = FALSE
 )
 ```
 
@@ -33,8 +34,8 @@ creates a `field3logit` object which may be represented by means of functions
 `gg3logit` and `stat_3logit`.
 
 The `plot3logit` package inherits graphical classes and methods from the
-package `ggtern` (Hamilton 2018) which, in turn, is based on the `ggplot2`
-package (Wickham 2016).
+package `ggtern` (Hamilton 2018) which, in turn, is based on the package
+`ggplot2` (Wickham 2016).
 
 Graphical representation based on **standard graphics** is made available
 through the package `Ternary` (Smith 2017) by functions `plot3logit` and
@@ -67,7 +68,7 @@ furhter details.
 Fit a trilogit model by means of package `nnet` where the student's employment
 situation is analysed with respect to all variables in the dataset
 `cross_1year`:
-```{r, eval=FALSE}
+```{r}
 data(cross_1year)
 library(nnet)
 mod0 <- multinom(employment_sit ~ ., data = cross_1year)
@@ -75,23 +76,23 @@ mod0 <- multinom(employment_sit ~ ., data = cross_1year)
 
 The gender effect is analysed by means of a ternary plot which is generated in
 two steps, however, package `plot3logit` should be loaded:
-```{r, eval=FALSE}
+```{r}
 library(plot3logit)
 ```
 
 Firstly, the vector field is computed:
-```{r, eval=FALSE}
+```{r}
 field0 <- field3logit(mod0, 'genderFemale')
 ```
 
 Secondly, the field is represented on a ternary plot, using either
 `gg`-graphics:
-```{r, eval=FALSE}
+```{r}
 gg3logit(field0) + stat_3logit()
 ```
 
 or standard graphics:
-```{r, eval=FALSE}
+```{r}
 plot(field0)
 ```
 
