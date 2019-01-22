@@ -24,9 +24,9 @@ plots is helping the interpretation of regression coefficients in terms of
 the effects that a change in regressors' values has on the probability
 distribution of the dependent variable. Such changes may involve either a
 single regressor, or a group of them (composite changes), and the package
-permits both cases to be represented in a user-friendly way. Theoretical
-and methodological details are illustrated and discussed in Santi, Dickson
-and Espa (2018).
+permits both cases to be handled in a user-friendly way. Theoretical and
+methodological details are illustrated and discussed in Santi, Dickson and Espa
+(2018).
 
 The package can read the results of **both categorical and ordinal trinomial
 logit** regression fitted by various functions (see the next section) and
@@ -39,8 +39,7 @@ package `ggtern` (Hamilton 2018) which, in turn, is based on the package
 
 Graphical representation based on **standard graphics** is made available
 through the package `Ternary` (Smith 2017) by functions `plot3logit` and
-`TernaryField`, and in particular by the `plot` method of `field3logit`
-objects.
+`TernaryField`, and by the `plot` method of `field3logit` objects.
 
 See the help of `field3logit` for representing composite effects and
 `multifield3logit` for drawing multiple fields.
