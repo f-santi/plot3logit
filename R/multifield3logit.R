@@ -111,7 +111,7 @@ print.multifield3logit <- function(x, maxitems = 10, ...) {
 
 #' @rdname multifield3logit
 #' @export
-fortify.multifield3logit <- function(model, ...) {
+fortify.multifield3logit <- function(model, data, ...) {
   lapply(model, fortify) %>%
     Reduce(rbind, .) %>%
     return

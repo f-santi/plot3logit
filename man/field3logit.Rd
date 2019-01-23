@@ -21,7 +21,7 @@ plot3logit(model, delta, label = "<empty>", p0 = NULL, alpha = NULL,
 
 \method{as.data.frame}{field3logit}(x, ..., wide = TRUE)
 
-\method{fortify}{field3logit}(model, ...)
+\method{fortify}{field3logit}(model, data, ...)
 }
 \arguments{
 \item{model}{either a fitted trinomial model or a matrix of regressor
@@ -68,6 +68,9 @@ ternary plot should be drawn (\code{add = FALSE}).}
 
 \item{wide}{it allows to choose whether \code{as.data.frme} should return a
 \code{data.frame} object in wide (default) or long form.}
+
+\item{data}{not used. Argument included only for interface compatibility with
+the generic \code{fortify}.}
 }
 \value{
 \code{S3} object of class \code{field3logit} structured as a named \code{list}.

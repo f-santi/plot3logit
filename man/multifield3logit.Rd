@@ -13,7 +13,7 @@ multifield3logit(x, ...)
 
 \method{print}{multifield3logit}(x, maxitems = 10, ...)
 
-\method{fortify}{multifield3logit}(model, ...)
+\method{fortify}{multifield3logit}(model, data, ...)
 }
 \arguments{
 \item{x, y}{object of class \code{field3logit} or \code{multifield3logit}.}
@@ -26,6 +26,9 @@ class \code{multifield3logit} is printed.}
 \item{model}{either a fitted trinomial model or a matrix of regressor
 coefficients. See section \emph{Compatibility} and examples of
 \code{\link{plot3logit-package}}.}
+
+\item{data}{not used. Argument included only for interface compatibility with
+the generic \code{fortify}.}
 }
 \value{
 \code{S3} object of class \code{multifield3logit} structured as a named \code{list}.

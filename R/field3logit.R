@@ -91,6 +91,8 @@ is_simplified_field3logit <- function(x) {
 #' @inheritParams effect
 #' @param label label to be used for identifying the field when multiple
 #'   fields are plotted. See [`multifield3logit`].
+#' @param data not used. Argument included only for interface compatibility with
+#'   the generic `fortify`.
 #'
 #' @return
 #' `S3` object of class `field3logit` structured as a named `list`.
@@ -258,7 +260,7 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
 
 #' @rdname field3logit
 #' @export
-fortify.field3logit <- function(model, ...) {
+fortify.field3logit <- function(model, data, ...) {
   return(as.data.frame.field3logit(model, ...))
 }
 
