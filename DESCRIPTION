@@ -20,7 +20,7 @@ Description: An implementation of the ternary plot for interpreting regression
     drawn using either 'ggtern' package (based on 'ggplot2') or 'Ternary'
     package (based on standard graphics).
 Depends: R (>= 3.1), ggtern (>= 3.1.0), Ternary (>= 1.0.1)
-Imports: magrittr (>= 1.5), ggplot2 (>= 3.1.0), graphics, reshape2 (>= 1.4.3),
+Imports: ggplot2 (>= 3.1.0), graphics, magrittr (>= 1.5), reshape2 (>= 1.4.3),
     stats, utils
 Suggests: MASS (>= 7.3-51), mlogit, nnet
 License: GPL (>=2)
@@ -30,5 +30,5 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.0
 Repository: CRAN
-Date: 2019-01-21
+Date: 2019-01-30
 
