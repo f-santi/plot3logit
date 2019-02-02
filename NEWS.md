@@ -5,7 +5,8 @@
 
 * Bug solved for `as.data.frame.field3logit` when a zero-coefficient model is
   passed to field3logit. The previous version was not able to return a
-  data.frame correctly built.
+  data.frame correctly built. Functions `gg3logit`, `stat_3logit`, and
+  `TernaryField` have been adapted so as to draw points instead of arrows.
 
 
 ## Minor changes
