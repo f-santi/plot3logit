@@ -99,11 +99,13 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
         zend = as.symbol(colnames(data)[9])
       ))
   } else {
-  	mapping %<>% utils::modifyList(list(x = NULL, y = NULL, z = NULL,
-  	  xend = NULL, yend = NULL, zend = NULL))
+  	mapping %<>% utils::modifyList(list(
+  	  x = NULL, y = NULL, z = NULL,
+  	  xend = NULL, yend = NULL, zend = NULL
+  	))
   }
-  
-  if (all(data$arrow == 'X')) {
+
+  if (!is.null(data$arrow) & all(data$arrow == 'X')) {
   	geom <- 'point'
   	params['arrow'] <- NULL
   }
