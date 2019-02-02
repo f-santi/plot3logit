@@ -15,6 +15,10 @@
   `data`, so that now all `fortify` methods of the package are compliant with
   the interface of the generic.
 
+* `field3logit` now can read categories labels of the dependent variable from
+  attribute `labs` when argument `model` is a `matrix`. Example in the help of
+  package presentation has been updated.
+
 
 ## Typos and other marginal changes
 
