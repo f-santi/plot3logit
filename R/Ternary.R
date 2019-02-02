@@ -76,9 +76,17 @@ TernaryField <- function(field, ..., length = 0.05) {
   
   field %>%
     use_series('effects') %>%
-    simplify_field3logit %>%
+    plot3logit:::simplify_field3logit() -> depo
+    
+  if (is.numeric(depo)) {
+  	depo %>%
+  	  matrix(ncol = 3, byrow = TRUE) %>%
+  	  TernaryPoints(...)
+  } else {
+    depo %>%
     lapply(function(w) AddToTernary(effect, w, ..., length = length))
-
+  }
+  
   invisible(field)
 }
 
