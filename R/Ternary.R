@@ -76,7 +76,7 @@ TernaryField <- function(field, ..., length = 0.05) {
   
   field %>%
     use_series('effects') %>%
-    plot3logit:::simplify_field3logit() -> depo
+    simplify_field3logit -> depo
     
   if (is.numeric(depo)) {
   	depo %>%
