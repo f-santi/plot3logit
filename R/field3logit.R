@@ -230,24 +230,36 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
     use_series('effects') %>%
     simplify_field3logit
 
-  x %>%
-    names %>%
-    strsplit('A') %>%
-    Reduce(rbind, ., NULL) %>%
-    as.data.frame %>%
-    { .[rep(1 : nrow(.), each = 2), ] } %>%
-    cbind(depoLab$label, .) %>%
-    set_colnames(c('label', 'curve', 'arrow')) %>%
-    set_rownames(NULL) -> depo
-    
-  levels(depo$arrow) %<>% paste0('A', .)
+  if (is.numeric(x)) {
+  	pos <- seq(from = 1, to = length(x), by = 3)
+  	x %<>%
+  	  matrix(ncol = 3, byrow = TRUE) %>%
+  	  as.data.frame %>%
+  	  cbind(depoLab$label, names(x)[pos], 'X', 'void', .) %>%
+      set_colnames(c('label', 'curve', 'arrow', 'role', depoLab$lab)) %>%
+      set_rownames(NULL)
+    x %<>% extract(rep(1:nrow(x), each = 2), )
+    x$role <- rep(c('from', 'to'), nrow(x) / 2)
+  } else {
+    x %>%
+      names %>%
+      strsplit('A') %>%
+      Reduce(rbind, ., NULL) %>%
+      as.data.frame %>%
+      { .[rep(1 : nrow(.), each = 2), ] } %>%
+      cbind(depoLab$label, .) %>%
+      set_colnames(c('label', 'curve', 'arrow')) %>%
+      set_rownames(NULL) -> depo
+  
+    levels(depo$arrow) %<>% paste0('A', .)
 
-  x %<>%
-    Reduce(function(x, y) { rbind(x, y$from, y$to) }, . , NULL) %>%
-    data.frame %>%
-    set_colnames(depoLab$lab) %>%
-    cbind(depo, role = rep(c('from', 'to'), nrow(depo) / 2), .)
-
+    x %<>%
+      Reduce(function(x, y) { rbind(x, y$from, y$to) }, . , NULL) %>%
+      data.frame %>%
+      set_colnames(depoLab$lab) %>%
+      cbind(depo, role = rep(c('from', 'to'), nrow(depo) / 2), .)
+  }
+  
   if (wide) {
     merge(x[x$role == 'from', -4], x[x$role == 'to', -4],
   	  by = c('label', 'curve', 'arrow'), suffixes = c('', '_end')
@@ -256,6 +268,7 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
   
   return(x)
 }
+
 
 
 #' @rdname field3logit

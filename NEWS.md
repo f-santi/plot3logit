@@ -1,6 +1,12 @@
 
 # plot3logit 1.0.0.9000
 
+## Major changes
+
+* Bug solved for `as.data.frame.field3logit` when a zero-coefficient model is
+  passed to field3logit. The previous version was not able to return a
+  data.frame correctly built.
+
 
 ## Minor changes
 
