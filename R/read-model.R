@@ -65,7 +65,7 @@ read_model <- function(model, type, alpha) {
   	out$B <- as.matrix(model)
   	if ((nrow(out$B) == 2) & (ncol(out$B) == 1)) { out$B %<>% t }
   	out$readfrom <- 'matrix'
-  	out$lab <- attr(A, 'labs')
+  	out$lab <- attr(model, 'labs')
   }
   
   # Add link functions
