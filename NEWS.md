@@ -2,7 +2,15 @@
 # plot3logit 1.0.1.9000
 
 
+## Major changes
+
+* Vignette "plot3logit-overview" has been added to the package.
+
+
 ## Minor changes
+
+* The level "Long" of variable "irregulariry" of dataset "cross_1year" has
+  been changed to "High".
 
 
 
