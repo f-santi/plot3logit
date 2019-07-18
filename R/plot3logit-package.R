@@ -3,7 +3,7 @@
 #'
 #' An implementation of the ternary plot for interpreting regression
 #' coefficients of trinomial regression models, as proposed in Santi, Dickson
-#' and Espa (2018).
+#' and Espa (2019).
 #'
 #' The package permits the covariate effects of trinomial regression models to
 #' be represented graphically by means of a ternary plot. The aim of the
@@ -13,7 +13,7 @@
 #' single regressor, or a group of them (composite changes), and the package
 #' permits both cases to be represented in a user-friendly way. Theoretical
 #' and methodological details are illustrated and discussed in Santi, Dickson
-#' and Espa (2018).
+#' and Espa (2019).
 #'
 #' The package can read the results of **both categorical and ordinal trinomial
 #' logit** regression fitted by various functions (see the next section) and
@@ -78,9 +78,9 @@
 #' *Journal of Statistical Software, Code Snippets*, **87**(3), 1-17.
 #' \doi{10.18637/jss.v087.c03}
 #'
-#' Santi F., M. M. Dickson, G. Espa (2018) "A graphical tool for interpreting
+#' Santi F., M. M. Dickson, G. Espa (2019) "A graphical tool for interpreting
 #' regression coefficients of trinomial logit models", *The American
-#' Statistician*. \doi{10.1080/00031305.2018.1442368}
+#' Statistician*, **73**(2), pp. 200-207. \doi{10.1080/00031305.2018.1442368}
 #'
 #' Smith M. R. (2017). "`Ternary`: An R Package for Creating Ternary Plots",
 #' *Zenodo*. \doi{10.5281/zenodo.1068996}

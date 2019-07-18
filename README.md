@@ -13,7 +13,7 @@ probability distribution of the dependent variable. Such changes may
 involve either a single regressor, or a group of them (composite
 changes), and the package permits both cases to be handled in a
 user-friendly way. Theoretical and methodological details are
-illustrated and discussed in Santi, Dickson and Espa (2018).
+illustrated and discussed in Santi, Dickson and Espa (2019).
 
 The package can read the results of **both categorical and ordinal
 trinomial logit** regression fitted by various functions (see the next
@@ -87,11 +87,12 @@ plot(field0)
 
 Hamilton N. E., M. Ferry (2018) “ggtern: Ternary Diagrams Using
 ggplot2”, *Journal of Statistical Software, Code Snippets*, **87**(3),
-1-17. <https://doi.org/10.18637/jss.v087.c03>
+pp. 1-17. <https://doi.org/10.18637/jss.v087.c03>
 
-Santi F., M. M. Dickson, G. Espa (2018) “A graphical tool for
+Santi F., M. M. Dickson, G. Espa (2019) “A graphical tool for
 interpreting regression coefficients of trinomial logit models”, *The
-American Statistician*. <https://doi.org/10.1080/00031305.2018.1442368>
+American Statistician*, **73**(2), pp. 200-207.
+<https://doi.org/10.1080/00031305.2018.1442368>
 
 Smith M. R. (2017). “Ternary: An R Package for Creating Ternary Plots”,
 *Zenodo*. <https://doi.org/10.5281/zenodo.1068996>

@@ -26,9 +26,10 @@
 #' * `hsscore` - high school final score, a `numeric` between 60 and
 #'   100.
 #'
-#' @references Santi F., M. M. Dickson, G. Espa (2018)
+#' @references Santi F., M. M. Dickson, G. Espa (2019)
 #' "A graphical tool for interpreting regression coefficients of trinomial logit
-#' models", *The American Statistician*. \doi{10.1080/00031305.2018.1442368}
+#' models", *The American Statistician*, **73**(2), pp. 200-207.
+#' \doi{10.1080/00031305.2018.1442368}
 #'
 #' @keywords data
 NULL

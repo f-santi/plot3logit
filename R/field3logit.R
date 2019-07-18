@@ -73,7 +73,7 @@ is_simplified_field3logit <- function(x) {
 #'   the ternary plot area. See Examples.
 #' @param alpha `numeric` vector of length two where constants \eqn{\alpha^{(1)}}
 #'   and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
-#'   defined in Equation (7) of Santi, Dickson and Espa (2018).
+#'   defined in Equation (7) of Santi, Dickson and Espa (2019).
 #' @param ncurves number of curves of the field to be computed. In case
 #'   of ordinal models, this parameter is ineffective, as only one curve
 #'   can be drawn. The parameter is ineffective also in case that argument

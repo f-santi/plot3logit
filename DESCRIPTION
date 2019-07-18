@@ -17,7 +17,7 @@ URL: https://www.flaviosanti.it/software/plot3logit
 BugReports: https://github.com/f-santi/plot3logit
 Description: An implementation of the ternary plot for interpreting regression
     coefficients of trinomial regression models, as proposed in Santi, Dickson
-    and Espa (2018) <doi:10.1080/00031305.2018.1442368>. Ternary plots can be
+    and Espa (2019) <doi:10.1080/00031305.2018.1442368>. Ternary plots can be
     drawn using either 'ggtern' package (based on 'ggplot2') or 'Ternary'
     package (based on standard graphics).
 Depends: R (>= 3.1), ggtern (>= 3.1.0), Ternary (>= 1.0.1)
