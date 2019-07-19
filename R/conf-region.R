@@ -12,7 +12,12 @@
 #'
 #' @return
 #' `data.frame` with three columns (named `p1`, `p2`, and `p3`)
-#' with ternary coordinates of the 
+#' with ternary coordinates of the points of the ellipse.
+#'
+#' @example
+#' Ternary::TernaryPlot()
+#' depo <- confregion(1:2, 0.3 * diag(2:1))
+#' Ternary::TernaryPoints()
 #'
 #' @keywords internal
 confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
