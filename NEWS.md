@@ -13,6 +13,11 @@
   been changed to "High".
 
 
+## Typos and other marginal changes
+
+* Updated references to Santi, Dickson and Espa (2019).
+
+
 
 
 
