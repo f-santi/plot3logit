@@ -1,9 +1,9 @@
 
 #' Builds up matrix of coefficients from fitted models
 #'
-#' It reads arguments `model`, `ordinal`, `type` and `alpha` passed
-#' by function [`field3logit`] and properly sets the matrix of
-#' coefficient and the other needed model-specific functions.
+#' `read_model` reads arguments `model`, `ordinal`, `type` and `alpha` passed
+#' by function [`field3logit`] and properly sets the matrix of coefficients
+#' and the other needed model-specific functions.
 #'
 #' @param model see [`field3logit`].
 #' @param type class of the model. Currently, forced to `"logit"`
@@ -11,9 +11,10 @@
 #' @param alpha see [`field3logit`].
 #'
 #' @return
-#' A named `list` with the following components:
+#' `read_model` returns a named `list` with the following components:
 #'
 #' \item{B}{matrix of coefficients.}
+#' \item{alpha}{see [`field3logit`].}
 #' \item{model}{argument `type`.}
 #' \item{ordinal}{`logical` variable indicating wheter the model is
 #'   ordinal or not.}

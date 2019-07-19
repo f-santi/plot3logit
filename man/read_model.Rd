@@ -27,9 +27,10 @@ by \code{\link{field3logit}} when \code{\link{read_model}} is called.}
 \item{alpha}{see \code{\link{field3logit}}.}
 }
 \value{
-A named \code{list} with the following components:
+\code{read_model} returns a named \code{list} with the following components:
 
 \item{B}{matrix of coefficients.}
+\item{alpha}{see \code{\link{field3logit}}.}
 \item{model}{argument \code{type}.}
 \item{ordinal}{\code{logical} variable indicating wheter the model is
 ordinal or not.}
@@ -39,9 +40,9 @@ ordinal or not.}
 the field should pass through (see \code{\link{DeltaB2pc}}).}
 }
 \description{
-It reads arguments \code{model}, \code{ordinal}, \code{type} and \code{alpha} passed
-by function \code{\link{field3logit}} and properly sets the matrix of
-coefficient and the other needed model-specific functions.
+\code{read_model} reads arguments \code{model}, \code{ordinal}, \code{type} and \code{alpha} passed
+by function \code{\link{field3logit}} and properly sets the matrix of coefficients
+and the other needed model-specific functions.
 }
 \seealso{
 \code{\link{plot3logit-package}}, \code{\link{field3logit}}.
