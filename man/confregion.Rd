@@ -24,4 +24,10 @@ Given the parameters of the confidence ellipse in the
 space of covariate coefficiets, it returns the confidence
 region of the effect.
 }
+\examples{
+Ternary::TernaryPlot()
+depo <- plot3logit:::confregion(1:2, 0.3 * diag(2:1))
+Ternary::TernaryPoints(depo)
+
+}
 \keyword{internal}

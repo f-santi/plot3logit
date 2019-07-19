@@ -14,10 +14,10 @@
 #' `data.frame` with three columns (named `p1`, `p2`, and `p3`)
 #' with ternary coordinates of the points of the ellipse.
 #'
-#' @example
+#' @examples
 #' Ternary::TernaryPlot()
 #' depo <- plot3logit:::confregion(1:2, 0.3 * diag(2:1))
-#' Ternary::TernaryPoints()
+#' Ternary::TernaryPoints(depo)
 #'
 #' @keywords internal
 confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
