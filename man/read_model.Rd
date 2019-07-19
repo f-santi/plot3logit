@@ -2,9 +2,21 @@
 % Please edit documentation in R/read-model.R
 \name{read_model}
 \alias{read_model}
+\alias{read_from_multinom}
+\alias{read_from_polr}
+\alias{read_from_mlogit}
+\alias{read_from_matrix}
 \title{Builds up matrix of coefficients from fitted models}
 \usage{
 read_model(model, type, alpha)
+
+read_from_multinom(model, ...)
+
+read_from_polr(model, ...)
+
+read_from_mlogit(model, ...)
+
+read_from_matrix(model, ...)
 }
 \arguments{
 \item{model}{see \code{\link{field3logit}}.}

@@ -8,7 +8,7 @@
 \description{
 An implementation of the ternary plot for interpreting regression
 coefficients of trinomial regression models, as proposed in Santi, Dickson
-and Espa (2018).
+and Espa (2019).
 }
 \details{
 The package permits the covariate effects of trinomial regression models to
@@ -19,7 +19,7 @@ distribution of the dependent variable. Such changes may involve either a
 single regressor, or a group of them (composite changes), and the package
 permits both cases to be represented in a user-friendly way. Theoretical
 and methodological details are illustrated and discussed in Santi, Dickson
-and Espa (2018).
+and Espa (2019).
 
 The package can read the results of \strong{both categorical and ordinal trinomial
 logit} regression fitted by various functions (see the next section) and
@@ -88,9 +88,9 @@ Hamilton N. E., M. Ferry (2018) "\code{ggtern}: Ternary Diagrams Using ggplot2",
 \emph{Journal of Statistical Software, Code Snippets}, \strong{87}(3), 1-17.
 \doi{10.18637/jss.v087.c03}
 
-Santi F., M. M. Dickson, G. Espa (2018) "A graphical tool for interpreting
+Santi F., M. M. Dickson, G. Espa (2019) "A graphical tool for interpreting
 regression coefficients of trinomial logit models", \emph{The American
-Statistician}. \doi{10.1080/00031305.2018.1442368}
+Statistician}, \strong{73}(2), pp. 200-207. \doi{10.1080/00031305.2018.1442368}
 
 Smith M. R. (2017). "\code{Ternary}: An R Package for Creating Ternary Plots",
 \emph{Zenodo}. \doi{10.5281/zenodo.1068996}

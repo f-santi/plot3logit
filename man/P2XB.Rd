@@ -16,7 +16,7 @@ P2XB_ord3logit(P, alpha)
 
 \item{alpha}{\code{numeric} vector of length two where constants \eqn{\alpha^{(1)}}
 and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
-defined in Equation (7) of Santi, Dickson and Espa (2018).}
+defined in Equation (7) of Santi, Dickson and Espa (2019).}
 }
 \value{
 Numeric matrix \eqn{\textbf{R}^{n\times 2}} of linear predictors.
@@ -25,12 +25,13 @@ Numeric matrix \eqn{\textbf{R}^{n\times 2}} of linear predictors.
 Given the probability distributions \eqn{P\in[0,\,1]^{n\times 3}} of the
 dependent variable, it computes the the values of linear predictors
 \eqn{XB\in\textbf{R}^{n\times 2}} according to notation used in Santi,
-Dickson and Espa (2018).
+Dickson and Espa (2019).
 }
 \references{
-Santi F., M. M. Dickson, G. Espa (2018)
+Santi F., M. M. Dickson, G. Espa (2019)
 "A graphical tool for interpreting regression coefficients of trinomial logit
-models", \emph{The American Statistician}. \doi{10.1080/00031305.2018.1442368}
+models", \emph{The American Statistician}, \strong{73}(2), pp. 200-207.
+\doi{10.1080/00031305.2018.1442368}
 }
 \seealso{
 \code{\link{XB2P}}.

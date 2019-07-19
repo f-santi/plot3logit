@@ -26,46 +26,19 @@
 #'
 #' @keywords internal
 read_model <- function(model, type, alpha) {
-  out<- list(B = NULL, model = type, ordinal = !is.null(alpha),
-    readfrom = NULL,
+  out<- list(B = NULL, alpha = alpha, model = type,
+    ordinal = !is.null(alpha), readfrom = NULL,
     P2XB = NULL, XB2P = NULL, DeltaB2pc = NULL)
   
-  # Read matrix
+  # Read models
   if (all(inherits(model, c('multinom', 'nnet'), TRUE))) {
-  	out$B <- t(stats::coef(model))
-  	out$model <- 'logit'
-  	out$ordinal <- FALSE
-  	out$readfrom <- 'nnet::multinom'
-  	out$lab <- model$lab
+  	out %<>% modifyList(read_from_multinom(model))
   } else if (inherits(model, 'polr')) {
-  	out$B <- as.matrix(stats::coef(model))
-  	alpha <- cumsum(model$zeta)
-  	out$model <- ifelse(model$method == 'logistic', 'logit', model$method)
-  	out$ordinal <- TRUE
-  	out$readfrom <- 'MASS::polr'
-  	out$lab <- model$lev
+  	out %<>% modifyList(read_from_polr(model))
   } else if (inherits(model, 'mlogit')) {
-  	depo <- stats::coef(model)
-  	depo %<>%
-  	  names %>%
-  	  strsplit(':') %>%
-  	  Reduce(rbind, .) %>%
-  	  as.data.frame %>%
-  	  set_colnames(c('lev', 'variable')) %>%
-  	  cbind(depo) %>%
-  	  reshape2::dcast(variable ~ lev, value.var = 'depo', fill = NA)  	  
-    depo %>%
-      { as.matrix(.[ , -1]) } %>%
-      set_rownames(depo$variable) -> out$B
-    out$model <- 'logit'
-  	out$ordinal <- FALSE
-  	out$readfrom <- 'mlogit::mlogit'
-  	out$lab <- names(model$freq)
+  	out %<>% modifyList(read_from_mlogit(model))
   } else {
-  	out$B <- as.matrix(model)
-  	if ((nrow(out$B) == 2) & (ncol(out$B) == 1)) { out$B %<>% t }
-  	out$readfrom <- 'matrix'
-  	out$lab <- attr(model, 'labs')
+  	out %<>% modifyList(read_from_matrix(model))
   }
   
   # Add link functions
@@ -74,9 +47,9 @@ read_model <- function(model, type, alpha) {
   	out$P2XB <- P2XB_cat3logit
   	out$DeltaB2pc <- DeltaB2pc_cat3logit
   } else if ((out$model == 'logit') & out$ordinal) {
-  	out$XB2P <- function(x) XB2P_ord3logit(x, alpha)
-  	out$P2XB <- function(x) P2XB_ord3logit(x, alpha)
-  	out$DeltaB2pc <- function(x, ...) DeltaB2pc_ord3logit(x, alpha, ...)
+  	out$XB2P <- function(x) XB2P_ord3logit(x, out$alpha)
+  	out$P2XB <- function(x) P2XB_ord3logit(x, out$alpha)
+  	out$DeltaB2pc <- function(x, ...) DeltaB2pc_ord3logit(x, out$alpha, ...)
   }
   
   # Check dimensionality of matrix coefficient  
@@ -102,52 +75,78 @@ read_model <- function(model, type, alpha) {
 
 
 
-#' It computes the vector of covariate change
-#'
-#' Given the argument `delta` passed to [`field3logit`] either as
-#' a `numeric` vector, a `character` or an `expression` (see
-#' [`field3logit`]), `get_vdelta` returns the `numeric` vector of
-#' covariate change \eqn{\Delta\in\textbf{R}^k}.
-#'
-#' @param model object returned by [`read_model`].
-#' @param delta see [`field3logit`].
-#'
-#' @return
-#' `numeric` vector of covariate change \eqn{\Delta\in\textbf{R}^k}.
-#'
-#' @examples
-#' library(magrittr)
-#'
-#' # Example 1
-#' matrix(c(0.11, 0.07, -0.1, 0.09), 2) %>%
-#'   plot3logit:::read_model('logit', NULL) %>%
-#'   plot3logit:::get_vdelta(c(0, 1), .)
-#'
-#' # Example 2
-#' library(nnet)
-#' data(cross_1year)
-#' mod0 <- multinom(employment_sit ~ ., cross_1year)
-#' plot3logit:::read_model(mod0, 'logit', NULL) %>%
-#'   plot3logit:::get_vdelta('genderFemale', .)
-#'
-#' # Example 3
-#' plot3logit:::read_model(mod0, 'logit', NULL) %>%
-#'   plot3logit:::get_vdelta('-0.5 * genderFemale + hsscore', .)
-#'
-#' @keywords internal
-get_vdelta <- function(delta, model) {
-  if (!is.numeric(delta) & (length(delta) > 1)) { delta %<>% extract(1) }
 
-  if (is.character(delta)) { delta %<>% parse(text = .) }
-  
-  if (is.expression(delta)) {
-  	depoE <- new.env()
-  	n <- nrow(model$B)
-  	mapply(function(x, y) assign(x, versor(y, n), envir = depoE),
-  	  rownames(model$B), 1 : n)
-  	delta <- eval(delta, depoE)
-  }
-  delta
+
+#' @rdname read_model
+#' @keywords internal
+read_from_multinom <- function(model, ...) {
+  list(
+    B = t(stats::coef(model)),
+    alpha = NULL,
+    model = 'logit',
+    ordinal = FALSE,
+    readfrom = 'nnet::multinom',
+    lab = model$lab
+  )
 }
 
+
+
+#' @rdname read_model
+#' @keywords internal
+read_from_polr <- function(model, ...) {
+  list(
+  	B = as.matrix(stats::coef(model)),
+  	alpha = cumsum(model$zeta),
+  	model = ifelse(model$method == 'logistic', 'logit', model$method),
+  	ordinal = TRUE,
+  	readfrom = 'MASS::polr',
+  	lab = model$lev
+  )
+}
+
+
+
+#' @rdname read_model
+#' @keywords internal
+read_from_mlogit <- function(model, ...) {
+  depo <- stats::coef(model)
+  depo %<>%
+    names %>%
+    strsplit(':') %>%
+    Reduce(rbind, .) %>%
+    as.data.frame %>%
+    set_colnames(c('lev', 'variable')) %>%
+    cbind(depo) %>%
+    reshape2::dcast(variable ~ lev, value.var = 'depo', fill = NA) %>%
+    { as.matrix(.[ , -1]) } %>%
+    set_rownames(depo$variable)
+    
+  list(
+    B = depo,
+    alpha = NULL,
+    model = 'logit',
+    ordinal = FALSE,
+    readfrom = 'mlogit::mlogit',
+    lab = names(model$freq)
+  )
+}
+
+
+
+#' @rdname read_model
+#' @keywords internal
+read_from_matrix <- function(model, ...) {
+  depo <- as.matrix(model)
+  if ((nrow(depo) == 2) & (ncol(depo) == 1)) { depo %<>% t }
+  
+  list(
+    B = depo,
+    # alpha
+    # model
+    # ordinal
+  	readfrom = 'matrix',
+  	lab = attr(model, 'labs')
+  )
+}
 

@@ -44,7 +44,7 @@ the ternary plot area. See Examples.}
 
 \item{alpha}{\code{numeric} vector of length two where constants \eqn{\alpha^{(1)}}
 and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
-defined in Equation (7) of Santi, Dickson and Espa (2018).}
+defined in Equation (7) of Santi, Dickson and Espa (2019).}
 
 \item{ncurves}{number of curves of the field to be computed. In case
 of ordinal models, this parameter is ineffective, as only one curve
@@ -126,9 +126,10 @@ gg3logit(field0) + stat_3logit()
 
 }
 \references{
-Santi F., M. M. Dickson, G. Espa (2018)
+Santi F., M. M. Dickson, G. Espa (2019)
 "A graphical tool for interpreting regression coefficients of trinomial logit
-models", \emph{The American Statistician}. \doi{10.1080/00031305.2018.1442368}
+models", \emph{The American Statistician}, \strong{73}(2), pp. 200-207.
+\doi{10.1080/00031305.2018.1442368}
 }
 \seealso{
 \code{\link{multifield3logit}}, \code{\link{gg3logit}}.

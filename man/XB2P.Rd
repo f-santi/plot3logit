@@ -30,7 +30,7 @@ X2P_ord3logit(X, B, alpha)
 
 \item{alpha}{\code{numeric} vector of length two where constants \eqn{\alpha^{(1)}}
 and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
-defined in Equation (7) of Santi, Dickson and Espa (2018).}
+defined in Equation (7) of Santi, Dickson and Espa (2019).}
 }
 \value{
 Numeric matrix \eqn{[0,\,1]^{n\times 3}} of probability distributions.
@@ -45,9 +45,10 @@ the coefficient matrix \eqn{B\in\textbf{R}^{k\times 2}} are taken as
 separate input arguments.
 }
 \references{
-Santi F., M. M. Dickson, G. Espa (2018)
+Santi F., M. M. Dickson, G. Espa (2019)
 "A graphical tool for interpreting regression coefficients of trinomial logit
-models", \emph{The American Statistician}. \doi{10.1080/00031305.2018.1442368}
+models", \emph{The American Statistician}, \strong{73}(2), pp. 200-207.
+\doi{10.1080/00031305.2018.1442368}
 }
 \seealso{
 \code{\link{P2XB}}.

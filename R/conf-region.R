@@ -16,7 +16,7 @@
 #'
 #' @example
 #' Ternary::TernaryPlot()
-#' depo <- confregion(1:2, 0.3 * diag(2:1))
+#' depo <- plot3logit:::confregion(1:2, 0.3 * diag(2:1))
 #' Ternary::TernaryPoints()
 #'
 #' @keywords internal
