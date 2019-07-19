@@ -118,7 +118,8 @@ read_from_mlogit <- function(model, ...) {
     as.data.frame %>%
     set_colnames(c('lev', 'variable')) %>%
     cbind(depo) %>%
-    reshape2::dcast(variable ~ lev, value.var = 'depo', fill = NA) %>%
+    reshape2::dcast(variable ~ lev, value.var = 'depo', fill = NA)
+  depo %<>%
     { as.matrix(.[ , -1]) } %>%
     set_rownames(depo$variable)
     
