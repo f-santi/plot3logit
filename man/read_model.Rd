@@ -30,6 +30,7 @@ by \code{\link{field3logit}} when \code{\link{read_model}} is called.}
 \code{read_model} returns a named \code{list} with the following components:
 
 \item{B}{matrix of coefficients.}
+\item{vcovB}{variance-covariance matrix of coefficients.}
 \item{alpha}{see \code{\link{field3logit}}.}
 \item{model}{argument \code{type}.}
 \item{ordinal}{\code{logical} variable indicating wheter the model is

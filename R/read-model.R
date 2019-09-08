@@ -14,6 +14,7 @@
 #' `read_model` returns a named `list` with the following components:
 #'
 #' \item{B}{matrix of coefficients.}
+#' \item{vcovB}{variance-covariance matrix of coefficients.}
 #' \item{alpha}{see [`field3logit`].}
 #' \item{model}{argument `type`.}
 #' \item{ordinal}{`logical` variable indicating wheter the model is
@@ -27,7 +28,7 @@
 #'
 #' @keywords internal
 read_model <- function(model, type, alpha) {
-  out<- list(B = NULL, alpha = alpha, model = type,
+  out <- list(B = NULL, vcovB = NULL, alpha = alpha, model = type,
     ordinal = !is.null(alpha), readfrom = NULL,
     P2XB = NULL, XB2P = NULL, DeltaB2pc = NULL)
   
@@ -83,6 +84,7 @@ read_model <- function(model, type, alpha) {
 read_from_multinom <- function(model, ...) {
   list(
     B = t(stats::coef(model)),
+  	vcovB = stats::vcov(model),
     alpha = NULL,
     model = 'logit',
     ordinal = FALSE,
@@ -98,6 +100,7 @@ read_from_multinom <- function(model, ...) {
 read_from_polr <- function(model, ...) {
   list(
   	B = as.matrix(stats::coef(model)),
+  	# vcovB = NULL,
   	alpha = cumsum(model$zeta),
   	model = ifelse(model$method == 'logistic', 'logit', model$method),
   	ordinal = TRUE,
@@ -111,21 +114,24 @@ read_from_polr <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_mlogit <- function(model, ...) {
-  depo <- stats::coef(model)
-  depo %<>%
+  depoB <- stats::coef(model)
+  depoB %<>%
     names %>%
     strsplit(':') %>%
     Reduce(rbind, .) %>%
     as.data.frame %>%
     set_colnames(c('lev', 'variable')) %>%
-    cbind(depo) %>%
-    reshape2::dcast(variable ~ lev, value.var = 'depo', fill = NA)
-  depo %<>%
+    cbind(depoB) %>%
+    reshape2::dcast(variable ~ lev, value.var = 'depoB', fill = NA)
+  depoB %<>%
     { as.matrix(.[ , -1]) } %>%
-    set_rownames(depo$variable)
-    
+    set_rownames(depoB$variable)
+  
+  #depoP <- matrix()
+  
   list(
-    B = depo,
+    B = depoB,
+  	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
     alpha = NULL,
     model = 'logit',
     ordinal = FALSE,
@@ -144,6 +150,7 @@ read_from_matrix <- function(model, ...) {
   
   list(
     B = depo,
+    # vcovB
     # alpha
     # model
     # ordinal
