@@ -1,4 +1,25 @@
 
+#' Covariance matrix of covariate change
+#'
+#' Given the covariance matrix of paramters, it return the covariance
+#' matrix associated to the chanve in covariate values in the space
+#' of covariantes.
+#'
+#' @param vcovB variance-covariance matrix of \eqn{\text{vec}(B)}.
+#' @param vdelta numeric vector of covariate change.
+#'
+#' @return
+#' Squared numeric matrix of order two.
+#'
+#' @keywords internal
+vcovB2vcovDeltaB <- function(vcovB, vdelta) {
+  if (!is.vector(vdelta)) { vdelta %<>% as.vector}
+  x <- kronecker(diag(2), vdelta)
+  return(crossprod(x, vcovB) %*% x)
+}
+
+
+
 #' It computes the confidence region in the ternary space
 #'
 #' Given the parameters of the confidence ellipse in the
