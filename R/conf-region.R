@@ -5,7 +5,7 @@
 #' matrix associated to the chanve in covariate values in the space
 #' of covariantes.
 #'
-#' @param vcovB variance-covariance matrix of \eqn{\text{vec}(B)}.
+#' @param vcovB variance-covariance matrix of \eqn{vec(B)}.
 #' @param vdelta numeric vector of covariate change.
 #'
 #' @return

@@ -1,7 +1,7 @@
 Package: plot3logit
 Type: Package
 Title: Ternary Plots for Trinomial Regression Models
-Version: 1.0.1.9000
+Version: 1.0.2
 Authors@R: c(
     person('Flavio', 'Santi', email = 'flavio.santi@univr.it',
       role = c('cre', 'aut'), comment = c(ORCID = "0000-0002-2014-1981")),
@@ -21,13 +21,9 @@ Description: An implementation of the ternary plot for interpreting regression
     drawn using either 'ggtern' package (based on 'ggplot2') or 'Ternary'
     package (based on standard graphics).
 Depends: R (>= 3.1), ggtern (>= 3.1.0), Ternary (>= 1.0.1)
-Imports: ellipse, ggplot2 (>= 3.1.0), graphics, magrittr (>= 1.5), reshape2 (>= 1.4.3), stats, utils
-Suggests: 
-    MASS (>= 7.3-51),
-    mlogit,
-    nnet,
-    knitr,
-    rmarkdown
+Imports: ellipse, ggplot2 (>= 3.1.0), graphics, magrittr (>= 1.5),
+    reshape2 (>= 1.4.3), stats, utils
+Suggests: MASS (>= 7.3-51), mlogit, nnet, knitr, rmarkdown
 License: GPL (>=2)
 LazyData: true
 NeedsCompilation: no
@@ -35,5 +31,5 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Repository: CRAN
-Date: 2019-01-30
+Date: 2019-09-08
 VignetteBuilder: knitr
