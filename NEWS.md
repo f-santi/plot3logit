@@ -1,11 +1,33 @@
 
+
+# plot3logit 1.0.2.9000
+
+
+## Major changes
+
+* 
+
+
+## Minor changes
+
+* 
+
+
+## Typos and other marginal changes
+
+* 
+
+
+
+
+
 # plot3logit 1.0.2
 
 
 ## Major changes
 
 * Vignette "plot3logit-overview" has been added to the package.
-* Updated dependencies by including package "ellipse" amongst imported packages
+* Updated dependencies by including package "ellipse" amongst imported packages.
 
 
 ## Minor changes
