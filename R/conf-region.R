@@ -55,9 +55,9 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
   out %<>% as.data.frame
   
   # Compute the ternary coordinates
-  out$p1 <- exp(out$x) / (1 + exp(out$x) + exp(out$y))
-  out$p2 <- exp(out$y) / (1 + exp(out$x) + exp(out$y))
-  out$p3 <- 1 / (1 + exp(out$x) + exp(out$y))
+  out$p2 <- exp(out$x) / (1 + exp(out$x) + exp(out$y))
+  out$p3 <- exp(out$y) / (1 + exp(out$x) + exp(out$y))
+  out$p1 <- 1 / (1 + exp(out$x) + exp(out$y))
   
   # Return the confidence ellipse
   return(out[ , c('p1', 'p2', 'p3'), drop = FALSE])
