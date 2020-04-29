@@ -114,21 +114,62 @@ read_from_polr <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_mlogit <- function(model, ...) {
-	
-  if(utils::packageVersion('mlogit') > '1.0.3.1') {
-  	depoCol <- c('variable', 'lev')
-  } else {
-  	depoCol <- c('lev', 'variable')
+  if(utils::packageVersion('mlogit') <= '1.0.3.1') {
   	warning('A new version of "mlogit" is available')
+  	out <- read_from_mlogit_ante1031(model, ...)
+  } else {
+  	out <- read_from_mlogit_post1031(model, ...)
   }
+  
+  return(out)
+}
 
+
+
+#' @rdname read_model
+#' @keywords internal
+read_from_mlogit_ante1031 <- function(model, ...) {
   depoB <- stats::coef(model)
+  
   depoB %<>%
     names %>%
     strsplit(':') %>%
     Reduce(rbind, .) %>%
     as.data.frame %>%
-    set_colnames(depoCol) %>%
+    set_colnames(c('lev', 'variable')) %>%
+    cbind(depoB) %>%
+    reshape2::dcast(variable ~ lev, value.var = 'depoB', fill = NA)
+
+  depoB %<>%
+    { as.matrix(.[ , -1]) } %>%
+    set_rownames(depoB$variable)
+  
+  #depoP <- matrix()
+  
+  list(
+    B = depoB,
+  	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
+    alpha = NULL,
+    model = 'logit',
+    ordinal = FALSE,
+    readfrom = 'mlogit::mlogit',
+    lab = names(model$freq)
+  )
+}
+
+
+
+#' @rdname read_model
+#' @keywords internal
+read_from_mlogit_post1031 <- function(model, ...) {
+  depoB <- stats::coef(model)
+  
+  depoB %<>%
+    names %>%
+    strsplit(':') %>%
+    Reduce(rbind, .) %>%
+    as.data.frame %>%
+    set_colnames(c('variable', 'lev')) %>%
     cbind(depoB) %>%
     reshape2::dcast(variable ~ lev, value.var = 'depoB', fill = NA)
 
