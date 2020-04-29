@@ -141,7 +141,9 @@ add_confregions <- function(x, conf = 0.95, npoints = 100) {
   } else if (depo[2] == 0) {
   	x %<>% add_confregions_field3logit(conf, npoints)
   } else {
-  	x %<>% lapply(add_confregions_field3logit, conf = conf, npoints = npoints)
+  	x %<>%
+  	  lapply(add_confregions_field3logit, conf = conf, npoints = npoints) %>%
+  	  structure(class = c('multifield3logit', 'field3logit'))
   }
 
   # Return the updated object

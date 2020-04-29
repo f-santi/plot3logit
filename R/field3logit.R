@@ -130,7 +130,7 @@ is_simplified_field3logit <- function(x) {
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   alpha = NULL, ncurves = 8, narrows = Inf, edge = 0.01,
-  conf = NULL, npoints = 100) {
+  conf = NA, npoints = 100) {
 
   # Read input
   modB <- read_model(model, 'logit', alpha)
