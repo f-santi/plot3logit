@@ -164,7 +164,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   class(out) <- 'field3logit'
   
   # Compute the confidence regions
-  if (!is.null(conf)) { out %<>% add_confregions(conf, npoints) }
+  if (!is.na(conf)) { out %<>% add_confregions(conf, npoints) }
   
   # Output
   out
