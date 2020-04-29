@@ -59,6 +59,7 @@ is_simplified_field3logit <- function(x) {
 #'
 #' See examples for comparing all three methods.
 #'
+#' @inheritParams effect
 #' @param model either a fitted trinomial model or a matrix of regressor
 #'   coefficients. See section *Compatibility* and examples of
 #'   [`plot3logit-package`].
@@ -88,11 +89,14 @@ is_simplified_field3logit <- function(x) {
 #' @param ... other arguments passed to or from other methods.
 #' @param wide it allows to choose whether `as.data.frme` should return a
 #'   `data.frame` object in wide (default) or long form.
-#' @inheritParams effect
 #' @param label label to be used for identifying the field when multiple
 #'   fields are plotted. See [`multifield3logit`].
 #' @param data not used. Argument included only for interface compatibility with
 #'   the generic `fortify`.
+#' @param conf confidence level of confidence regions to be computed **for each
+#'   arrow** of the field.
+#' @param npoints number of points of the border to be computed **for each
+#'   confidence region**.
 #'
 #' @return
 #' `S3` object of class `field3logit` structured as a named `list`.
@@ -125,7 +129,8 @@ is_simplified_field3logit <- function(x) {
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
-  alpha = NULL, ncurves = 8, narrows = Inf, edge = 0.01) {
+  alpha = NULL, ncurves = 8, narrows = Inf, edge = 0.01,
+  conf = NULL, npoints = 100) {
 
   # Read input
   modB <- read_model(model, 'logit', alpha)
@@ -149,14 +154,19 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
       edge = edge, nmax = narrows, flink = modB[c('XB2P','P2XB')])
   }
 
-  # Output
+  # Create field3logit object
   names(out) %<>% paste0('C', 1:length(out), .)
   out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
     vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
     effects = out, label = label, vcovB = modB$vcovB,
-    ordinal = modB$ordinal, conf = NA
+    ordinal = modB$ordinal, conf = conf
   )
   class(out) <- 'field3logit'
+  
+  # Compute the confidence regions
+  if (!is.null(conf)) { out %<>% add_confregions(conf, npoints) }
+  
+  # Output
   out
 }
 
