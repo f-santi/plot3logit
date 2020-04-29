@@ -153,7 +153,8 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   names(out) %<>% paste0('C', 1:length(out), .)
   out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
     vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
-    effects = out, label = label, vcovB = modB$vcovB)
+    effects = out, label = label, vcovB = modB$vcovB,
+    ordinal = modB$ordinal)
   class(out) <- 'field3logit'
   out
 }
