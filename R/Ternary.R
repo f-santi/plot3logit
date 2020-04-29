@@ -52,9 +52,17 @@ effect <- function(x, y, ..., length = 0.05) {
 #' @param field object of class `field3logit` as returned by
 #'   [`field3logit`].
 #' @inheritParams effect
+#' @inheritParams field3logit
+#' @param conf if `FALSE` confidence regions are not drawn, even if available;
+#'   if `TRUE` confidence regions are drawn only if available; if a `numeric`
+#'   value is passed, confidence regions at the specified confidence level
+#'   are computed (if not already available) and drawn.
+#' @param conf.args graphical parameters of confidence regions to be passed
+#'   to [`TernaryPolygon`].
 #'
 #' @return
-#' Argument `field` is invisibly returned.
+#' An object of class `field3logit` with confidence regions included, if
+#' computed within `TernaryField `.
 #'
 #' @seealso [`field3logit`].
 #'
@@ -69,14 +77,28 @@ effect <- function(x, y, ..., length = 0.05) {
 #' TernaryField(field0)
 #'
 #' @export
-TernaryField <- function(field, ..., length = 0.05) {
+TernaryField <- function(field, ..., length = 0.05, conf = FALSE, 
+  npoints = 100, conf.args = list()) {
+  	
+  # Check the input
   if (!inherits(field, 'field3logit')) {
   	warning('A non-standard object "field" has been processed.')
   }
   
+  # Handle the argument "conf"
+  if ((conf == TRUE) & is.null(field$conf)) { conf <- FALSE }
+  if (is.numeric(conf)) {
+  	conflevel <- conf
+  	conf <- (conf > 0) & (conf < 1)
+  	if (conf & (field$conf != conflevel)) {
+  	  field %<>% add_confregions(conflevel, npoints)
+    }
+  }
+  
+  # Simplify the field
   field %>%
     use_series('effects') %>%
-    simplify_field3logit -> depo
+    plot3logit:::simplify_field3logit() -> depo
     
   if (is.numeric(depo)) {
   	depo %>%
@@ -85,6 +107,16 @@ TernaryField <- function(field, ..., length = 0.05) {
   } else {
     depo %>%
       lapply(function(w) {
+      	if (conf) {
+      	  list(
+        	    col = grDevices::rgb(0, 0, 1, 0.2),
+      	    border = NA
+      	  ) %>%
+      	    modifyList(conf.args) %>%
+      	    modifyList(list(coordinates = w$confregion)) %>%
+      	    do.call('TernaryPolygon', .)
+      	}
+      	
       	w %>%
       	  `[`(c('from', 'to')) %>%
       	  AddToTernary(effect, ., ..., length = length)

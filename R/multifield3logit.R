@@ -136,7 +136,12 @@ plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   	plot(x[[j]], add = (j > 1) + (j == 1) * add, col = col[j], ...)
   }) -> out
   
-  if (legend) { legend('topright', legend = names(x), col = col, lwd = 2) }
+  if (legend) {
+  	legend(
+  	  x = 'topright', legend = names(x),
+  	  col = col, lwd = 2
+  	)
+  }
   
   invisible(out)
 }
