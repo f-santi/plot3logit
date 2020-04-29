@@ -2,7 +2,7 @@
 #' Covariance matrix of covariate change
 #'
 #' Given the covariance matrix of paramters, it return the covariance
-#' matrix associated to the chanve in covariate values in the space
+#' matrix associated to the change in covariate values in the space
 #' of covariantes.
 #'
 #' @param vcovB variance-covariance matrix of \eqn{vec(B)}.
