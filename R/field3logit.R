@@ -188,7 +188,7 @@ print.field3logit <- function(x, ...) {
  
   type  <- ifelse(x$ordinal, 'ordinal', 'categorical')
   vcovB <- ifelse(is.null(x$vcovB), 'not available', 'available')
-  confr <- ifelse(is.na(x$confr), 'not available', x$confr)
+  confr <- ifelse(is.na(x$confr), 'not available', paste0(100 * x$confr, '%'))
   
   cat(' Object of class "field3logit"\n')
   cat('-------------------------------\n')
