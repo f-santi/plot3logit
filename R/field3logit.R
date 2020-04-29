@@ -198,6 +198,7 @@ print.field3logit <- function(x, ...) {
   }
   
   cat('Model has been read from :', x$readfrom, '\n')
+  cat('Type of model            :', ifelse(x$ordinal, 'ordinal', 'categorical'), '\n')
   cat('Number of curves         :', length(x$effects), '\n')
   cat('Number of arrows         :', na, '\n')
   cat('Covariance matrix        :', vcovB, '\n')
