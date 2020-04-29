@@ -114,15 +114,24 @@ read_from_polr <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_mlogit <- function(model, ...) {
+	
+  if(utils::packageVersion('mlogit') > '1.0.3.1') {
+  	depoCol <- c('variable', 'lev')
+  } else {
+  	depoCol <- c('lev', 'variable')
+  	warning('A new version of "mlogit" is available')
+  }
+
   depoB <- stats::coef(model)
   depoB %<>%
     names %>%
     strsplit(':') %>%
     Reduce(rbind, .) %>%
     as.data.frame %>%
-    set_colnames(c('lev', 'variable')) %>%
+    set_colnames(depoCol) %>%
     cbind(depoB) %>%
     reshape2::dcast(variable ~ lev, value.var = 'depoB', fill = NA)
+
   depoB %<>%
     { as.matrix(.[ , -1]) } %>%
     set_rownames(depoB$variable)
