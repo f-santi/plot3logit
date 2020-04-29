@@ -84,7 +84,11 @@ TernaryField <- function(field, ..., length = 0.05) {
   	  TernaryPoints(...)
   } else {
     depo %>%
-    lapply(function(w) AddToTernary(effect, w, ..., length = length))
+      lapply(function(w) {
+      	w %>%
+      	  `[`(c('from', 'to')) %>%
+      	  AddToTernary(effect, ., ..., length = length)
+      })
   }
   
   invisible(field)
