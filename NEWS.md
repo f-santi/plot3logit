@@ -10,7 +10,8 @@
 
 ## Minor changes
 
-* 
+* Checks on installed version of "mlogit" have been included, so that "plot3logit"
+  works with both the newest and the older versions of that package.
 
 
 ## Typos and other marginal changes
