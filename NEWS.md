@@ -5,7 +5,7 @@
 
 ## Major changes
 
-* 
+* Added the "plot" function for "multifield3logit" in standard graphics.
 
 
 ## Minor changes
