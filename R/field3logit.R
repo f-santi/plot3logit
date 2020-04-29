@@ -154,7 +154,8 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
     vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
     effects = out, label = label, vcovB = modB$vcovB,
-    ordinal = modB$ordinal, confr = FALSE)
+    ordinal = modB$ordinal, confr = NA
+  )
   class(out) <- 'field3logit'
   out
 }
@@ -187,7 +188,7 @@ print.field3logit <- function(x, ...) {
  
   type  <- ifelse(x$ordinal, 'ordinal', 'categorical')
   vcovB <- ifelse(is.null(x$vcovB), 'not available', 'available')
-  confr <- ifelse(x$confr, 'available', 'not available')
+  confr <- ifelse(is.na(x$confr), 'not available', x$confr)
   
   cat(' Object of class "field3logit"\n')
   cat('-------------------------------\n')
