@@ -1,7 +1,7 @@
 
 #' Covariance matrix of covariate change
 #'
-#' Given the covariance matrix of paramters, it return the covariance
+#' Given the covariance matrix of parameters, it return the covariance
 #' matrix associated to the change in covariate values in the space
 #' of covariantes.
 #'
@@ -28,7 +28,7 @@ vcovB2vcovDeltaB <- function(vcovB, vdelta) {
 #'
 #' @param mu centre of the ellipse.
 #' @param Sig covariance matrix of the ellipse.
-#' @param conf confidence level.
+#' @param conf confidence level of the region.
 #' @param npoints number of points of the border.
 #'
 #' @return
@@ -63,6 +63,90 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
   return(out[ , c('p1', 'p2', 'p3'), drop = FALSE])
 }
 
+
+
+
+
+#' It adds the confidence regions to a "field3logit" object
+#'
+#' Given the confidence level, it computes the confidence regions
+#' the effects for each arrow of the `field3logit` object.
+#'
+#' @inheritParams confregion
+#' @param x an object of class `field3logit`.
+#'
+#' @return
+#' Object of class `field3logit` with updated confidence regions.
+#'
+#' @examples
+#' data(cross_1year)
+#'
+#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
+#' field0 <- field3logit(mod0, 'genderFemale')
+#' plot3logit:::add_confregions_field3logit(field0)
+#'
+#' @keywords internal
+add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
+  # Compute the covariance matrix of the ellipse
+  SigMa <- vcovB2vcovDeltaB(x$vcovB, x$vdelta)
+  
+  # Compute the confidence regions
+  x$effects %<>%
+    lapply(function(w) lapply(w, function(y) {
+    	  P2XB(y$to, x) %>%
+        confregion(SigMa) -> y$confregion
+        
+      return(y)
+    }))
+  
+  # Update other object attributes
+  x$confr <- conf
+  
+  # Return the updated object
+  return(x)
+}
+
+
+
+
+
+#' Computes the confidence regions of covariate effects
+#'
+#' Given the confidence level, it computes the confidence regions
+#' of the effects for each arrow of the `field3logit` or 
+#' `multifield3logit` object.
+#'
+#' @inheritParams add_confregions_field3logit
+#' @param x an object of class `field3logit` or `multifield3logit`.
+#'
+#' @return
+#' Object of class `field3logit` or `multifield3logit` with updated
+#' confidence regions.
+#'
+#' @examples
+#' data(cross_1year)
+#'
+#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
+#' field0 <- field3logit(mod0, 'genderFemale')
+#' add_confregions(field0)
+#'
+#' @export
+add_confregions <- function(x, conf = 0.95, npoints = 100) {
+  # Check the class of input
+  depo <- inherits(x, c('field3logit','multifield3logit'), which = TRUE)
+  
+  # Compute the confidence regions
+  if (all(depo == 0)) {
+  	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
+  } else if (depo[2] == 0) {
+  	x %<>% add_confregions_field3logit(conf, npoints)
+  } else {
+  	x %<>% lapply(add_confregions_field3logit, conf = conf, npoints = npoints)
+  }
+
+  # Return the updated object
+  return(x)
+}
 
 
 
