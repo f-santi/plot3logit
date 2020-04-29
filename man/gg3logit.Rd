@@ -35,7 +35,8 @@ gg3logit(field0) + stat_3logit()
 
 }
 \seealso{
-Other `gg` functions: \code{\link{multifield3logit}},
-  \code{\link{stat_3logit}}
+Other \code{gg} functions: 
+\code{\link{multifield3logit}()},
+\code{\link{stat_3logit}()}
 }
-\concept{`gg` functions}
+\concept{\code{gg} functions}

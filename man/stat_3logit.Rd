@@ -4,9 +4,16 @@
 \alias{stat_3logit}
 \title{Add a field to a \code{gg3logit} plot}
 \usage{
-stat_3logit(mapping = aes(), data = NULL, geom = "segment",
-  position = "identity", show.legend = NA, inherit.aes = TRUE,
-  arrow. = arrow(length = unit(0.2, "cm")), ...)
+stat_3logit(
+  mapping = aes(),
+  data = NULL,
+  geom = "segment",
+  position = "identity",
+  show.legend = NA,
+  inherit.aes = TRUE,
+  arrow. = arrow(length = unit(0.2, "cm")),
+  ...
+)
 }
 \arguments{
 \item{mapping}{list of aesthetic mappings to use for plot. \strong{Note
@@ -29,12 +36,12 @@ display.}
 \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
-the default plot specification, e.g. \code{\link[=borders]{borders()}}.}
+the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{arrow.}{specification for arrow heads, as created by
 function \code{\link[grid:arrow]{arrow}} of package \code{\link[grid:grid-package]{grid}}.}
 
-\item{...}{Other arguments passed on to \code{\link[=layer]{layer()}}. These are
+\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
@@ -53,7 +60,8 @@ gg3logit() + stat_3logit(data = field0)
 
 }
 \seealso{
-Other `gg` functions: \code{\link{gg3logit}},
-  \code{\link{multifield3logit}}
+Other \code{gg} functions: 
+\code{\link{gg3logit}()},
+\code{\link{multifield3logit}()}
 }
-\concept{`gg` functions}
+\concept{\code{gg} functions}

@@ -4,7 +4,8 @@
 \name{cross_1year}
 \alias{cross_1year}
 \title{Master's students' employment condition}
-\format{\code{data.frame} with 3282 observations of 7 variables:
+\format{
+\code{data.frame} with 3282 observations of 7 variables:
 \itemize{
 \item \code{employment_sit} - employment situation, a
 \code{factor} with three levels: \emph{Employed}, \emph{Unemployed}, \emph{Trainee}.
@@ -20,7 +21,8 @@
 a \code{factor} with three levels: \emph{Low}, \emph{Average}, \emph{High}.
 \item \code{hsscore} - high school final score, a \code{numeric} between 60 and
 100.
-}}
+}
+}
 \description{
 \code{data.frame} with 3282 cross-sectional observations of 7 variables about
 employment condition of master's students one year after graduation. Data

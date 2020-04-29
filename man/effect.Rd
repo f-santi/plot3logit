@@ -11,9 +11,9 @@ effect(x, y, ..., length = 0.05)
 the probability distribution is unchanged, \code{x} and \code{y} should
 have length one.}
 
-\item{...}{\link{graphical parameters} such as \code{xpd} and the line
+\item{...}{\link[graphics]{graphical parameters} such as \code{xpd} and the line
     characteristics \code{lend}, \code{ljoin} and \code{lmitre}:
-    see \code{\link{par}}.}
+    see \code{\link[graphics]{par}}.}
 
 \item{length}{length of the edges of the arrow head (in inches).}
 }

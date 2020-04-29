@@ -1,4 +1,5 @@
 inst/doc
+man/
 .DS_Store
 .Rapp.history
 .Rproj.user

@@ -78,7 +78,8 @@ gg3logit(mfields) +
 \seealso{
 \code{\link{field3logit}}.
 
-Other `gg` functions: \code{\link{gg3logit}},
-  \code{\link{stat_3logit}}
+Other \code{gg} functions: 
+\code{\link{gg3logit}()},
+\code{\link{stat_3logit}()}
 }
-\concept{`gg` functions}
+\concept{\code{gg} functions}

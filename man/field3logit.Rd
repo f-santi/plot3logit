@@ -9,11 +9,28 @@
 \alias{fortify.field3logit}
 \title{Computation of the vector field}
 \usage{
-field3logit(model, delta, label = "<empty>", p0 = NULL, alpha = NULL,
-  ncurves = 8, narrows = Inf, edge = 0.01)
+field3logit(
+  model,
+  delta,
+  label = "<empty>",
+  p0 = NULL,
+  alpha = NULL,
+  ncurves = 8,
+  narrows = Inf,
+  edge = 0.01
+)
 
-plot3logit(model, delta, label = "<empty>", p0 = NULL, alpha = NULL,
-  ncurves = 8, narrows = Inf, edge = 0.01, ...)
+plot3logit(
+  model,
+  delta,
+  label = "<empty>",
+  p0 = NULL,
+  alpha = NULL,
+  ncurves = 8,
+  narrows = Inf,
+  edge = 0.01,
+  ...
+)
 
 \method{print}{field3logit}(x, ...)
 
