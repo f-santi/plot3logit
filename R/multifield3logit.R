@@ -134,13 +134,6 @@ plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   
   lapply(1:length(x), function(j) {
   	plot(x[[j]], add = (j > 1) + (j == 1) * add, col = col[j], ...)
-  	#if (labels) {
-  	#  x[[j]] %>%
-  	#    fortify %>%
-  	#    select(ends_with('_end')) %>%
-  	#    as.matrix %>%
-  	#    TernaryText(labels = names(x)[j], cex = 0.8, col = col[j], font = 2)
-  	#}
   }) -> out
   
   if (legend) { legend('topright', legend = names(x), col = col, lwd = 2) }
