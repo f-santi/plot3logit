@@ -13,6 +13,7 @@
 #' @param ... other arguments passed to or from other methods.
 #' @param maxitems maximum number of items to be enumerated when an object of
 #'   class `multifield3logit` is printed.
+#' @param col,legend graphical parameters if `Ternary` package is used.
 #'
 #' @return
 #' `S3` object of class `multifield3logit` structured as a named `list`.
@@ -117,6 +118,34 @@ fortify.multifield3logit <- function(model, data, ...) {
   lapply(model, fortify) %>%
     Reduce(rbind, .) %>%
     return
+}
+
+
+#' @rdname multifield3logit
+#' @export
+plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
+  legend = TRUE, ...) {
+  	
+  x %<>% add(y)
+  
+  if (is.null(col)) { col <- 'black' }
+  if (is.na(col)) { col <- 1:length(x) }
+  if (length(col) == 1) { col %<>% rep(length(x)) }
+  
+  lapply(1:length(x), function(j) {
+  	plot(x[[j]], add = (j > 1) + (j == 1) * add, col = col[j], ...)
+  	#if (labels) {
+  	#  x[[j]] %>%
+  	#    fortify %>%
+  	#    select(ends_with('_end')) %>%
+  	#    as.matrix %>%
+  	#    TernaryText(labels = names(x)[j], cex = 0.8, col = col[j], font = 2)
+  	#}
+  }) -> out
+  
+  if (legend) { legend('topright', legend = names(x), col = col, lwd = 2) }
+  
+  invisible(out)
 }
 
 
