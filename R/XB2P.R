@@ -7,7 +7,8 @@
 #' Functions `X2P_cat3logit` and `X2P_ord3logit` perform the same computation,
 #' except that the design matrix \eqn{X\in\textbf{R}^{n\times k}} and
 #' the coefficient matrix \eqn{B\in\textbf{R}^{k\times 2}} are taken as
-#' separate input arguments.
+#' separate input arguments. `XB2P` and `X2P` apply the proper function
+#' according to the type of model passed to argument `model`.
 #'
 #' @inheritParams P2XB
 #' @param XB object of class `matrix` (or other coercible classes) such that
@@ -27,7 +28,27 @@
 #' @seealso [`P2XB`].
 #'
 #' @name XB2P
-NULL
+XB2P <- function(XB, model) {
+  if (model$ordinal) {
+  	out <- XB2P_ord3logit(XB)
+  } else {
+  	out <- XB2P_cat3logit(XB)
+  }
+  return(out)
+}
+
+
+
+#' @rdname XB2P
+#' @keywords internal
+X2P <- function(X, B, model) {
+  if (model$ordinal) {
+  	out <- X2P_ord3logit(X, B)
+  } else {
+  	out <- X2P_cat3logit(X, B)
+  }
+  return(out)
+}
 
 
 

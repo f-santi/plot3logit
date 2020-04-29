@@ -11,6 +11,7 @@
 #' @param alpha `numeric` vector of length two where constants \eqn{\alpha^{(1)}}
 #'   and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
 #'   defined in Equation (7) of Santi, Dickson and Espa (2019).
+#' @param model object of class `field3logit`.
 #'
 #' @return
 #' Numeric matrix \eqn{\textbf{R}^{n\times 2}} of linear predictors.
@@ -23,7 +24,14 @@
 #' @seealso [`XB2P`].
 #'
 #' @name P2XB
-NULL
+P2XB <- function(P, model) {
+  if (model$ordinal) {
+  	out <- P2XB_ord3logit(P)
+  } else {
+  	out <- P2XB_cat3logit(P)
+  }
+  return(out)
+}
 
 
 
