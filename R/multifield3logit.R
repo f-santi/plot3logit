@@ -57,6 +57,8 @@
 #'
 #' @export
 multifield3logit <- function(x, ...) {
+  if (is.null(x)) { return(NULL) }
+  
   depo <- inherits(x, c('field3logit','multifield3logit'), which = TRUE)
   if (all(depo == 0)) {
   	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
