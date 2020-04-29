@@ -154,7 +154,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
     vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
     effects = out, label = label, vcovB = modB$vcovB,
-    ordinal = modB$ordinal, confr = NA
+    ordinal = modB$ordinal, conf = NA
   )
   class(out) <- 'field3logit'
   out
@@ -188,7 +188,7 @@ print.field3logit <- function(x, ...) {
  
   type  <- ifelse(x$ordinal, 'ordinal', 'categorical')
   vcovB <- ifelse(is.null(x$vcovB), 'not available', 'available')
-  confr <- ifelse(is.na(x$confr), 'not available', paste0(100 * x$confr, '%'))
+  conf  <- ifelse(is.na(x$conf), 'not available', paste0(100 * x$conf, '%'))
   
   cat(' Object of class "field3logit"\n')
   cat('-------------------------------\n')
@@ -205,7 +205,7 @@ print.field3logit <- function(x, ...) {
   cat('Number of curves         :', length(x$effects), '\n')
   cat('Number of arrows         :', na, '\n')
   cat('Covariance matrix        :', vcovB, '\n')
-  cat('Confidence regions       :', confr, '\n')
+  cat('Confidence regions       :', conf, '\n')
 
   invisible(x)
 }

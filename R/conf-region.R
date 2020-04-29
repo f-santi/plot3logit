@@ -100,7 +100,7 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
     }))
   
   # Update other object attributes
-  x$confr <- conf
+  x$conf <- conf
   
   # Return the updated object
   return(x)
