@@ -128,6 +128,7 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
 #' field0 <- field3logit(mod0, 'genderFemale')
+#' field0
 #' add_confregions(field0)
 #'
 #' @export
