@@ -37,8 +37,16 @@ vcovB2vcovDeltaB <- function(vcovB, vdelta) {
 #'
 #' @examples
 #' Ternary::TernaryPlot()
-#' depo <- plot3logit:::confregion(1:2, 0.3 * diag(2:1))
-#' Ternary::TernaryPoints(depo)
+#' Ternary::TernaryPolygon(
+#'   coordinates = plot3logit:::confregion(1:2, 0.3 * diag(2:1)),
+#'   col = grDevices::rgb(0, 0, 0.5, 0.2),
+#'   border = NA
+#' )
+#' Ternary::TernaryPolygon(
+#'   coordinates = plot3logit:::confregion(1:2, 0.1 * diag(2:1)),
+#'   col = grDevices::rgb(0, 0, 0.5, 0.2),
+#'   border = NA
+#' )
 #'
 #' @keywords internal
 confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
