@@ -154,7 +154,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
     vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
     effects = out, label = label, vcovB = modB$vcovB,
-    ordinal = modB$ordinal)
+    ordinal = modB$ordinal, confr = FALSE)
   class(out) <- 'field3logit'
   out
 }
@@ -184,13 +184,16 @@ print.field3logit <- function(x, ...) {
     lapply(length) %>%
     unlist %>%
     sum -> na
-  
+ 
+  type  <- ifelse(x$ordinal, 'ordinal', 'categorical')
   vcovB <- ifelse(is.null(x$vcovB), 'not available', 'available')
+  confr <- ifelse(x$confr, 'available', 'not available')
   
   cat(' Object of class "field3logit"\n')
   cat('-------------------------------\n')
   cat('Label                    :', x$label, '\n')
   cat('Possible outcomes        :', paste(x$lab, collapse = '; '), '\n')
+  cat('Type of model            :', type, '\n')
   cat('Effect                   :', x$delta, '\n')
   
   if (!is.numeric(x$delta)) {
@@ -198,10 +201,10 @@ print.field3logit <- function(x, ...) {
   }
   
   cat('Model has been read from :', x$readfrom, '\n')
-  cat('Type of model            :', ifelse(x$ordinal, 'ordinal', 'categorical'), '\n')
   cat('Number of curves         :', length(x$effects), '\n')
   cat('Number of arrows         :', na, '\n')
   cat('Covariance matrix        :', vcovB, '\n')
+  cat('Confidence regions       :', confr, '\n')
 
   invisible(x)
 }
