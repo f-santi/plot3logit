@@ -129,6 +129,7 @@ read_from_mlogit <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_mlogit_until1031 <- function(model, ...) {
+  # Read the matrix of coefficients
   model %>%
     stats::coef() %>%
     as.matrix %>%
@@ -141,6 +142,7 @@ read_from_mlogit_until1031 <- function(model, ...) {
     spread('lev', 'coef') %>%
     tbl2matrix('variable') -> depoB
     
+  # Prepare the output
   list(
     B = depoB,
   	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
@@ -157,18 +159,20 @@ read_from_mlogit_until1031 <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_mlogit_after1031 <- function(model, ...) {
+  # Read the matrix of coefficients
   model %>%
     stats::coef() %>%
     as.matrix %>%
     set_colnames('coef') %>%
     as_tibble(rownames = 'name') %>%
     mutate(name = strsplit(name, ':')) %>%
-    mutate(lev = purrr::map_chr(.$name, `[`(1))) %>%
-    mutate(variable = purrr::map_chr(.$name, `[`(2))) %>%
+    mutate(lev = purrr::map_chr(.$name, `[`(2))) %>%
+    mutate(variable = purrr::map_chr(.$name, `[`(1))) %>%
     select(-'name') %>%
     spread('lev', 'coef') %>%
     tbl2matrix('variable') -> depoB
-  
+
+  # Prepare the output  
   list(
     B = depoB,
   	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,

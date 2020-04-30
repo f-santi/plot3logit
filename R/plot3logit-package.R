@@ -102,7 +102,7 @@
 #' @importFrom ggplot2 fortify unit arrow
 #' @importFrom graphics points arrows
 #' @importFrom stats uniroot
-#' @importFrom tibble tibble
+#' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr spread
 #' @importFrom utils modifyList tail
 #'
