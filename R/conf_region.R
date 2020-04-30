@@ -84,6 +84,13 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
 #'
 #' @keywords internal
 add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
+  # Check the input
+  if (x$ordinal) {
+  	warning('Confidence regions are not available for ordinal models.')
+  	x$conf <- NA
+  	return(x)
+  }
+  
   # Compute the covariance matrix of the ellipse
   SigMa <- vcovB2vcovDeltaB(x$vcovB, x$vdelta)
   
