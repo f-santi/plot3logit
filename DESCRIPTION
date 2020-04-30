@@ -21,8 +21,8 @@ Description: An implementation of the ternary plot for interpreting regression
     drawn using either 'ggtern' package (based on 'ggplot2') or 'Ternary'
     package (based on standard graphics).
 Depends: R (>= 3.1), ggtern (>= 3.3.0), Ternary (>= 1.0.1)
-Imports: ellipse, ggplot2 (>= 3.3.0), graphics, grDevices, magrittr (>= 1.5),
-    reshape2 (>= 1.4.3), stats, utils
+Imports: dplyr, ellipse, ggplot2 (>= 3.3.0), graphics, grDevices,
+  magrittr (>= 1.5), purrr, stats, tibble, tidyr, utils
 Suggests: MASS (>= 7.3-51), mlogit, nnet, knitr, rmarkdown
 License: GPL (>=2)
 LazyData: true

@@ -116,9 +116,9 @@ read_from_polr <- function(model, ...) {
 read_from_mlogit <- function(model, ...) {
   if(utils::packageVersion('mlogit') <= '1.0.3.1') {
   	warning('A new version of "mlogit" is available')
-  	out <- read_from_mlogit_ante1031(model, ...)
+  	out <- read_from_mlogit_until1031(model, ...)
   } else {
-  	out <- read_from_mlogit_post1031(model, ...)
+  	out <- read_from_mlogit_after1031(model, ...)
   }
   
   return(out)
@@ -128,24 +128,16 @@ read_from_mlogit <- function(model, ...) {
 
 #' @rdname read_model
 #' @keywords internal
-read_from_mlogit_ante1031 <- function(model, ...) {
-  depoB <- stats::coef(model)
-  
-  depoB %<>%
-    names %>%
-    strsplit(':') %>%
-    Reduce(rbind, .) %>%
-    as.data.frame %>%
-    set_colnames(c('lev', 'variable')) %>%
-    cbind(depoB) %>%
-    reshape2::dcast(variable ~ lev, value.var = 'depoB', fill = NA)
+read_from_mlogit_until1031 <- function(model, ...) {
+  model %>%
+    stats::coef() %>%
+    { tibble(name = strsplit(names(.), ':'), coef = .) } %>%
+    mutate(lev = purrr::map_chr(.$name, `[`(1))) %>%
+    mutate(variable = purrr::map_chr(.$name, `[`(2))) %>%
+    select(-'name') %>%
+    spread('lev', 'coef') %>%
+    tbl2matrix('variable') -> depoB
 
-  depoB %<>%
-    { as.matrix(.[ , -1]) } %>%
-    set_rownames(depoB$variable)
-  
-  #depoP <- matrix()
-  
   list(
     B = depoB,
   	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
@@ -161,23 +153,15 @@ read_from_mlogit_ante1031 <- function(model, ...) {
 
 #' @rdname read_model
 #' @keywords internal
-read_from_mlogit_post1031 <- function(model, ...) {
-  depoB <- stats::coef(model)
-  
-  depoB %<>%
-    names %>%
-    strsplit(':') %>%
-    Reduce(rbind, .) %>%
-    as.data.frame %>%
-    set_colnames(c('variable', 'lev')) %>%
-    cbind(depoB) %>%
-    reshape2::dcast(variable ~ lev, value.var = 'depoB', fill = NA)
-
-  depoB %<>%
-    { as.matrix(.[ , -1]) } %>%
-    set_rownames(depoB$variable)
-  
-  #depoP <- matrix()
+read_from_mlogit_after1031 <- function(model, ...) {
+  model %>%
+    stats::coef() %>%
+    { tibble(name = strsplit(names(.), ':'), coef = .) } %>%
+    mutate(lev = purrr::map_chr(.$name, `[`(1))) %>%
+    mutate(variable = purrr::map_chr(.$name, `[`(2))) %>%
+    select(-'name') %>%
+    spread('lev', 'coef') %>%
+    tbl2matrix('variable') -> depoB
   
   list(
     B = depoB,

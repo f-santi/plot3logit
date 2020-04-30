@@ -98,9 +98,12 @@
 #'
 #' @import magrittr Ternary ggtern
 #'
+#' @importFrom dplyr mutate pull select
 #' @importFrom ggplot2 fortify unit arrow
 #' @importFrom graphics points arrows
 #' @importFrom stats uniroot
+#' @importFrom tibble tibble
+#' @importFrom tidyr spread
 #' @importFrom utils modifyList tail
 #'
 NULL
