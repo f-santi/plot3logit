@@ -115,7 +115,7 @@ read_from_polr <- function(model, ...) {
 #' @keywords internal
 read_from_mlogit <- function(model, ...) {
   if(utils::packageVersion('mlogit') <= '1.0.3.1') {
-  	warning('A new version of "mlogit" is available')
+  	message('A new version of "mlogit" is available')
   	out <- read_from_mlogit_until1031(model, ...)
   } else {
   	out <- read_from_mlogit_after1031(model, ...)
@@ -131,13 +131,16 @@ read_from_mlogit <- function(model, ...) {
 read_from_mlogit_until1031 <- function(model, ...) {
   model %>%
     stats::coef() %>%
-    { tibble(name = strsplit(names(.), ':'), coef = .) } %>%
+    as.matrix %>%
+    set_colnames('coef') %>%
+    as_tibble(rownames = 'name') %>%
+    mutate(name = strsplit(name, ':')) %>%
     mutate(lev = purrr::map_chr(.$name, `[`(1))) %>%
     mutate(variable = purrr::map_chr(.$name, `[`(2))) %>%
     select(-'name') %>%
     spread('lev', 'coef') %>%
     tbl2matrix('variable') -> depoB
-
+    
   list(
     B = depoB,
   	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
@@ -156,7 +159,10 @@ read_from_mlogit_until1031 <- function(model, ...) {
 read_from_mlogit_after1031 <- function(model, ...) {
   model %>%
     stats::coef() %>%
-    { tibble(name = strsplit(names(.), ':'), coef = .) } %>%
+    as.matrix %>%
+    set_colnames('coef') %>%
+    as_tibble(rownames = 'name') %>%
+    mutate(name = strsplit(name, ':')) %>%
     mutate(lev = purrr::map_chr(.$name, `[`(1))) %>%
     mutate(variable = purrr::map_chr(.$name, `[`(2))) %>%
     select(-'name') %>%
