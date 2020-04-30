@@ -117,9 +117,16 @@ read_from_mlogit <- function(model, ...) {
   # Check the version of "mlogit"
   if(utils::packageVersion('mlogit') <= '1.0.3.1') {
   	message('A new version of "mlogit" is available')
-  	depoV <- c('lev', 'variable')
+  	depoN <- c('lev', 'variable')
+  	
+  	depo <- length(stats::coef(model))
+  	indxP <- c(
+  	  seq(from = 1, to = depo, by = 2),
+  	  seq(from = 2, to = depo, by = 2)
+  	)
   } else {
-  	depoV <- c('variable', 'lev')
+  	depoN <- c('variable', 'lev')
+  	indxP <- seq_along(stats::coef(model))
   }
   
   # Read the matrix of coefficients
@@ -128,20 +135,23 @@ read_from_mlogit <- function(model, ...) {
     as.matrix %>%
     set_colnames('coef') %>%
     as_tibble(rownames = 'name') %>%
-    tidyr:::separate(name, depoV, ':') %>%
-    tidyr:::spread('lev', 'coef') %>%
+    tidyr::separate('name', depoN, ':') %>%
+    tidyr::pivot_wider(
+      id_cols = 'variable',
+      names_from = 'lev',
+      values_from = 'coef'
+    ) %>%
     tbl2matrix('variable') -> depoB
   
   # Read the covariance matrix of coefficients
   model %>%
     stats::vcov() %>%
-    as_tibble(rownames = 'idrow') %>%
-    tidyr:::gather('idcol', 'value', -'idrow') -> void
+    extract(indxP, indxP) -> depoV
    
   # Prepare the output
   list(
     B = depoB,
-  	vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
+  	vcovB = depoV,
     alpha = NULL,
     model = 'logit',
     ordinal = FALSE,
