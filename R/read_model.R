@@ -100,7 +100,7 @@ read_from_multinom <- function(model, ...) {
 read_from_polr <- function(model, ...) {
   list(
   	B = as.matrix(stats::coef(model)),
-  	# vcovB = NULL,
+  	vcovB = NULL,
   	alpha = cumsum(model$zeta),
   	model = ifelse(model$method == 'logistic', 'logit', model$method),
   	ordinal = TRUE,
@@ -114,68 +114,34 @@ read_from_polr <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_mlogit <- function(model, ...) {
+  # Check the version of "mlogit"
   if(utils::packageVersion('mlogit') <= '1.0.3.1') {
   	message('A new version of "mlogit" is available')
-  	out <- read_from_mlogit_until1031(model, ...)
+  	depoV <- c('lev', 'variable')
   } else {
-  	out <- read_from_mlogit_after1031(model, ...)
+  	depoV <- c('variable', 'lev')
   }
   
-  return(out)
-}
-
-
-
-#' @rdname read_model
-#' @keywords internal
-read_from_mlogit_until1031 <- function(model, ...) {
   # Read the matrix of coefficients
   model %>%
     stats::coef() %>%
     as.matrix %>%
     set_colnames('coef') %>%
     as_tibble(rownames = 'name') %>%
-    mutate(name = strsplit(name, ':')) %>%
-    mutate(lev = purrr::map_chr(.$name, `[`(1))) %>%
-    mutate(variable = purrr::map_chr(.$name, `[`(2))) %>%
-    select(-'name') %>%
-    spread('lev', 'coef') %>%
+    tidyr:::separate(name, depoV, ':') %>%
+    tidyr:::spread('lev', 'coef') %>%
     tbl2matrix('variable') -> depoB
-    
+  
+  # Read the covariance matrix of coefficients
+  model %>%
+    stats::vcov() %>%
+    as_tibble(rownames = 'idrow') %>%
+    tidyr:::gather('idcol', 'value', -'idrow') -> void
+   
   # Prepare the output
   list(
     B = depoB,
-  	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
-    alpha = NULL,
-    model = 'logit',
-    ordinal = FALSE,
-    readfrom = 'mlogit::mlogit',
-    lab = names(model$freq)
-  )
-}
-
-
-
-#' @rdname read_model
-#' @keywords internal
-read_from_mlogit_after1031 <- function(model, ...) {
-  # Read the matrix of coefficients
-  model %>%
-    stats::coef() %>%
-    as.matrix %>%
-    set_colnames('coef') %>%
-    as_tibble(rownames = 'name') %>%
-    mutate(name = strsplit(name, ':')) %>%
-    mutate(lev = purrr::map_chr(.$name, `[`(2))) %>%
-    mutate(variable = purrr::map_chr(.$name, `[`(1))) %>%
-    select(-'name') %>%
-    spread('lev', 'coef') %>%
-    tbl2matrix('variable') -> depoB
-
-  # Prepare the output  
-  list(
-    B = depoB,
-  	# vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
+  	vcovB = NULL, #depoP %*% stats::vcov(model) %*% depoP,
     alpha = NULL,
     model = 'logit',
     ordinal = FALSE,
