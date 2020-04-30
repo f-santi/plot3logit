@@ -44,3 +44,32 @@ versor<- function(k, n, simplify = TRUE) {
   out
 }
 
+
+
+#' Convert a tibble to a matrix
+#'
+#' Given an `n`-dimensional space, the `k`-th versor is returned.
+#'
+#' @param n dimension of the space.
+#' @param k order of the versor.
+#' @param simplify if `TRUE`, a `numeric` is returned, otherwise
+#'   `versor` returns a column matrix.
+#'
+#' @examples
+#' plot3logit:::versor(1, 3)
+#' plot3logit:::versor(3, 6)
+#' plot3logit:::versor(3, 6, FALSE)
+#'
+#' @keywords internal
+tbl2matrix <- function(x, .rownames = NULL) {
+  if (!is.null(.rownames)) {
+  	x %>% pull(.rownames) -> depo
+  	x %<>% select(-!!(.rownames))
+  } else { depo <- NULL }
+  
+  x %>%
+    as.matrix %>%
+    set_rownames(depo) %>%
+    return
+}
+
