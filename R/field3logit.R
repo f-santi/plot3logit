@@ -273,18 +273,18 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE, conf = TRUE) {
       reduce(bind_rows) %>%
       separate(name, c('curve', 'arrow'), 'A') %>%
       mutate(arrow = paste0('A', arrow)) %>%
-      pivot_longer(c('from', 'to'), names_to = 'role', values_to = 'value') %>%
-      pivot_wider(names_from = 'comp', values_from = 'value')
+      pivot_longer(c('from', 'to'), names_to = 'role', values_to = 'value')
   }
   
   if (wide) {
     x %<>%
-      mutate(role = ifelse(role == 'from', '', '_end')) %>%
+      mutate(comp = paste0(comp, ifelse(role == 'from', '', '_end'))) %>%
+      arrange(.$role) %>%
+      select(-'role') %>%
       pivot_wider(
-        names_from = 'role',
-        values_from = c('Employed', 'Unemployed', 'Trainee'),
-        names_sep = ''
-      ) %>%
+        names_from = 'comp',
+        values_from = 'value'
+      )
   }
   
   return(x)
