@@ -243,7 +243,7 @@ plot.field3logit <- function(x, ..., add = FALSE, length = 0.05) {
 
 #' @rdname field3logit
 #' @export
-as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
+as.data.frame.field3logit <- function(x, ..., wide = TRUE, conf = TRUE) {
 
   depoLab <- list(label = x$label, lab = x$lab)
   
@@ -262,29 +262,29 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
     x %<>% extract(rep(1:nrow(x), each = 2), )
     x$role <- rep(c('from', 'to'), nrow(x) / 2)
   } else {
-    x %>%
-      names %>%
-      strsplit('A') %>%
-      Reduce(rbind, ., NULL) %>%
-      as.data.frame %>%
-      { .[rep(1 : nrow(.), each = 2), ] } %>%
-      cbind(depoLab$label, .) %>%
-      set_colnames(c('label', 'curve', 'arrow')) %>%
-      set_rownames(NULL) -> depo
-  
-    levels(depo$arrow) %<>% paste0('A', .)
-
-    x %<>%
-      Reduce(function(x, y) { rbind(x, y$from, y$to) }, . , NULL) %>%
-      data.frame %>%
-      set_colnames(depoLab$lab) %>%
-      cbind(depo, role = rep(c('from', 'to'), nrow(depo) / 2), .)
+  	x %<>%
+      imap(~ tibble(
+        label = depoLab$label,
+        name = .y,
+        comp = depoLab$lab,
+        from = .x$from,
+        to = .x$to
+      )) %>%
+      reduce(bind_rows) %>%
+      separate(name, c('curve', 'arrow'), 'A') %>%
+      mutate(arrow = paste0('A', arrow)) %>%
+      pivot_longer(c('from', 'to'), names_to = 'role', values_to = 'value') %>%
+      pivot_wider(names_from = 'comp', values_from = 'value')
   }
   
   if (wide) {
-    merge(x[x$role == 'from', -4], x[x$role == 'to', -4],
-  	  by = c('label', 'curve', 'arrow'), suffixes = c('', '_end')
-  	) -> x
+    x %<>%
+      mutate(role = ifelse(role == 'from', '', '_end')) %>%
+      pivot_wider(
+        names_from = 'role',
+        values_from = c('Employed', 'Unemployed', 'Trainee'),
+        names_sep = ''
+      ) %>%
   }
   
   return(x)

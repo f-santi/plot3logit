@@ -136,7 +136,7 @@ read_from_mlogit <- function(model, ...) {
     set_colnames('coef') %>%
     as_tibble(rownames = 'name') %>%
     tidyr::separate('name', depoN, ':') %>%
-    tidyr::pivot_wider(
+    pivot_wider(
       id_cols = 'variable',
       names_from = 'lev',
       values_from = 'coef'

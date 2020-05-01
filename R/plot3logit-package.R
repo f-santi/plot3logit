@@ -103,6 +103,7 @@
 #' @importFrom graphics points arrows
 #' @importFrom stats uniroot
 #' @importFrom tibble as_tibble tibble
+#' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom utils modifyList tail
 #'
 NULL
