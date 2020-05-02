@@ -1,4 +1,15 @@
 
+prepare_arrow <- function(comp, from, to) {
+  tibble(comp = comp, from = from, to = to) %>%
+    pivot_longer(cols = c('from', 'to'), names_to = 'role') %>%
+    dplyr::arrange(role) %>%
+    mutate(comp = paste0(comp, ifelse(role == 'from', '', '_to'))) %>%
+    select(-role) %>%
+    pivot_wider(names_from = 'comp')
+}
+
+
+
 #' `field3logit` simplification function and test
 #'
 #' Given an object of class `field3logit`, `simplify_field3logit` returns
@@ -243,8 +254,7 @@ plot.field3logit <- function(x, ..., add = FALSE, length = 0.05) {
 
 #' @rdname field3logit
 #' @export
-as.data.frame.field3logit <- function(x, ..., wide = TRUE, conf = TRUE) {
-
+as.data.frame.field3logit <- function(x, ...) {
   depoLab <- list(label = x$label, lab = x$lab)
   
   x %<>%
@@ -263,28 +273,13 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE, conf = TRUE) {
     x$role <- rep(c('from', 'to'), nrow(x) / 2)
   } else {
   	x %<>%
-      imap(~ tibble(
+      purrr::imap(~ tibble(
         label = depoLab$label,
-        name = .y,
-        comp = depoLab$lab,
-        from = .x$from,
-        to = .x$to
+        idarrow = .y,
+        arrow = list(prepare_arrow(depoLab$lab, .x$from, .x$to)),
+        region = list(as_tibble(.x$confregion))
       )) %>%
-      reduce(bind_rows) %>%
-      separate(name, c('curve', 'arrow'), 'A') %>%
-      mutate(arrow = paste0('A', arrow)) %>%
-      pivot_longer(c('from', 'to'), names_to = 'role', values_to = 'value')
-  }
-  
-  if (wide) {
-    x %<>%
-      mutate(comp = paste0(comp, ifelse(role == 'from', '', '_end'))) %>%
-      arrange(.$role) %>%
-      select(-'role') %>%
-      pivot_wider(
-        names_from = 'comp',
-        values_from = 'value'
-      )
+      reduce(bind_rows)
   }
   
   return(x)
