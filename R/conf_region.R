@@ -98,7 +98,8 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
   x$effects %<>%
     lapply(function(w) lapply(w, function(y) {
     	  P2XB(y$to, x) %>%
-        confregion(SigMa) -> y$confregion
+        confregion(SigMa) %>%
+        set_colnames(x$lab) -> y$confregion
         
       return(y)
     }))
