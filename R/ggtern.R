@@ -17,6 +17,8 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 
 
 
+
+
 #' Create a new gg3logit
 #'
 #' `gg3logit` initializes a [`ggplot`][ggplot2::ggplot] object through
@@ -100,22 +102,6 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
 #'
 #' @export
-stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
-  position = 'identity', show.legend = NA, inherit.aes = TRUE,
-  arrow. = arrow(length = unit(0.2, 'cm')), ...) {
-
-  .Deprecated('stat_field3logit')
-  
-  stat_field3logit(
-    mapping = mapping, data = data, geom = geom, position = position,
-    show.legend = show.legend, inherit.aes = inherit.aes, arrow. = arrow., ...
-  )
-}
-
-
-
-#' @rdname stat_3logit
-#' @export
 stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   position = 'identity', show.legend = NA, inherit.aes = TRUE,
   arrow. = arrow(length = unit(0.2, 'cm')), ...) {
@@ -160,7 +146,33 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 
 
 
-#' @rdname stat_3logit
+
+
+#' Add a field to a `gg3logit` plot
+#'
+#' `stat_3logit` add a field to a [`gg3logit`] plot.
+#'
+#' @inheritParams ggplot2::geom_segment
+#' @inheritParams ggplot2::stat_identity
+#' @inheritParams gg3logit
+#' @param data a `field3logit` or a `multifield3logit` object.
+#' @param mapping list of aesthetic mappings to use for plot. **Note
+#'   that** mappings `x`, `y` and `z` are **not** required: they will be
+#'   overwritten if specified (see examples).
+#' @param arrow. specification for arrow heads, as created by
+#'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
+#'
+#' @family `gg` functions
+#'
+#' @examples
+#' data(cross_1year)
+#'
+#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
+#' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
+#'
+#' gg3logit(field0) + stat_field3logit()
+#' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
+#'
 #' @export
 stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   position = 'identity', show.legend = NA, inherit.aes = TRUE, ...) {
@@ -198,5 +210,101 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
     inherit.aes = inherit.aes, params = params
   )
 }
+
+
+
+
+
+#' Add a field to a `gg3logit` plot
+#'
+#' `stat_3logit` add a field to a [`gg3logit`] plot.
+#'
+#' @inheritParams ggplot2::geom_segment
+#' @inheritParams ggplot2::stat_identity
+#' @inheritParams gg3logit
+#' @param data a `field3logit` or a `multifield3logit` object.
+#' @param mapping list of aesthetic mappings to use for plot. **Note
+#'   that** mappings `x`, `y` and `z` are **not** required: they will be
+#'   overwritten if specified (see examples).
+#' @param arrow. specification for arrow heads, as created by
+#'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
+#'
+#' @family `gg` functions
+#'
+#' @examples
+#' data(cross_1year)
+#'
+#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
+#' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
+#'
+#' gg3logit(field0) + stat_field3logit()
+#' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
+#'
+#' @export
+stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(), data = NULL,
+  params_field = list(), params_conf = list(),
+  show.legend = NA, inherit.aes = TRUE, conf = TRUE) {
+
+  list(
+    mapping = mapping_field, data = data,
+    show.legend = show.legend, inherit.aes = inherit.aes
+  ) %>%
+    modifyList(params_field) %>%
+    do.call('stat_field3logit', .) -> depofield
+  
+  list(
+    mapping = mapping_conf, data = data,
+    show.legend = show.legend, inherit.aes = inherit.aes
+  ) %>%
+    modifyList(params_conf) %>%
+    do.call('stat_conf3logit', .) -> depoconf
+    
+  return(list(depofield, depoconf))
+}
+
+
+
+
+
+#' Create a new gg3logit
+#'
+#' `gg3logit` initializes a [`ggplot`][ggplot2::ggplot] object through
+#' [`ggtern`][ggtern::ggtern]. If a fortified `field3logit` or a
+#' `multifield3logit` object is passed as argument `data` to `gg3logit`,
+#' the labels of the ternary plot are automatically. The same happens if a
+#' `field3logit` or a `multifield3logit` object is passed; in that case,
+#' `gg3logit` preliminarly invoke the `fortify` method.
+#'
+#' @param x a `field3logit` or a `multifield3logit` object. If not
+#'   specified, must be supplied in each layer added to the plot.
+#' @param conf whether...
+#'
+#' @family `gg` functions
+#'
+#' @examples
+#' data(cross_1year)
+#'
+#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
+#' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
+#'
+#' autoplot(field0)
+#'
+#' @export
+autoplot <- function(x, mapping_field = aes(), mapping_conf = aes(),
+  data = NULL, params_field = list(), params_conf = list(),
+  show.legend = NA, conf = TRUE) {
+  
+  if (!inherits(x, 'field3logit')) {
+  	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
+  }
+  
+  gg3logit(x) +
+    stat_3logit(
+      mapping_field = mapping_field, mapping_conf = mapping_conf,
+      params_field = params_field, params_conf = params_conf,
+      show.legend = show.legend, conf = conf
+    )
+}
+
 
 
