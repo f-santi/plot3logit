@@ -50,7 +50,7 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
   if (!is.null(data)) {
     if (inherits(data, 'field3logit')) {
     	  data %<>% fortify
-      #data %<>% unnest(cols = 'arrow')
+      
       mapping %<>%
         modifyList(ggplot2::aes_(
           x     = as.symbol(colnames(data)[4]),
@@ -97,7 +97,6 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' field0 <- field3logit(mod0, 'genderFemale')
 #'
 #' gg3logit(field0) + stat_3logit()
-#' gg3logit() + stat_3logit(data = field0)
 #'
 #' @export
 stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
@@ -109,7 +108,7 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   if (!is.null(data)) {
     if (inherits(data, 'field3logit')) {
       data %<>% fortify
-      #data %<>% unnest(cols = 'arrow')
+      
       mapping %<>%
         modifyList(ggplot2::aes_(
           x     = as.symbol(colnames(data)[4]),
@@ -119,14 +118,14 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
           yend  = as.symbol(colnames(data)[8]),
           zend  = as.symbol(colnames(data)[9]),
           group = as.symbol('idarrow'),
-          obj   = as.symbol('obj') 
+          obj   = as.symbol('obj')
         ))
     }
   } else {
   	mapping %<>% utils::modifyList(list(
   	  x = NULL, y = NULL, z = NULL,
   	  xend = NULL, yend = NULL, zend = NULL,
-  	  group = NULL
+  	  group = NULL, obj = NULL
   	))
   }
 
@@ -175,7 +174,7 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   position = 'identity', show.legend = NA, inherit.aes = TRUE, ...) {
 
-  list(fill = 'blue', alpha = 0.15) %>%
+  list(fill = 'blue', alpha = 0.2) %>%
     modifyList(list(...)) -> params
     
   if (!is.null(data)) {
@@ -183,26 +182,22 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   	data %<>% unnest(cols = 'arrow')
     mapping %<>%
       modifyList(ggplot2::aes_(
-        x     = as.symbol(colnames(data)[3]),
-        y     = as.symbol(colnames(data)[4]),
-        z     = as.symbol(colnames(data)[5]),
-        xend  = as.symbol(colnames(data)[6]),
-        yend  = as.symbol(colnames(data)[7]),
-        zend  = as.symbol(colnames(data)[8]),
-        group = as.symbol('idarrow')
-      ))
+          x     = as.symbol(colnames(data)[4]),
+          y     = as.symbol(colnames(data)[5]),
+          z     = as.symbol(colnames(data)[6]),
+          xend  = as.symbol(colnames(data)[7]),
+          yend  = as.symbol(colnames(data)[8]),
+          zend  = as.symbol(colnames(data)[9]),
+          group = as.symbol('idarrow'),
+          obj   = as.symbol('obj')
+        ))
   } else {
   	mapping %<>% utils::modifyList(list(
   	  x = NULL, y = NULL, z = NULL,
   	  xend = NULL, yend = NULL, zend = NULL,
-  	  group = NULL
+  	  group = NULL, obj = NULL
   	))
   }
-
-  #data %<>%
-  #  select('label', 'idarrow', 'region') %>%
-  #  unique %>%
-  #  unnest(cols = 'region')
 
   ggplot2::layer(
     stat = Conf3Logit, data = data, mapping = mapping, geom = geom,
