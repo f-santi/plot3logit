@@ -12,22 +12,24 @@ prepare_arrow <- function(comp, from, to) {
 
 prepare_block <- function(label, idarrow, comp, from, to, confregion) {
   # Prepare arrows
-  tibble(obj = 'arrow', comp = comp, from = from, to = to) %>%
-    pivot_longer(cols = c('from', 'to'), names_to = 'role') -> depo
+  tibble(type = 'arrow', comp = comp, from = from, to = to) %>%
+    pivot_longer(cols = c('from', 'to'), names_to = 'role') %>%
+    mutate(ord = 0) -> depo
   
   # Prepare confidence regions
   if (!is.null(confregion)) {
   	confregion %>%
+  	  mutate(ord = 1:nrow(.)) %>%
       pivot_longer(cols = 1:3, names_to = 'comp') %>%
-      mutate(role = 'from', obj = 'region') %>%
-      select(obj, comp, role, value) %>%
+      mutate(role = 'from', type = 'region') %>%
+      select(type, comp, role, value, ord) %>%
       bind_rows(depo) -> depo
   }
   
   # Complete output
   depo %>%
-    mutate(label = label, idarrow = idarrow) %>%
-    select(label, idarrow, everything()) %>%
+    mutate(label = label, idarrow = idarrow, group = NA) %>%
+    select(label, idarrow, group, ord, everything()) %>%
     return
 }
 
@@ -296,12 +298,6 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
     x$role <- rep(c('from', 'to'), nrow(x) / 2)
   } else {
   	x %<>%
-      #purrr::imap(~ tibble(
-      #  label = depoLab$label,
-      #  idarrow = .y,
-      #  arrow = list(prepare_arrow(depoLab$lab, .x$from, .x$to)),
-      #  region = list(as_tibble(.x$confregion))
-      #)) %>%
       purrr::imap(~ prepare_block(
         label = depoLab$label,
         idarrow = .y,
@@ -329,7 +325,11 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
   }
   
   x %>%
+    mutate(group = fct_anon(factor(paste0(label, idarrow)), 'H')) %>%
     mutate_if(is.character, factor) %>%
+    group_by(group) %>%
+    arrange(ord) %>%
+    ungroup %>%
     return
 }
 

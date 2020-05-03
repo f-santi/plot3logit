@@ -27,7 +27,7 @@ autoplot <- function(x, conf = TRUE) {
   	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
   }
   
-  ggdepo <- gg3logit(x) + stat_3logit()
+  ggdepo <- gg3logit(x) + stat_field3logit()
   
   if (conf) {
   	ggdepo <- ggdepo + stat_conf3logit()

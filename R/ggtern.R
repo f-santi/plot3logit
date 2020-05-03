@@ -2,7 +2,7 @@
 Stat3Logit <- ggplot2::ggproto('StatIdentity', Stat,
   compute_group = function(data, scales) {
   	data %>%
-  	  filter(obj == 'arrow') %>%
+  	  filter(type == 'arrow') %>%
   	  return
   }
 )
@@ -10,7 +10,7 @@ Stat3Logit <- ggplot2::ggproto('StatIdentity', Stat,
 Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
   compute_group = function(data, scales) {
   	data %>%
-  	  filter(obj == 'region') %>%
+  	  filter(type == 'region') %>%
   	  return
   }
 )
@@ -53,14 +53,14 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
       
       mapping %<>%
         modifyList(ggplot2::aes_(
-          x     = as.symbol(colnames(data)[4]),
-          y     = as.symbol(colnames(data)[5]),
-          z     = as.symbol(colnames(data)[6]),
-          xend  = as.symbol(colnames(data)[7]),
-          yend  = as.symbol(colnames(data)[8]),
-          zend  = as.symbol(colnames(data)[9]),
-          group = as.symbol('idarrow'),
-          obj   = as.symbol('obj') 
+          x     = as.symbol(colnames(data)[6]),
+          y     = as.symbol(colnames(data)[7]),
+          z     = as.symbol(colnames(data)[8]),
+          xend  = as.symbol(colnames(data)[9]),
+          yend  = as.symbol(colnames(data)[10]),
+          zend  = as.symbol(colnames(data)[11]),
+          group = as.symbol('group'),
+          type  = as.symbol('type')
         ))
     }
   }
@@ -94,12 +94,29 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
-#' field0 <- field3logit(mod0, 'genderFemale')
+#' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
 #'
-#' gg3logit(field0) + stat_3logit()
+#' gg3logit(field0) + stat_field3logit()
+#' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
 #'
 #' @export
 stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
+  position = 'identity', show.legend = NA, inherit.aes = TRUE,
+  arrow. = arrow(length = unit(0.2, 'cm')), ...) {
+
+  .Deprecated('stat_field3logit')
+  
+  stat_field3logit(
+    mapping = mapping, data = data, geom = geom, position = position,
+    show.legend = show.legend, inherit.aes = inherit.aes, arrow. = arrow., ...
+  )
+}
+
+
+
+#' @rdname stat_3logit
+#' @export
+stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   position = 'identity', show.legend = NA, inherit.aes = TRUE,
   arrow. = arrow(length = unit(0.2, 'cm')), ...) {
 
@@ -111,21 +128,21 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
       
       mapping %<>%
         modifyList(ggplot2::aes_(
-          x     = as.symbol(colnames(data)[4]),
-          y     = as.symbol(colnames(data)[5]),
-          z     = as.symbol(colnames(data)[6]),
-          xend  = as.symbol(colnames(data)[7]),
-          yend  = as.symbol(colnames(data)[8]),
-          zend  = as.symbol(colnames(data)[9]),
-          group = as.symbol('idarrow'),
-          obj   = as.symbol('obj')
+          x     = as.symbol(colnames(data)[6]),
+          y     = as.symbol(colnames(data)[7]),
+          z     = as.symbol(colnames(data)[8]),
+          xend  = as.symbol(colnames(data)[9]),
+          yend  = as.symbol(colnames(data)[10]),
+          zend  = as.symbol(colnames(data)[11]),
+          group = as.symbol('group'),
+          type  = as.symbol('type')
         ))
     }
   } else {
   	mapping %<>% utils::modifyList(list(
   	  x = NULL, y = NULL, z = NULL,
   	  xend = NULL, yend = NULL, zend = NULL,
-  	  group = NULL, obj = NULL
+  	  group = NULL, type = NULL
   	))
   }
 
@@ -143,33 +160,7 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 
 
 
-
-
-#' Add a field to a `gg3logit` plot
-#'
-#' `stat_3logit` add a field to a [`gg3logit`] plot.
-#'
-#' @inheritParams ggplot2::geom_segment
-#' @inheritParams ggplot2::stat_identity
-#' @inheritParams gg3logit
-#' @param data a `field3logit` or a `multifield3logit` object.
-#' @param mapping list of aesthetic mappings to use for plot. **Note
-#'   that** mappings `x`, `y` and `z` are **not** required: they will be
-#'   overwritten if specified (see examples).
-#' @param arrow. specification for arrow heads, as created by
-#'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
-#'
-#' @family `gg` functions
-#'
-#' @examples
-#' data(cross_1year)
-#'
-#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
-#' field0 <- field3logit(mod0, 'genderFemale')
-#'
-#' gg3logit(field0) + stat_3logit()
-#' gg3logit() + stat_3logit(data = field0)
-#'
+#' @rdname stat_3logit
 #' @export
 stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   position = 'identity', show.legend = NA, inherit.aes = TRUE, ...) {
@@ -182,22 +173,25 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   	data %<>% unnest(cols = 'arrow')
     mapping %<>%
       modifyList(ggplot2::aes_(
-          x     = as.symbol(colnames(data)[4]),
-          y     = as.symbol(colnames(data)[5]),
-          z     = as.symbol(colnames(data)[6]),
-          xend  = as.symbol(colnames(data)[7]),
-          yend  = as.symbol(colnames(data)[8]),
-          zend  = as.symbol(colnames(data)[9]),
-          group = as.symbol('idarrow'),
-          obj   = as.symbol('obj')
+          x     = as.symbol(colnames(data)[6]),
+          y     = as.symbol(colnames(data)[7]),
+          z     = as.symbol(colnames(data)[8]),
+          xend  = as.symbol(colnames(data)[9]),
+          yend  = as.symbol(colnames(data)[10]),
+          zend  = as.symbol(colnames(data)[11]),
+          group = as.symbol('group'),
+          type  = as.symbol('type')
         ))
   } else {
   	mapping %<>% utils::modifyList(list(
   	  x = NULL, y = NULL, z = NULL,
   	  xend = NULL, yend = NULL, zend = NULL,
-  	  group = NULL, obj = NULL
+  	  group = NULL, type = NULL
   	))
   }
+  
+  if (!is.null(mapping$fill))  { params$fill  <- NULL }
+  if (!is.null(mapping$alpha)) { params$alpha <- NULL }
 
   ggplot2::layer(
     stat = Conf3Logit, data = data, mapping = mapping, geom = geom,

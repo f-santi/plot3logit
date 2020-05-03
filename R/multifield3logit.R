@@ -117,6 +117,7 @@ print.multifield3logit <- function(x, maxitems = 10, ...) {
 fortify.multifield3logit <- function(model, data, ...) {
   lapply(model, fortify) %>%
     Reduce(rbind, .) %>%
+    mutate(group = fct_anon(factor(paste0(label, idarrow)), 'H')) %>%
     return
 }
 
