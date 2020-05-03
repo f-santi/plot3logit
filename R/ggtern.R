@@ -237,8 +237,8 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
 #' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
 #'
-#' gg3logit(field0) + stat_field3logit()
-#' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
+#' gg3logit(field0) + stat_3logit()
+#' gg3logit(field0) + stat_3logit(conf = TRUE)
 #'
 #' @export
 stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(), data = NULL,
@@ -250,16 +250,19 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(), data = NULL
     show.legend = show.legend, inherit.aes = inherit.aes
   ) %>%
     modifyList(params_field) %>%
-    do.call('stat_field3logit', .) -> depofield
+    do.call('stat_field3logit', .) -> out
   
-  list(
-    mapping = mapping_conf, data = data,
-    show.legend = show.legend, inherit.aes = inherit.aes
-  ) %>%
-    modifyList(params_conf) %>%
-    do.call('stat_conf3logit', .) -> depoconf
+  if (conf) {
+    list(
+      mapping = mapping_conf, data = data,
+      show.legend = show.legend, inherit.aes = inherit.aes
+    ) %>%
+      modifyList(params_conf) %>%
+      do.call('stat_conf3logit', .) %>%
+      list(out) -> out
+  }
     
-  return(list(depofield, depoconf))
+  return(out)
 }
 
 
