@@ -53,12 +53,12 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
       
       mapping %<>%
         modifyList(ggplot2::aes_(
-          x     = as.symbol(colnames(data)[6]),
-          y     = as.symbol(colnames(data)[7]),
-          z     = as.symbol(colnames(data)[8]),
-          xend  = as.symbol(colnames(data)[9]),
-          yend  = as.symbol(colnames(data)[10]),
-          zend  = as.symbol(colnames(data)[11]),
+          x     = as.symbol(colnames(data)[5]),
+          y     = as.symbol(colnames(data)[6]),
+          z     = as.symbol(colnames(data)[7]),
+          xend  = as.symbol(colnames(data)[8]),
+          yend  = as.symbol(colnames(data)[9]),
+          zend  = as.symbol(colnames(data)[10]),
           group = as.symbol('group'),
           type  = as.symbol('type')
         ))
@@ -128,12 +128,12 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
       
       mapping %<>%
         modifyList(ggplot2::aes_(
-          x     = as.symbol(colnames(data)[6]),
-          y     = as.symbol(colnames(data)[7]),
-          z     = as.symbol(colnames(data)[8]),
-          xend  = as.symbol(colnames(data)[9]),
-          yend  = as.symbol(colnames(data)[10]),
-          zend  = as.symbol(colnames(data)[11]),
+          x     = as.symbol(colnames(data)[5]),
+          y     = as.symbol(colnames(data)[6]),
+          z     = as.symbol(colnames(data)[7]),
+          xend  = as.symbol(colnames(data)[8]),
+          yend  = as.symbol(colnames(data)[9]),
+          zend  = as.symbol(colnames(data)[10]),
           group = as.symbol('group'),
           type  = as.symbol('type')
         ))
@@ -173,12 +173,12 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   	data %<>% unnest(cols = 'arrow')
     mapping %<>%
       modifyList(ggplot2::aes_(
-          x     = as.symbol(colnames(data)[6]),
-          y     = as.symbol(colnames(data)[7]),
-          z     = as.symbol(colnames(data)[8]),
-          xend  = as.symbol(colnames(data)[9]),
-          yend  = as.symbol(colnames(data)[10]),
-          zend  = as.symbol(colnames(data)[11]),
+          x     = as.symbol(colnames(data)[5]),
+          y     = as.symbol(colnames(data)[6]),
+          z     = as.symbol(colnames(data)[7]),
+          xend  = as.symbol(colnames(data)[8]),
+          yend  = as.symbol(colnames(data)[9]),
+          zend  = as.symbol(colnames(data)[10]),
           group = as.symbol('group'),
           type  = as.symbol('type')
         ))

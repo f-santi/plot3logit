@@ -13,23 +13,21 @@ prepare_arrow <- function(comp, from, to) {
 prepare_block <- function(label, idarrow, comp, from, to, confregion) {
   # Prepare arrows
   tibble(type = 'arrow', comp = comp, from = from, to = to) %>%
-    pivot_longer(cols = c('from', 'to'), names_to = 'role') %>%
-    mutate(ord = 0) -> depo
+    pivot_longer(cols = c('from', 'to'), names_to = 'role') -> depo
   
   # Prepare confidence regions
   if (!is.null(confregion)) {
   	confregion %>%
-  	  mutate(ord = 1:nrow(.)) %>%
       pivot_longer(cols = 1:3, names_to = 'comp') %>%
       mutate(role = 'from', type = 'region') %>%
-      select(type, comp, role, value, ord) %>%
+      select(type, comp, role, value) %>%
       bind_rows(depo) -> depo
   }
   
   # Complete output
   depo %>%
     mutate(label = label, idarrow = idarrow, group = NA) %>%
-    select(label, idarrow, group, ord, everything()) %>%
+    select(label, idarrow, group, everything()) %>%
     return
 }
 
@@ -327,9 +325,6 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
   x %>%
     mutate(group = fct_anon(factor(paste0(label, idarrow)), 'H')) %>%
     mutate_if(is.character, factor) %>%
-    group_by(group) %>%
-    arrange(ord) %>%
-    ungroup %>%
     return
 }
 
