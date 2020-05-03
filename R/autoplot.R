@@ -9,6 +9,7 @@
 #'
 #' @param x a `field3logit` or a `multifield3logit` object. If not
 #'   specified, must be supplied in each layer added to the plot.
+#' @param conf whether...
 #'
 #' @family `gg` functions
 #'

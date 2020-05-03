@@ -2,9 +2,9 @@
 prepare_arrow <- function(comp, from, to) {
   tibble(comp = comp, from = from, to = to) %>%
     pivot_longer(cols = c('from', 'to'), names_to = 'role') %>%
-    dplyr::arrange(role) %>%
-    mutate(comp = paste0(comp, ifelse(role == 'from', '', '_to'))) %>%
-    select(-role) %>%
+    dplyr::arrange('role') %>%
+    mutate(comp = paste0(.$comp, ifelse(.$role == 'from', '', '_to'))) %>%
+    select(-'role') %>%
     pivot_wider(names_from = 'comp') %>%
     return
 }
@@ -20,14 +20,14 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
   	confregion %>%
       pivot_longer(cols = 1:3, names_to = 'comp') %>%
       mutate(role = 'from', type = 'region') %>%
-      select(type, comp, role, value) %>%
+      select('type', 'comp', 'role', 'value') %>%
       bind_rows(depo) -> depo
   }
   
   # Complete output
   depo %>%
     mutate(label = label, idarrow = idarrow, group = NA) %>%
-    select(label, idarrow, group, tidyselect::everything()) %>%
+    select('label', 'idarrow', 'group', tidyselect::everything()) %>%
     return
 }
 
@@ -305,14 +305,14 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
         confregion = .x$confregion
       )) %>%
       purrr::reduce(bind_rows) %>%
-      mutate(comp = factor(comp, depoLab$lab))
+      mutate(comp = factor(.$comp, depoLab$lab))
   }
   
   if (wide) {
     x %<>%
-      dplyr::arrange(role) %>%
-      mutate(comp = paste0(comp, ifelse(role == 'from', '', '_end'))) %>%
-      select(-role) %>%
+      dplyr::arrange(.$role) %>%
+      mutate(comp = paste0(.$comp, ifelse(.$role == 'from', '', '_end'))) %>%
+      select(-'role') %>%
       pivot_wider(
         names_from = 'comp',
         values_from = 'value',
@@ -323,7 +323,7 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
   }
   
   x %>%
-    mutate(group = forcats::fct_anon(factor(paste0(label, idarrow)), 'H')) %>%
+    mutate(group = forcats::fct_anon(factor(paste0(.$label, .$idarrow)), 'H')) %>%
     dplyr::mutate_if(is.character, factor) %>%
     return
 }

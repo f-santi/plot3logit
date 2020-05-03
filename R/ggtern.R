@@ -170,8 +170,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
     
   if (!is.null(data)) {
   	if (inherits(data, 'field3logit')) { data %<>% fortify }
-  	data %<>% unnest(cols = 'arrow')
-    mapping %<>%
+  	mapping %<>%
       modifyList(ggplot2::aes_(
           x     = as.symbol(colnames(data)[5]),
           y     = as.symbol(colnames(data)[6]),
