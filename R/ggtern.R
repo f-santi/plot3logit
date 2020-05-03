@@ -1,15 +1,16 @@
 
 Stat3Logit <- ggplot2::ggproto('StatIdentity', Stat,
-  compute_group = function(data, scales) { print(data); return(data) }
+  compute_group = function(data, scales) {
+  	data %>%
+  	  filter(obj == 'arrow') %>%
+  	  return
+  }
 )
 
 Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
   compute_group = function(data, scales) {
   	data %>%
-  	  print %>% 
-      select('label', 'idarrow', 'region') %>%
-      unique %>%
-      unnest(cols = 'region') %>%
+  	  filter(obj == 'region') %>%
   	  return
   }
 )
@@ -47,18 +48,21 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 gg3logit <- function (data = NULL, mapping = aes(), ...) {
 
   if (!is.null(data)) {
-    if (inherits(data, 'field3logit')) { data %<>% fortify }
-    data %<>% unnest(cols = 'arrow')
-    mapping %<>%
-      modifyList(ggplot2::aes_(
-        x     = as.symbol(colnames(data)[3]),
-        y     = as.symbol(colnames(data)[4]),
-        z     = as.symbol(colnames(data)[5]),
-        xend  = as.symbol(colnames(data)[6]),
-        yend  = as.symbol(colnames(data)[7]),
-        zend  = as.symbol(colnames(data)[8]),
-        group = as.symbol('idarrow')
-      ))
+    if (inherits(data, 'field3logit')) {
+    	  data %<>% fortify
+      #data %<>% unnest(cols = 'arrow')
+      mapping %<>%
+        modifyList(ggplot2::aes_(
+          x     = as.symbol(colnames(data)[4]),
+          y     = as.symbol(colnames(data)[5]),
+          z     = as.symbol(colnames(data)[6]),
+          xend  = as.symbol(colnames(data)[7]),
+          yend  = as.symbol(colnames(data)[8]),
+          zend  = as.symbol(colnames(data)[9]),
+          group = as.symbol('idarrow'),
+          obj   = as.symbol('obj') 
+        ))
+    }
   }
 
   ggtern(data = data, mapping = mapping, ...) +
@@ -103,19 +107,21 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   params <- list(arrow = arrow., ...)
   
   if (!is.null(data)) {
-  	if (inherits(data, 'field3logit')) { data %<>% fortify }
-  	data %<>% unnest(cols = 'arrow')
-  	
-    mapping %<>%
-      modifyList(ggplot2::aes_(
-        x     = as.symbol(colnames(data)[3]),
-        y     = as.symbol(colnames(data)[4]),
-        z     = as.symbol(colnames(data)[5]),
-        xend  = as.symbol(colnames(data)[6]),
-        yend  = as.symbol(colnames(data)[7]),
-        zend  = as.symbol(colnames(data)[8]),
-        group = as.symbol('idarrow')
-      ))
+    if (inherits(data, 'field3logit')) {
+      data %<>% fortify
+      #data %<>% unnest(cols = 'arrow')
+      mapping %<>%
+        modifyList(ggplot2::aes_(
+          x     = as.symbol(colnames(data)[4]),
+          y     = as.symbol(colnames(data)[5]),
+          z     = as.symbol(colnames(data)[6]),
+          xend  = as.symbol(colnames(data)[7]),
+          yend  = as.symbol(colnames(data)[8]),
+          zend  = as.symbol(colnames(data)[9]),
+          group = as.symbol('idarrow'),
+          obj   = as.symbol('obj') 
+        ))
+    }
   } else {
   	mapping %<>% utils::modifyList(list(
   	  x = NULL, y = NULL, z = NULL,
@@ -169,6 +175,9 @@ stat_3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   position = 'identity', show.legend = NA, inherit.aes = TRUE, ...) {
 
+  list(fill = 'blue', alpha = 0.15) %>%
+    modifyList(list(...)) -> params
+    
   if (!is.null(data)) {
   	if (inherits(data, 'field3logit')) { data %<>% fortify }
   	data %<>% unnest(cols = 'arrow')
@@ -196,9 +205,9 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
   #  unnest(cols = 'region')
 
   ggplot2::layer(
-    stat = Stat3Logit, data = data, mapping = mapping, geom = geom,
+    stat = Conf3Logit, data = data, mapping = mapping, geom = geom,
     position = position, show.legend = show.legend,
-    inherit.aes = inherit.aes, params = list(...)
+    inherit.aes = inherit.aes, params = params
   )
 }
 

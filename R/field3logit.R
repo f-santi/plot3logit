@@ -5,7 +5,30 @@ prepare_arrow <- function(comp, from, to) {
     dplyr::arrange(role) %>%
     mutate(comp = paste0(comp, ifelse(role == 'from', '', '_to'))) %>%
     select(-role) %>%
-    pivot_wider(names_from = 'comp')
+    pivot_wider(names_from = 'comp') %>%
+    return
+}
+
+
+prepare_block <- function(label, idarrow, comp, from, to, confregion) {
+  # Prepare arrows
+  tibble(obj = 'arrow', comp = comp, from = from, to = to) %>%
+    pivot_longer(cols = c('from', 'to'), names_to = 'role') -> depo
+  
+  # Prepare confidence regions
+  if (!is.null(confregion)) {
+  	confregion %>%
+      pivot_longer(cols = 1:3, names_to = 'comp') %>%
+      mutate(role = 'from', obj = 'region') %>%
+      select(obj, comp, role, value) %>%
+      bind_rows(depo) -> depo
+  }
+  
+  # Complete output
+  depo %>%
+    mutate(label = label, idarrow = idarrow) %>%
+    select(label, idarrow, everything()) %>%
+    return
 }
 
 
@@ -254,7 +277,7 @@ plot.field3logit <- function(x, ..., add = FALSE, length = 0.05) {
 
 #' @rdname field3logit
 #' @export
-as.data.frame.field3logit <- function(x, ...) {
+as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
   depoLab <- list(label = x$label, lab = x$lab)
   
   x %<>%
@@ -273,16 +296,41 @@ as.data.frame.field3logit <- function(x, ...) {
     x$role <- rep(c('from', 'to'), nrow(x) / 2)
   } else {
   	x %<>%
-      purrr::imap(~ tibble(
+      #purrr::imap(~ tibble(
+      #  label = depoLab$label,
+      #  idarrow = .y,
+      #  arrow = list(prepare_arrow(depoLab$lab, .x$from, .x$to)),
+      #  region = list(as_tibble(.x$confregion))
+      #)) %>%
+      purrr::imap(~ prepare_block(
         label = depoLab$label,
         idarrow = .y,
-        arrow = list(prepare_arrow(depoLab$lab, .x$from, .x$to)),
-        region = list(as_tibble(.x$confregion))
+        comp = depoLab$lab,
+        from = .x$from,
+        to = .x$to,
+        confregion = .x$confregion
       )) %>%
-      reduce(bind_rows)
+      reduce(bind_rows) %>%
+      mutate(comp = factor(comp, depoLab$lab))
   }
   
-  return(x)
+  if (wide) {
+    x %<>%
+      arrange(role) %>%
+      mutate(comp = paste0(comp, ifelse(role == 'from', '', '_end'))) %>%
+      select(-role) %>%
+      pivot_wider(
+        names_from = 'comp',
+        values_from = 'value',
+        values_fill = list(NA),
+        values_fn = list(value = list)
+      ) %>%
+      { unnest(., setdiff(colnames(.), c('label', 'idarrow', 'obj'))) }
+  }
+  
+  x %>%
+    mutate_if(is.character, factor) %>%
+    return
 }
 
 
