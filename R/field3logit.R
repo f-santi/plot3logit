@@ -27,7 +27,7 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
   # Complete output
   depo %>%
     mutate(label = label, idarrow = idarrow, group = NA) %>%
-    select(label, idarrow, group, everything()) %>%
+    select(label, idarrow, group, tidyselect::everything()) %>%
     return
 }
 
@@ -150,16 +150,16 @@ is_simplified_field3logit <- function(x) {
 #' 
 #' # Assessing the effect of "finalgradeHigh" (explicit notation)
 #' field0 <- field3logit(mod0, c(0, 0, 1, 0, 0, 0))
-#' gg3logit(field0) + stat_3logit()
+#' gg3logit(field0) + stat_field3logit()
 #'
 #' # Assessing the effect of "finalgradeHigh" (implicit notation)
 #' field0 <- field3logit(mod0, 'finalgradeHigh')
-#' gg3logit(field0) + stat_3logit()
+#' gg3logit(field0) + stat_field3logit()
 #' 
 #' # Assessing the combined effect of "finalgradeHigh" and
 #' # a decrease of "hsscore" by 10
 #' field0 <- field3logit(mod0, 'finalgradeHigh - 10 * hsscore')
-#' gg3logit(field0) + stat_3logit()
+#' gg3logit(field0) + stat_field3logit()
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
@@ -304,13 +304,13 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
         to = .x$to,
         confregion = .x$confregion
       )) %>%
-      reduce(bind_rows) %>%
+      purrr::reduce(bind_rows) %>%
       mutate(comp = factor(comp, depoLab$lab))
   }
   
   if (wide) {
     x %<>%
-      arrange(role) %>%
+      dplyr::arrange(role) %>%
       mutate(comp = paste0(comp, ifelse(role == 'from', '', '_end'))) %>%
       select(-role) %>%
       pivot_wider(
@@ -319,12 +319,12 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
         values_fill = list(NA),
         values_fn = list(value = list)
       ) %>%
-      { unnest(., setdiff(colnames(.), c('label', 'idarrow', 'obj'))) }
+      tidyr::unnest(setdiff(colnames(.), c('label', 'idarrow', 'obj')))
   }
   
   x %>%
-    mutate(group = fct_anon(factor(paste0(label, idarrow)), 'H')) %>%
-    mutate_if(is.character, factor) %>%
+    mutate(group = forcats::fct_anon(factor(paste0(label, idarrow)), 'H')) %>%
+    dplyr::mutate_if(is.character, factor) %>%
     return
 }
 
