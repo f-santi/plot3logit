@@ -28,7 +28,8 @@
 #' @seealso [`plot3logit-package`], [`field3logit`].
 #'
 #' @keywords internal
-read_model <- function(model, type, alpha, vcov) {
+read_model <- function(model, type, alpha = NULL, vcov = NULL) {
+  # Initialise the output object
   out <- list(B = NULL, vcovB = vcov, alpha = alpha, model = type,
     ordinal = !is.null(alpha), readfrom = NULL,
     P2XB = NULL, XB2P = NULL, DeltaB2pc = NULL)
@@ -41,7 +42,7 @@ read_model <- function(model, type, alpha, vcov) {
   } else if (inherits(model, 'mlogit')) {
   	out %<>% modifyList(read_from_mlogit(model))
   } else {
-  	out %<>% modifyList(read_from_matrix(model, alpha, ordinal, vcov))
+  	out %<>% modifyList(read_from_matrix(model, alpha, vcov))
   }
   
   # Add link functions
@@ -165,7 +166,7 @@ read_from_mlogit <- function(model, ...) {
 
 #' @rdname read_model
 #' @keywords internal
-read_from_matrix <- function(model, alpha, ordinal, vcov, ...) {
+read_from_matrix <- function(model, alpha, vcov, ...) {
   depo <- as.matrix(model)
   if ((nrow(depo) == 2) & (ncol(depo) == 1)) { depo %<>% t }
   
@@ -174,7 +175,7 @@ read_from_matrix <- function(model, alpha, ordinal, vcov, ...) {
     vcovB = vcov,
     alpha = alpha,
     model = 'logit',
-    ordinal = ordinal,
+    ordinal = !is.null(alpha),
   	readfrom = 'matrix',
   	lab = attr(model, 'labs')
   )

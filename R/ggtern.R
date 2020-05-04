@@ -188,8 +188,6 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #' @param mapping list of aesthetic mappings to use for plot. **Note
 #'   that** mappings `x`, `y` and `z` are **not** required: they will be
 #'   overwritten if specified (see examples).
-#' @param arrow. specification for arrow heads, as created by
-#'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
 #'
 #' @family `gg` functions
 #'
@@ -251,12 +249,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #' @inheritParams ggplot2::geom_segment
 #' @inheritParams ggplot2::stat_identity
 #' @inheritParams gg3logit
-#' @param data a `field3logit` or a `multifield3logit` object.
-#' @param mapping list of aesthetic mappings to use for plot. **Note
-#'   that** mappings `x`, `y` and `z` are **not** required: they will be
-#'   overwritten if specified (see examples).
-#' @param arrow. specification for arrow heads, as created by
-#'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
+#' @inheritParams autoplot
 #'
 #' @family `gg` functions
 #'
@@ -309,6 +302,12 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(), data = NULL
 #'
 #' @param x a `field3logit` or a `multifield3logit` object. If not
 #'   specified, must be supplied in each layer added to the plot.
+#' @param mapping_field ...
+#' @param mapping_conf ...
+#' @param data ...
+#' @param params_field ...
+#' @param params_conf ...
+#' @param show.legend ...
 #' @param conf whether...
 #'
 #' @family `gg` functions
