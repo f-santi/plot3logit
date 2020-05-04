@@ -28,14 +28,43 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' `field3logit` or a `multifield3logit` object is passed; in that case,
 #' `gg3logit` preliminarly invoke the `fortify` method.
 #'
-#' @param data a `field3logit` or a `multifield3logit` object. If not
-#'   specified, must be supplied in each layer added to the plot.
-#' @param mapping list of aesthetic mappings to use for plot. If not
-#'   specified, must be supplied in each layer added to the plot. **Note
-#'   that** mappings `x`, `y` and `z` are **not** required: they will be
-#'   overwritten if specified (see examples).
+#' @param data a `field3logit` object, a `multifield3logit` object, or
+#'   a `data.frame` structured like a fortified `field3logit` or a
+#'   `multifield3logit` object. If a `field3logit` or a `multifield3logit`
+#'   is passed, none of the aestetics mappings listed in Section
+#'   "Aesthetic mappings" below has to be specified.
+#' @param mapping list of aesthetic mappings to use for plot. If a
+#'   `field3logit` or a `multifield3logit` is passed to `data`, none of the
+#'   aestetics mappings listed in section *Aesthetic mappings* below has to be
+#'   specified. 
 #' @param ... additional arguments passed through to [`ggtern`][ggtern::ggtern].
 #'
+#' @section Aesthetic mappings:
+#'
+#' The following aestetics are required by at least one of the available stats.
+#' None of them should be specified if a `field3logit` or a `multifield3logit`
+#' is passed to the argument `data` of [gg3logit()], [stat_field3logit()] or
+#' [stat_conf3logit()]:
+#' * `x`, `y`, `z` are required by:
+#'   + [stat_field3logit()] as ternary coordinates of the starting points of the
+#'     arrows;
+#'   + [stat_conf3logit()] ternary coordinates of the points on the border of
+#'     confidence regions;
+#' * `xend`, `yend`, `zend`: required by [stat_field3logit()] as ternary
+#'   coordinates of the ending points of the arrows;
+#' * `group`: identifier of groups of graphical objets (arrows and their confidence
+#'   regions);
+#' * `type`: type of graphical object (arrows or confidence regions).
+#'
+#' The following variables of a fortified `field3logit` or a `multifield3logit`
+#' object may be useful for defining other standard aestetics (such as `fill`,
+#' `colour`, ...):
+#' * `label` identifies a field through a label, thus it is useful for
+#'   distinguishing the fields in a `multifield3logit` object.
+#' * `idarrow` identifies each group of graphical objets (arrows and their
+#'   confidence regions) *within* every field. Unlike variable `group`,
+#'  `idarrow` is not a global identifier of graphical objets.
+#' 
 #' @family `gg` functions
 #'
 #' @examples

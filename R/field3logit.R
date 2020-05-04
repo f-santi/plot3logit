@@ -124,7 +124,7 @@ is_simplified_field3logit <- function(x) {
 #' @param wide it allows to choose whether `as.data.frme` should return a
 #'   `data.frame` object in wide (default) or long form.
 #' @param label label to be used for identifying the field when multiple
-#'   fields are plotted. See [`multifield3logit`].
+#'   fields are plotted. See [multifield3logit()].
 #' @param data not used. Argument included only for interface compatibility with
 #'   the generic `fortify`.
 #' @param conf confidence level of confidence regions to be computed **for each
@@ -141,7 +141,7 @@ is_simplified_field3logit <- function(x) {
 #' `S3` object of class `field3logit` structured as a named `list`.
 #'
 #' @seealso
-#' [`multifield3logit`], [`gg3logit`].
+#' [multifield3logit()], [gg3logit()], [autoplot()].
 #'
 #' @inherit cross_1year references
 #'
