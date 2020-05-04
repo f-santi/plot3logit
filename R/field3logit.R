@@ -131,6 +131,11 @@ is_simplified_field3logit <- function(x) {
 #'   arrow** of the field.
 #' @param npoints number of points of the border to be computed **for each
 #'   confidence region**.
+#' @param vcov (**only if** the model is read from a matrix, otherwise it will
+#'   be ignored) variance-covariance matrix of parameter estimates. The elements
+#'   of the variance-covariance matrix should be ordered according to the matrix 
+#'   of parameter estimates where the categories of the dependent variable are
+#'   the slow index, whereas the covariates are the fast index.
 #'
 #' @return
 #' `S3` object of class `field3logit` structured as a named `list`.
@@ -163,11 +168,11 @@ is_simplified_field3logit <- function(x) {
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
-  alpha = NULL, ncurves = 8, narrows = Inf, edge = 0.01,
+  alpha = NULL, vcov = NULL, ncurves = 8, narrows = Inf, edge = 0.01,
   conf = NA, npoints = 100) {
 
   # Read input
-  modB <- read_model(model, 'logit', alpha)
+  modB <- read_model(model, 'logit', alpha, vcov)
   vdelta <- get_vdelta(delta, modB)
   DeltaB <- as.numeric(crossprod(vdelta, modB$B))
 

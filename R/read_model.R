@@ -5,6 +5,7 @@
 #' by function [`field3logit`] and properly sets the matrix of coefficients
 #' and the other needed model-specific functions.
 #'
+#' @inheritParams field3logit
 #' @param model see [`field3logit`].
 #' @param type class of the model. Currently, forced to `"logit"`
 #'   by [`field3logit`] when [`read_model`] is called.
@@ -27,8 +28,8 @@
 #' @seealso [`plot3logit-package`], [`field3logit`].
 #'
 #' @keywords internal
-read_model <- function(model, type, alpha) {
-  out <- list(B = NULL, vcovB = NULL, alpha = alpha, model = type,
+read_model <- function(model, type, alpha, vcov) {
+  out <- list(B = NULL, vcovB = vcov, alpha = alpha, model = type,
     ordinal = !is.null(alpha), readfrom = NULL,
     P2XB = NULL, XB2P = NULL, DeltaB2pc = NULL)
   
@@ -40,7 +41,7 @@ read_model <- function(model, type, alpha) {
   } else if (inherits(model, 'mlogit')) {
   	out %<>% modifyList(read_from_mlogit(model))
   } else {
-  	out %<>% modifyList(read_from_matrix(model))
+  	out %<>% modifyList(read_from_matrix(model, alpha, ordinal, vcov))
   }
   
   # Add link functions
@@ -164,16 +165,16 @@ read_from_mlogit <- function(model, ...) {
 
 #' @rdname read_model
 #' @keywords internal
-read_from_matrix <- function(model, ...) {
+read_from_matrix <- function(model, alpha, ordinal, vcov, ...) {
   depo <- as.matrix(model)
   if ((nrow(depo) == 2) & (ncol(depo) == 1)) { depo %<>% t }
   
   list(
     B = depo,
-    # vcovB
-    # alpha
-    # model
-    # ordinal
+    vcovB = vcov,
+    alpha = alpha,
+    model = 'logit',
+    ordinal = ordinal,
   	readfrom = 'matrix',
   	lab = attr(model, 'labs')
   )
