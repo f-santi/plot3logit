@@ -215,22 +215,6 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
 
 #' @rdname field3logit
 #' @export
-plot3logit <- function(model, delta, label = '<empty>', p0 = NULL,
-  alpha = NULL, ncurves = 8, narrows = Inf, edge = 0.01, ...) {
-
-  depo <- field3logit(model = model, delta = delta, p0 = p0,
-    alpha = alpha, ncurves = ncurves, narrows = narrows,
-    edge = edge, label = label)
-  
-  graphics::plot(depo, ...)
-  
-  invisible(depo)
-}
-
-
-
-#' @rdname field3logit
-#' @export
 print.field3logit <- function(x, ...) {
   x$effects %>%
     lapply(length) %>%

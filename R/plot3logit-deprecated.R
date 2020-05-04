@@ -1,0 +1,65 @@
+
+#' List of deprecated and defunct functions
+#'
+#' The following functions are deprecated and will no longer be updated.
+#' They may be removed in a future version of the package.
+#'
+#' @section Deprecated functions:
+#'
+#' * [plot3logit()] (since version 2.0.0). Instead of [plot3logit()], generate a
+#'   `field3logit` object through [field3logit()] and then plot it through the
+#'   method [plot()] (standard graphics based on [Ternary::Ternary-package]),
+#'   through [autoplot()] or through [gg3logit()] plus some `stat_*3logit` stats
+#'   (graphics based on [ggtern::ggtern-package]).
+#'
+#' @docType data
+#' @name deprecated-functions
+#' @keywords deprecated
+#'
+NULL
+
+
+
+
+
+#' Computation and representation of the vector field
+#'
+#' \lifecycle{deprecated}
+#'
+#' @description
+#'
+#' `plot3logit` method draw the ternary plot using standard graphics
+#' methods provided by package `Ternary`. See function [`gg3logit`] for plotting
+#' through the package [`ggtern`][ggtern::ggtern-package] based on the grammar
+#' of graphics.
+#'
+#' @inheritParams field3logit
+#'
+#' @return
+#' `S3` object of class `field3logit` structured as a named `list`.
+#'
+#' @seealso
+#' [`field3logit`].
+#'
+#' @name plot3logit-deprecated
+#' @keywords deprecated
+#'
+#' @export
+plot3logit <- function(model, delta, label = '<empty>', p0 = NULL,
+  alpha = NULL, ncurves = 8, narrows = Inf, edge = 0.01, ...) {
+
+  lifecycle::deprecate_warn()
+  
+  depo <- field3logit(model = model, delta = delta, p0 = p0,
+    alpha = alpha, ncurves = ncurves, narrows = narrows,
+    edge = edge, label = label)
+  
+  graphics::plot(depo, ...)
+  
+  invisible(depo)
+}
+
+
+
+
+
