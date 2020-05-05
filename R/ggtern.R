@@ -21,12 +21,10 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 
 #' Create a new gg3logit
 #'
-#' `gg3logit` initializes a [`ggplot`][ggplot2::ggplot] object through
+#' `gg3logit` initialises a [`ggplot`][ggplot2::ggplot] object through
 #' [`ggtern`][ggtern::ggtern]. If a fortified `field3logit` or a
-#' `multifield3logit` object is passed as argument `data` to `gg3logit`,
-#' the labels of the ternary plot are automatically. The same happens if a
-#' `field3logit` or a `multifield3logit` object is passed; in that case,
-#' `gg3logit` preliminarly invoke the `fortify` method.
+#' `multifield3logit` object is passed to argument `data`, the mandatory
+#' aestetics of the ternary plot are automatically set.
 #'
 #' @param data a `field3logit` object, a `multifield3logit` object, or
 #'   a `data.frame` structured like a fortified `field3logit` or a
@@ -36,7 +34,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' @param mapping list of aesthetic mappings to use for plot. If a
 #'   `field3logit` or a `multifield3logit` is passed to `data`, none of the
 #'   aestetics mappings listed in section *Aesthetic mappings* below has to be
-#'   specified. 
+#'   specified (if specified, they will be overwritten). 
 #' @param ... additional arguments passed through to [`ggtern`][ggtern::ggtern].
 #'
 #' @section Aesthetic mappings:

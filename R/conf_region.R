@@ -122,7 +122,6 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
 #' input. If the `field3logit` or `multifield3logit` object already contains the
 #' confidence regions, they will be updated if the value of `conf` is different.
 #'
-#' @inheritParams add_confregions_field3logit
 #' @param x an object of class `field3logit` or `multifield3logit`.
 #' @param conf confidence level of the regions.
 #' @param npoints number of points of the borders of the regions.
