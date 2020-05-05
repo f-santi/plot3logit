@@ -242,9 +242,9 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #' [stat_conf3logit()] which are jointly applied.
 #'
 #' @inheritParams stat_field3logit
-#' @param mapping_field, mapping_conf aesthetic mappings passed to argument
+#' @param mapping_field,mapping_conf aesthetic mappings passed to argument
 #'   `mapping` of [stat_field3logit()] and [stat_conf3logit()].
-#' @param params_field, params_conf graphical parameters passed to argument
+#' @param params_field,params_conf graphical parameters passed to argument
 #'   `mapping` of [stat_field3logit()] and [stat_conf3logit()].
 #' @param conf if `TRUE` the layer of [stat_conf3logit()] is added if
 #'   confidence regions are available, otherwise only the layer of
