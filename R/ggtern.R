@@ -235,7 +235,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 
 
 
-#' Add a field to a `gg3logit` plot
+#' Add a field and confidence regions to a `gg3logit` plot
 #'
 #' [stat_3logit()] adds a field and its confidence regions to a [`gg3logit`]
 #' plot. [stat_3logit()] is a wrapper for stats [stat_field3logit()] and
@@ -246,8 +246,8 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #'   `mapping` of [stat_field3logit()] and [stat_conf3logit()].
 #' @param params_field,params_conf graphical parameters passed to argument
 #'   `mapping` of [stat_field3logit()] and [stat_conf3logit()].
-#' @param conf if `TRUE` the layer of [stat_conf3logit()] is added if
-#'   confidence regions are available, otherwise only the layer of
+#' @param conf if `TRUE` and if confidence regions are available, the layer of
+#'   [stat_conf3logit()] is added, otherwise only the layer of
 #'   [stat_field3logit()] is returned.
 #'
 #' @family `gg` functions
@@ -290,24 +290,16 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 
 
 
-#' Create a new gg3logit
+#' Create a `gg3logit` plot with field and confidence regions
 #'
-#' `gg3logit` initializes a [`ggplot`][ggplot2::ggplot] object through
-#' [`ggtern`][ggtern::ggtern]. If a fortified `field3logit` or a
-#' `multifield3logit` object is passed as argument `data` to `gg3logit`,
-#' the labels of the ternary plot are automatically. The same happens if a
-#' `field3logit` or a `multifield3logit` object is passed; in that case,
-#' `gg3logit` preliminarly invoke the `fortify` method.
+#' [autoplot()] creates a [`gg3logit`] plot and adds a field and its confidence
+#' regions. [autoplot()] is a wrapper for [gg3logit()] and [stat_3logit()].
 #'
-#' @param x a `field3logit` or a `multifield3logit` object. If not
-#'   specified, must be supplied in each layer added to the plot.
-#' @param mapping_field ...
-#' @param mapping_conf ...
-#' @param data ...
-#' @param params_field ...
-#' @param params_conf ...
-#' @param show.legend ...
-#' @param conf whether...
+#' @inheritParams stat_3logit
+#' @inheritParams add_confregions
+#' @param conf if `TRUE` and if confidence regions are available, the layer of
+#'   [stat_conf3logit()] is added, otherwise only a [gg3logit()] object with the
+#'   layer of [stat_field3logit()] is returned.
 #'
 #' @family `gg` functions
 #'
