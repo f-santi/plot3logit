@@ -105,7 +105,7 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 
 #' Add a field to a `gg3logit` plot
 #'
-#' [stat_3logit()] adds a field to a [`gg3logit`] plot.
+#' [stat_field3logit()] adds a field to a [`gg3logit`] plot.
 #'
 #' @inheritParams ggplot2::geom_segment
 #' @inheritParams ggplot2::stat_identity
@@ -176,17 +176,11 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 
 
 
-#' Add a field to a `gg3logit` plot
+#' Add the confidence regions of a field to a `gg3logit` plot
 #'
-#' `stat_3logit` add a field to a [`gg3logit`] plot.
+#' [stat_conf3logit()] adds a field to a [`gg3logit`] plot.
 #'
-#' @inheritParams ggplot2::geom_segment
-#' @inheritParams ggplot2::stat_identity
-#' @inheritParams gg3logit
-#' @param data a `field3logit` or a `multifield3logit` object.
-#' @param mapping list of aesthetic mappings to use for plot. **Note
-#'   that** mappings `x`, `y` and `z` are **not** required: they will be
-#'   overwritten if specified (see examples).
+#' @inheritParams stat_field3logit
 #'
 #' @family `gg` functions
 #'
@@ -196,7 +190,7 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
 #' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
 #'
-#' gg3logit(field0) + stat_field3logit()
+#' gg3logit(field0) + stat_conf3logit()
 #' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
 #'
 #' @export
