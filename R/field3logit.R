@@ -116,7 +116,7 @@ is_simplified_field3logit <- function(x) {
 #' @param narrows maximum number of arrows to be drawn per curve.
 #' @param edge minimum distance between each arrow (or point) and
 #'   the edge of the ternary plot.
-#' @param x object of class `field3logit`.
+#' @param x,object object of class `field3logit`.
 #' @param add `logical` argument which specifies whether the field
 #'   should be added to an existing plot (`add = TRUE`) or a new
 #'   ternary plot should be drawn (`add = FALSE`).
