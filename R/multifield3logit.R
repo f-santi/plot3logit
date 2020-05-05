@@ -2,13 +2,13 @@
 #' Multiple trilogit fields
 #'
 #' Methods of `S3` class `multifield3logit` handle multiple `fields3logit`
-#' objects simultaneously and permit new `multifield3logit` object to be
-#' easily created by means of the sum operator `+`. The [`fortify`] method
+#' objects simultaneously and permit new `multifield3logit` objects to be
+#' easily created by means of the sum operator "`+`". The [`fortify`] method
 #' of `multifield3logit` permits multiple `field3logit` objects to be easily
 #' handled by [`gg3logit`] and `ggtern`-based functions and methods. See
 #' Examples.
 #'
-#' @param x,y object of class `field3logit` or `multifield3logit`.
+#' @param x,y,model object of class `field3logit` or `multifield3logit`.
 #' @inheritParams field3logit
 #' @param ... other arguments passed to or from other methods.
 #' @param maxitems maximum number of items to be enumerated when an object of
