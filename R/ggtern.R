@@ -105,15 +105,16 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 
 #' Add a field to a `gg3logit` plot
 #'
-#' `stat_3logit` add a field to a [`gg3logit`] plot.
+#' [stat_3logit()] adds a field to a [`gg3logit`] plot.
 #'
 #' @inheritParams ggplot2::geom_segment
 #' @inheritParams ggplot2::stat_identity
 #' @inheritParams gg3logit
 #' @param data a `field3logit` or a `multifield3logit` object.
-#' @param mapping list of aesthetic mappings to use for plot. **Note
-#'   that** mappings `x`, `y` and `z` are **not** required: they will be
-#'   overwritten if specified (see examples).
+#' @param mapping list of aesthetic mappings to be used for plot. Mandatory
+#'   aestetics should not be specified if `field3loglit` or `multifield3logit`
+#'   object is passed to `data`. See secion"Aesthetic mappings" of
+#'   [gg3logit()] for details.
 #' @param arrow. specification for arrow heads, as created by
 #'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
 #'
