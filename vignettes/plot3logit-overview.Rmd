@@ -13,8 +13,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 5,
-  fig.asp = 1
+  fig.width = 6,
+  fig.height = 4,
+  fig.align = "center"
 )
 ```
 
@@ -96,7 +97,7 @@ gg3logit(field0) + stat_3logit()
 ```
 
 or standard graphics:
-```{r}
+```{r, fig.width=6, fig.asp=1}
 plot(field0)
 ```
 
