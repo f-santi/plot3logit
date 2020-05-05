@@ -67,13 +67,13 @@ is_simplified_field3logit <- function(x) {
 #'
 #' @description
 #'
-#' `field3logit` computes the vector field associated to a change in regressior
-#' values (which may involve more than one regressor) of a trinomial logit
-#' model either fitted by some multinomial regression function or explicitly
-#' specified.
+#' [field3logit()] computes the vector field associated to a change in
+#' regressior values (which may involve more than one regressor) of a trinomial
+#' logit model either fitted by some multinomial regression function or
+#' explicitly specified.
 #'
-#' `plot3logit` and `plot` method draw the ternary plot using standard graphics
-#' methods provided by package `Ternary`. See function [`gg3logit`] for plotting
+#' The method [plot()] draws the ternary plot using standard graphics methods
+#' provided by package `Ternary`. See function [gg3logit()] for plotting
 #' through the package [`ggtern`][ggtern::ggtern-package] based on the grammar
 #' of graphics.
 #'
