@@ -9,7 +9,7 @@
 #' * [plot3logit()] (since version 2.0.0). Instead of [plot3logit()], generate a
 #'   `field3logit` object through [field3logit()] and then plot it through the
 #'   method [plot()] (standard graphics based on package
-#ì   [`Ternary `][Ternary::Ternary-package]), through [autoplot()] or through
+#'   [`Ternary`][Ternary::Ternary-package]), through [autoplot()], or through
 #'   [gg3logit()] plus some `stat_*3logit` stats (graphics based on package
 #'   [`ggtern`][ggtern::ggtern-package]).
 #'
