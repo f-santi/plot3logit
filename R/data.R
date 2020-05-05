@@ -11,19 +11,19 @@
 #' @format
 #' `data.frame` with 3282 observations of 7 variables:
 #'
-#' * `employment_sit` - employment situation, a
+#' * `employment_sit` --- employment situation, a
 #'   `factor` with three levels: *Employed*, *Unemployed*, *Trainee*.
-#' * `gender` - gender, a `factor` with two levels: *Male*, *Female*.
-#' * `finalgrade` - final grade degree, a `factor` with three levels:
+#' * `gender` --- gender, a `factor` with two levels: *Male*, *Female*.
+#' * `finalgrade` --- final grade degree, a `factor` with three levels:
 #'   *Low*, *Average*, *High*.
-#' * `duration` - duration of studies, a `factor` with three levels:
+#' * `duration` --- duration of studies, a `factor` with three levels:
 #'   *Short*, *Average*, *Long*.
-#' * `social_class` - social class, a `factor` with five levels:
+#' * `social_class` --- social class, a `factor` with five levels:
 #'   *Working class*, *White-collar workers*, *Lower middle class*,
 #'   *Upper middle class*, *Unclassified*.
-#' * `irregularity` - irregularity indicator of student's studies,
+#' * `irregularity` --- irregularity indicator of student's studies,
 #'   a `factor` with three levels: *Low*, *Average*, *High*.
-#' * `hsscore` - high school final score, a `numeric` between 60 and
+#' * `hsscore` --- high school final score, a `numeric` between 60 and
 #'   100.
 #'
 #' @references Santi F., M. M. Dickson, G. Espa (2019)
