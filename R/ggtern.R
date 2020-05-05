@@ -237,12 +237,18 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 
 #' Add a field to a `gg3logit` plot
 #'
-#' `stat_3logit` add a field to a [`gg3logit`] plot.
+#' [stat_3logit()] adds a field and its confidence regions to a [`gg3logit`]
+#' plot. [stat_3logit()] is a wrapper for stats [stat_field3logit()] and
+#' [stat_conf3logit()] which are jointly applied.
 #'
-#' @inheritParams ggplot2::geom_segment
-#' @inheritParams ggplot2::stat_identity
-#' @inheritParams gg3logit
-#' @inheritParams autoplot
+#' @inheritParams stat_field3logit
+#' @param mapping_field, mapping_conf aesthetic mappings passed to argument
+#'   `mapping` of [stat_field3logit()] and [stat_conf3logit()].
+#' @param params_field, params_conf graphical parameters passed to argument
+#'   `mapping` of [stat_field3logit()] and [stat_conf3logit()].
+#' @param conf if `TRUE` the layer of [stat_conf3logit()] is added if
+#'   confidence regions are available, otherwise only the layer of
+#'   [stat_field3logit()] is returned.
 #'
 #' @family `gg` functions
 #'
@@ -256,8 +262,8 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #' gg3logit(field0) + stat_3logit(conf = TRUE)
 #'
 #' @export
-stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(), data = NULL,
-  params_field = list(), params_conf = list(),
+stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
+  data = NULL, params_field = list(), params_conf = list(),
   show.legend = NA, inherit.aes = TRUE, conf = TRUE) {
 
   list(
