@@ -338,4 +338,20 @@ fortify.field3logit <- function(model, data, ...) {
 
 
 
+#' @rdname field3logit
+#' @export
+coef.field3logit <- function(object, ...) {
+  return(object$B)
+}
+
+
+
+#' @rdname field3logit
+#' @export
+vcov.field3logit <- function(object, ...) {
+  return(object$vcovB)
+}
+
+
+
 

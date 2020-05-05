@@ -31,7 +31,7 @@ NULL
 #'
 #' This function is deprecated and may be soon removed from the package.
 #'
-#' `plot3logit` method draws the ternary plot using standard graphics
+#' [plot3logit()] method draws the ternary plot using standard graphics
 #' methods provided by package `Ternary`. Use the method [plot()] of
 #' `field3logit` objects instead.
 #'
@@ -41,7 +41,7 @@ NULL
 #' `S3` object of class `field3logit` structured as a named `list`.
 #'
 #' @seealso
-#' [`field3logit`].
+#' [field3logit()].
 #'
 #' @name plot3logit-deprecated
 #' @keywords deprecated
