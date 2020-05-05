@@ -2,6 +2,7 @@
 
 S3method("+",field3logit)
 S3method(as.data.frame,field3logit)
+S3method(as_tibble,field3logit)
 S3method(fortify,field3logit)
 S3method(fortify,multifield3logit)
 S3method(plot,field3logit)

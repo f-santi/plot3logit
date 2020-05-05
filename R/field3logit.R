@@ -332,7 +332,8 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
 #' @rdname field3logit
 #' @export
 fortify.field3logit <- function(model, data, ...) {
-  return(as_tibble.field3logit(model, ...))
+  as_tibble.field3logit(model, ...) %>%
+    return
 }
 
 
