@@ -29,10 +29,11 @@ NULL
 #'
 #' @description
 #'
-#' `plot3logit` method draw the ternary plot using standard graphics
-#' methods provided by package `Ternary`. See function [`gg3logit`] for plotting
-#' through the package [`ggtern`][ggtern::ggtern-package] based on the grammar
-#' of graphics.
+#' This function is deprecated and may be soon removed from the package.
+#'
+#' `plot3logit` method draws the ternary plot using standard graphics
+#' methods provided by package `Ternary`. Use the method [plot()] of
+#' `field3logit` objects instead.
 #'
 #' @inheritParams field3logit
 #'
