@@ -1,31 +1,31 @@
 
 #' Builds up matrix of coefficients from fitted models
 #'
-#' `read_model` reads arguments `model`, `ordinal`, `type` and `alpha` passed
-#' by function [`field3logit`] and properly sets the matrix of coefficients
+#' [read_model()] reads arguments `model`, `ordinal`, `type` and `alpha` passed
+#' by function [field3logit()] and properly sets the matrix of coefficients
 #' and the other needed model-specific functions.
 #'
 #' @inheritParams field3logit
-#' @param model see [`field3logit`].
+#' @param model see [field3logit()].
 #' @param type class of the model. Currently, forced to `"logit"`
-#'   by [`field3logit`] when [`read_model`] is called.
-#' @param alpha see [`field3logit`].
+#'   by [field3logit()] when [read_model()] is called.
+#' @param alpha see [field3logit()].
 #'
 #' @return
 #' `read_model` returns a named `list` with the following components:
 #'
 #' \item{B}{matrix of coefficients.}
 #' \item{vcovB}{variance-covariance matrix of coefficients.}
-#' \item{alpha}{see [`field3logit`].}
+#' \item{alpha}{see [field3logit()].}
 #' \item{model}{argument `type`.}
 #' \item{ordinal}{`logical` variable indicating wheter the model is
 #'   ordinal or not.}
 #' \item{P2XB}{link function.}
 #' \item{XB2P}{inverse of the link function.}
 #' \item{DeltaB2pc}{function that computes the points the curve of
-#'   the field should pass through (see [`DeltaB2pc`]).}
+#'   the field should pass through (see [DeltaB2pc()]).}
 #'
-#' @seealso [`plot3logit-package`], [`field3logit`].
+#' @seealso [`plot3logit-package`], [field3logit()].
 #'
 #' @keywords internal
 read_model <- function(model, type, alpha = NULL, vcov = NULL) {

@@ -266,7 +266,7 @@ plot.field3logit <- function(x, ..., add = FALSE, length = 0.05) {
 
 #' @rdname field3logit
 #' @export
-as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
+as_tibble.field3logit <- function(x, ..., wide = TRUE) {
   depoLab <- list(label = x$label, lab = x$lab)
   
   x %<>%
@@ -321,8 +321,18 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
 
 #' @rdname field3logit
 #' @export
+as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
+  as_tibble(x, ..., wide = wide) %>%
+    as.data.frame %>%
+    return
+}
+
+
+
+#' @rdname field3logit
+#' @export
 fortify.field3logit <- function(model, data, ...) {
-  return(as.data.frame.field3logit(model, ...))
+  return(as_tibble.field3logit(model, ...))
 }
 
 
