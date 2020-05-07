@@ -27,7 +27,7 @@
 ## Minor changes
 
 * Added methods `coef` and `vcov` for objects of class `field3logit` and
-  `multifield3logit`
+  `multifield3logit`.
 
 
 
@@ -46,14 +46,14 @@
 
 ## Major changes
 
-* Vignette "plot3logit-overview" has been added to the package.
+* Vignette `plot3logit-overview` has been added to the package.
 * Updated dependencies by including package "ellipse" amongst imported packages.
 
 
 ## Minor changes
 
-* The level "Long" of variable "irregulariry" of dataset "cross_1year" has
-  been changed to "High".
+* The level `Long` of variable `irregulariry` of dataset `cross_1year` has
+  been changed to `High`.
 
 
 ## Typos and other marginal changes
