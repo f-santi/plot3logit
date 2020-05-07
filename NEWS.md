@@ -5,19 +5,37 @@
 
 ## Major changes
 
-* Added the "plot" function for "multifield3logit" in standard graphics.
+* Added functions for computing the confidence regions of the covariate effects
+  of categorical trilogit models and function for representing confidence
+  regions both in standard an gg graphics.
+* Changed dependencies of the package both in section "Depends" (updated the
+  version of ggtern) and in section "Imports" (added `dplyr`, `forcats`,
+  `grDevices`, `lifecycle`, `purrr`, `tibble`, `tidyr`, `tidyselect` and removed
+  `reshape2`).
+* Added the `plot` function for `multifield3logit` in standard graphics.
+* Updated the functions for reading the output of `mlogit` according to the
+  upcoming new version of the package. The package `plot3logit` handles the
+  output of both the current and the upcoming version of `mlogit`.
+* Completely redefined the output of methods `as.data.frame` and `fortify` for
+  objects of class `field3logit` and `multifield3logit`.
+* Function `plot3logit` is now deprecated and not updated.
+* Partially redefined function `stat_3logit` and added function
+  `stat_field3logit` which works like the previous version of `stat_3logit`.
+  
 
 
 ## Minor changes
 
-* Updated version dependencies of packages "ggtern" and "ggplot2".
-* Checks on installed version of "mlogit" have been included, so that "plot3logit"
-  works with both the newest and the older versions of that package.
+* Added methods `coef` and `vcov` for objects of class `field3logit` and
+  `multifield3logit`
+
 
 
 ## Typos and other marginal changes
 
-* 
+* Added zero element (NULL) in the sum of `field3logit` and `multifield3logit`.
+* Added attribute `ordinal` to S3 class `field3logit` and updated the S3 method
+ `print`.
 
 
 
