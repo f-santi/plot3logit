@@ -11,14 +11,14 @@
 #' the effects that a change in regressors' values has on the probability
 #' distribution of the dependent variable. Such changes may involve either a
 #' single regressor, or a group of them (composite changes), and the package
-#' permits both cases to be represented in a user-friendly way. Theoretical
-#' and methodological details are illustrated and discussed in
+#' permits both cases to be represented in a user-friendly way. Methodological
+#' details are illustrated and discussed in
 #' \insertCite{santi2019;textual}{plot3logit}.
 #'
 #' The package can read the results of **both categorical and ordinal trinomial
 #' logit** regression fitted by various functions (see the next section) and
 #' creates a `field3logit` object which may be represented by means of functions
-#' [`gg3logit`] and [`stat_3logit`].
+#' [gg3logit()] and [stat_field3logit()].
 #'
 #' The `plot3logit` package inherits graphical classes and methods from the
 #' package [`ggtern`][ggtern::ggtern-package]
@@ -28,19 +28,24 @@
 #'
 #' Graphical representation based on **standard graphics** is made available
 #' through the package [`Ternary`][Ternary::TernaryPlot]
-#' \insertCite{smith2017}{plot3logit} by functions [`plot3logit`] and
-#' [`TernaryField`], and in particular by the [`plot`][plot.field3logit]
-#' method of `field3logit` objects.
+#' \insertCite{smith2017}{plot3logit} by function [TernaryField()]
+#' and in particular by the method [`plot`][plot.field3logit] of
+#' `field3logit` class.
+#'
+#' Since version 2.0.0, `plot3logit` permits one to draw also the confidence
+#' regions associated to the covariates effects. See the vignette of the
+#' package (type `vignette('plot3logit-overview')`) and the help of function
+#' [stat_conf3logit()] for some examples.
 #'
 #' @section Compatibility:
-#' Function [`field3logit`] of package `plot3logit` can read trinomial
-#' regression estimates from the output of the following functions:
+#' Function [field3logit()] can read trinomial regression estimates from the
+#' output of the following functions:
 #' * [`multinom`][nnet::multinom] of package `nnet` (logit regression);
 #' * [`polr`][MASS::polr] of package `MASS` (ordinal logit regression);
 #' * [`mlogit`][mlogit::mlogit] of package `mlogit` (logit regression).
 #'
 #' Moreover, explicit matrix of regression coefficients can be passed to
-#' [`field3logit`]. See examples and function [`field3logit`] for further
+#' [field3logit()]. See examples and function [field3logit()] for further
 #' details.
 #'
 #' @examples
@@ -78,7 +83,7 @@
 #' @references
 #' \insertAllCited{}
 #'
-#' @seealso [`field3logit`], [`gg3logit`], [`TernaryField`].
+#' @seealso [field3logit()], [gg3logit()], [TernaryField()].
 #'
 #' @encoding UTF-8
 #'
