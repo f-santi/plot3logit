@@ -1,7 +1,7 @@
 Package: plot3logit
 Type: Package
 Title: Ternary Plots for Trinomial Regression Models
-Version: 1.0.2.9000
+Version: 2.0.0
 Authors@R: c(
     person('Flavio', 'Santi', email = 'flavio.santi@univr.it',
       role = c('cre', 'aut'), comment = c(ORCID = "0000-0002-2014-1981")),
@@ -32,6 +32,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Repository: CRAN
-Date: 2019-09-08
+Date: 2020-05-09
 VignetteBuilder: knitr
 RdMacros: Rdpack, lifecycle

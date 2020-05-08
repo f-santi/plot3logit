@@ -1,8 +1,7 @@
 
 ## Test environments
 
-* local OS X install, R 3.6.0
-* local ubuntu 18.04 LTS (bionic), R 3.6.1
+* local OS X install, R 4.0.0
 * win-builder (oldrelease, release, and devel)
 
 
