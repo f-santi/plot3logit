@@ -18,7 +18,7 @@ illustrated and discussed in Santi, Dickson and Espa (2019).
 The package can read the results of **both categorical and ordinal
 trinomial logit** regression fitted by various functions (see the next
 section) and creates a `field3logit` object which may be represented by
-means of functions `gg3logit` and `stat_3logit`.
+means of functions `gg3logit` and `stat_field3logit`.
 
 The `plot3logit` package inherits graphical classes and methods from the
 package `ggtern` (Hamilton 2018) which, in turn, is based on the package
@@ -74,7 +74,7 @@ Secondly, the field is represented on a ternary plot, using either
 `gg`-graphics:
 
 ``` r
-gg3logit(field0) + stat_3logit()
+gg3logit(field0) + stat_field3logit()
 ```
 
 or standard graphics:
