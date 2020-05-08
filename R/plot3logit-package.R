@@ -49,6 +49,7 @@
 #' details.
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' # Read from "nnet::multinom"
@@ -79,6 +80,7 @@
 #' attr(M, 'labs') <- c('Employed', 'Unemployed', 'Trainee')
 #' field3 <- field3logit(M, c(0, 1))
 #' gg3logit(field3) + stat_field3logit()
+#' }
 #'
 #' @references
 #' \insertAllCited{}
@@ -95,7 +97,7 @@
 #'
 #' @importFrom dplyr bind_rows mutate pull select
 #' @importFrom ggplot2 fortify unit arrow
-#' @importFrom graphics points arrows
+#' @importFrom graphics points arrows plot
 #' @importFrom Rdpack reprompt
 #' @importFrom stats uniroot
 #' @importFrom tibble as_tibble tibble

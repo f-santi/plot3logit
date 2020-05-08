@@ -3,10 +3,7 @@
 #'
 #' Methods of `S3` class `multifield3logit` handle multiple `fields3logit`
 #' objects simultaneously and permit new `multifield3logit` objects to be
-#' easily created by means of the sum operator "`+`". The [`fortify`] method
-#' of `multifield3logit` permits multiple `field3logit` objects to be easily
-#' handled by [`gg3logit`] and `ggtern`-based functions and methods. See
-#' Examples.
+#' easily created by means of the sum operator "`+`".
 #'
 #' @param x,y,model object of class `field3logit` or `multifield3logit`.
 #' @inheritParams field3logit
@@ -18,12 +15,11 @@
 #' @return
 #' `S3` object of class `multifield3logit` structured as a named `list`.
 #'
-#' @family `gg` functions
-#'
 #' @seealso
-#' [`field3logit`].
+#' [field3logit()].
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ ., data = cross_1year)
@@ -55,6 +51,7 @@
 #' gg3logit(mfields) +
 #'   stat_field3logit(aes(colour = label)) +
 #'   theme_zoom_L(0.45)
+#' }
 #'
 #' @export
 multifield3logit <- function(x, ...) {

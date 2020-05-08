@@ -149,6 +149,7 @@ is_simplified_field3logit <- function(x) {
 #' \insertAllCited{}
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' # Model fit
@@ -168,6 +169,7 @@ is_simplified_field3logit <- function(x) {
 #' # a decrease of "hsscore" by 10
 #' field0 <- field3logit(mod0, 'finalgradeHigh - 10 * hsscore')
 #' gg3logit(field0) + stat_field3logit()
+#' }
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,

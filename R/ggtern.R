@@ -63,7 +63,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #'   confidence regions) *within* every field. Unlike variable `group`,
 #'  `idarrow` is not a global identifier of graphical objets.
 #' 
-#' @family `gg` functions
+#' @family gg functions
 #'
 #' @examples
 #' data(cross_1year)
@@ -118,9 +118,10 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' @param arrow. specification for arrow heads, as created by
 #'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
 #'
-#' @family `gg` functions
+#' @family gg functions
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -128,6 +129,7 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #'
 #' gg3logit(field0) + stat_field3logit()
 #' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
+#' }
 #'
 #' @export
 stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
@@ -182,9 +184,10 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #'
 #' @inheritParams stat_field3logit
 #'
-#' @family `gg` functions
+#' @family gg functions
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -192,6 +195,7 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #'
 #' gg3logit(field0) + stat_conf3logit()
 #' gg3logit(field0) + stat_field3logit() + stat_conf3logit()
+#' }
 #'
 #' @export
 stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
@@ -250,9 +254,10 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #'   [stat_conf3logit()] is added, otherwise only the layer of
 #'   [stat_field3logit()] is returned.
 #'
-#' @family `gg` functions
+#' @family gg functions
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -260,6 +265,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #'
 #' gg3logit(field0) + stat_3logit()
 #' gg3logit(field0) + stat_3logit(conf = TRUE)
+#' }
 #'
 #' @export
 stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
@@ -301,15 +307,17 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #'   [stat_conf3logit()] is added, otherwise only a [gg3logit()] object with the
 #'   layer of [stat_field3logit()] is returned.
 #'
-#' @family `gg` functions
+#' @family gg functions
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
 #' field0 <- field3logit(mod0, 'genderFemale', conf = 0.95)
 #'
 #' autoplot(field0)
+#' }
 #'
 #' @export
 autoplot <- function(x, mapping_field = aes(), mapping_conf = aes(),
