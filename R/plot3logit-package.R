@@ -101,6 +101,7 @@
 #' @importFrom dplyr bind_rows mutate pull select
 #' @importFrom ggplot2 fortify unit arrow
 #' @importFrom graphics points arrows
+#' @importFrom Rdpack reprompt
 #' @importFrom stats uniroot
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr pivot_longer pivot_wider
