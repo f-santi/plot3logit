@@ -2,8 +2,8 @@
 #' Ternary Plots for Trinomial Regression Models
 #'
 #' An implementation of the ternary plot for interpreting regression
-#' coefficients of trinomial regression models, as proposed in Santi, Dickson
-#' and Espa (2019).
+#' coefficients of trinomial regression models, as proposed in
+#' \insertCite{santi2019;textual}{plot3logit}.
 #'
 #' The package permits the covariate effects of trinomial regression models to
 #' be represented graphically by means of a ternary plot. The aim of the
@@ -12,8 +12,8 @@
 #' distribution of the dependent variable. Such changes may involve either a
 #' single regressor, or a group of them (composite changes), and the package
 #' permits both cases to be represented in a user-friendly way. Theoretical
-#' and methodological details are illustrated and discussed in Santi, Dickson
-#' and Espa (2019).
+#' and methodological details are illustrated and discussed in
+#' \insertCite{santi2019;textual}{plot3logit}.
 #'
 #' The package can read the results of **both categorical and ordinal trinomial
 #' logit** regression fitted by various functions (see the next section) and
@@ -21,13 +21,16 @@
 #' [`gg3logit`] and [`stat_3logit`].
 #'
 #' The `plot3logit` package inherits graphical classes and methods from the
-#' package [`ggtern`][ggtern::ggtern-package] (Hamilton 2018) which, in turn, is
-#' based on the [`ggplot2`][ggplot2::ggplot2-package] package (Wickham 2016).
+#' package [`ggtern`][ggtern::ggtern-package]
+#' \insertCite{hamilton2018}{plot3logit} which, in turn, is based on the
+#' [`ggplot2`][ggplot2::ggplot2-package] package
+#' \insertCite{wickham2016}{plot3logit}.
 #'
 #' Graphical representation based on **standard graphics** is made available
-#' through the package [`Ternary`][Ternary::TernaryPlot] (Smith 2017) by
-#' functions [`plot3logit`] and [`TernaryField`], and in particular by the
-#' [`plot`][plot.field3logit] method of `field3logit` objects.
+#' through the package [`Ternary`][Ternary::TernaryPlot]
+#' \insertCite{smith2017}{plot3logit} by functions [`plot3logit`] and
+#' [`TernaryField`], and in particular by the [`plot`][plot.field3logit]
+#' method of `field3logit` objects.
 #'
 #' @section Compatibility:
 #' Function [`field3logit`] of package `plot3logit` can read trinomial
@@ -73,20 +76,7 @@
 #' gg3logit(field3) + stat_field3logit()
 #'
 #' @references
-#'
-#' Hamilton N. E., M. Ferry (2018) "`ggtern`: Ternary Diagrams Using ggplot2",
-#' *Journal of Statistical Software, Code Snippets*, **87**(3), 1-17.
-#' \doi{10.18637/jss.v087.c03}
-#'
-#' Santi F., M. M. Dickson, G. Espa (2019) "A graphical tool for interpreting
-#' regression coefficients of trinomial logit models", *The American
-#' Statistician*, **73**(2), pp. 200-207. \doi{10.1080/00031305.2018.1442368}
-#'
-#' Smith M. R. (2017). "`Ternary`: An R Package for Creating Ternary Plots",
-#' *Zenodo*. \doi{10.5281/zenodo.1068996}
-#'
-#' Wickham, H. (2016) *`ggplot2`: Elegant Graphics for Data Analysis.*
-#' Springer-Verlag, New York.
+#' \insertAllCited{}
 #'
 #' @seealso [`field3logit`], [`gg3logit`], [`TernaryField`].
 #'
