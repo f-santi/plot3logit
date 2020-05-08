@@ -1,7 +1,7 @@
 
 #' Computes the coordinates of a vertex on the edge
 #'
-#' Given the coordinates of one of vertices, `v2vedge` computes the
+#' Given the coordinates of one of vertices, [v2vedge()] computes the
 #' coordinates of the vertex on the edge.
 #'
 #' @param v `numeric` vector of ternary coordinates.
@@ -22,14 +22,14 @@ v2vedge<- function(v, edge) {
 
 #' Computation of starting points of curves of the field
 #'
-#' Given the output of [`DeltaB2pc_cat3logit`] or
-#' [`DeltaB2pc_ord3logit`], the coordinates of points on the
+#' Given the output of [DeltaB2pc_cat3logit()] or
+#' [DeltaB2pc_ord3logit()], the coordinates of points on the
 #' edge are computed for each curve of the field of points
 #' given in input.
 #'
 #' @inheritParams DeltaB2pc
 #' @param pc `list` of ternary coordinates, as returned by
-#'   [`DeltaB2pc_cat3logit`] or [`DeltaB2pc_ord3logit`].
+#'   [DeltaB2pc_cat3logit()] or [DeltaB2pc_ord3logit()].
 #'   Function `pc2p0_single` accepts only a single point
 #'   (that is a `numeric` vector of length three).
 #' @param flink named `list` of two functions: `P2XB`
@@ -39,7 +39,7 @@ v2vedge<- function(v, edge) {
 #' @return
 #' A named `list` with two components:
 #' \item{status}{a `character` always equal to `"p0"`
-#'   (see section *Value* of [`DeltaB2pc`]).}
+#'   (see section *Value* of [DeltaB2pc()]).}
 #' \item{pp}{a `list` of ternary coordinates.}
 #'
 #' @examples
@@ -115,7 +115,7 @@ pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
 #' of the arrow, and the ternary coordinates of the tip of the
 #' arrow.
 #'
-#' @seealso [`P2XB`], [`XB2P`].
+#' @seealso [P2XB()], [XB2P()].
 #'
 #' @keywords internal
 gen_path <- function(p0, DeltaB, edge = 0.01, nmax = Inf, flink) {

@@ -10,8 +10,8 @@
   regions both in standard an gg graphics.
 * Changed dependencies of the package both in section "Depends" (updated the
   version of ggtern) and in section "Imports" (added `dplyr`, `forcats`,
-  `grDevices`, `lifecycle`, `purrr`, `tibble`, `tidyr`, `tidyselect` and removed
-  `reshape2`).
+  `grDevices`, `lifecycle`, `purrr`, `Rdpack`, `tibble`, `tidyr`, `tidyselect`
+  and removed `reshape2`).
 * Added the `plot` function for `multifield3logit` in standard graphics.
 * Updated the functions for reading the output of `mlogit` according to the
   upcoming new version of the package. The package `plot3logit` handles the

@@ -47,7 +47,8 @@ DeltaB2pc_cat3logit <- function(DeltaB, n = 8, edge = 0.01) {
   switch(as.character(sum(xcmp)),
     '0' = DeltaB2pc_cat3logit_dim3(DeltaB, n, edge),
     '1' = DeltaB2pc_cat3logit_dim2(DeltaB, n, edge),
-    '3' = DeltaB2pc_cat3logit_dim1(DeltaB, n, edge))
+    '3' = DeltaB2pc_cat3logit_dim1(DeltaB, n, edge)
+  )
 }
 
 
