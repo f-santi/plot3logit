@@ -277,6 +277,35 @@ gg3logit(mfields) +
 ```
 
 
+## Confidence regions
+
+The package `plot3logit` allows also to draw the confidence regions associated
+to each effect, both in case of `field3logit` and `multifield3logit` objects.
+
+The confidence regions can be computed when the function `field3logit` is
+called by setting the argument `conf`. Otherwise, they can be added later
+through the function `add_confregions` as it follows:
+```{r}
+field0 <- add_confregions(field0, conf = 0.95)
+field0
+```
+and through the same syntax in case of `multifield3logit` objects:
+```{r}
+mfields <- add_confregions(mfields, conf = 0.95)
+```
+
+The statistic `stat_conf3logit` permits confidence regions to be drawn,
+if available:
+```{r, eval=FALSE}
+gg3logit(field0) + stat_field3logit() + stat_conf3logit()
+```
+and
+```{r, message = FALSE}
+gg3logit(mfields) +
+  stat_field3logit(aes(colour = label)) +
+  stat_conf3logit(aes(fill = label)) +
+  theme_zoom_L(0.45)
+```
 
 
 
