@@ -99,9 +99,10 @@ TernaryField <- function(field, ..., length = 0.05, conf = FALSE,
     use_series('effects') %>%
     simplify_field3logit -> depo
     
-  if (is.numeric(depo)) {
+  if (all(is.na(depo[[1]]$to))) {
   	depo %>%
-  	  matrix(ncol = 3, byrow = TRUE) %>%
+  	  lapply(function(x) { x$from }) %>%
+  	  purrr::reduce(rbind) %>%
   	  TernaryPoints(...)
   } else {
     depo %>%

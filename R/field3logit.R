@@ -185,12 +185,14 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
       pc2p0(DeltaB, edge, modB[c('XB2P','P2XB')]) -> p0
   } else {
     p0 <- list(pp = p0)
-    p0$status <- ifelse(all(DeltaB == 0),'p','p0')
+    p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
   }
 
   # Compute the arrows
   if (p0$status == 'p') {
-    out <- p0$pp
+  	lapply(p0$pp, function(x) {
+  	  list(A1 = list(from = x, to = rep(NA, 3)))
+  	}) -> out
   } else {
     out <- lapply(p0$pp, gen_path, DeltaB = DeltaB,
       edge = edge, nmax = narrows, flink = modB[c('XB2P','P2XB')])
@@ -274,31 +276,17 @@ as_tibble.field3logit <- function(x, ..., wide = TRUE) {
   
   x %<>%
     use_series('effects') %>%
-    simplify_field3logit
-
-  if (is.numeric(x)) {
-  	pos <- seq(from = 1, to = length(x), by = 3)
-  	x %<>%
-  	  matrix(ncol = 3, byrow = TRUE) %>%
-  	  as.data.frame %>%
-  	  cbind(depoLab$label, names(x)[pos], 'X', 'void', .) %>%
-      set_colnames(c('label', 'curve', 'arrow', 'role', depoLab$lab)) %>%
-      set_rownames(NULL)
-    x %<>% extract(rep(1:nrow(x), each = 2), )
-    x$role <- rep(c('from', 'to'), nrow(x) / 2)
-  } else {
-  	x %<>%
-      purrr::imap(~ prepare_block(
-        label = depoLab$label,
-        idarrow = .y,
-        comp = depoLab$lab,
-        from = .x$from,
-        to = .x$to,
-        confregion = .x$confregion
-      )) %>%
-      purrr::reduce(bind_rows) %>%
-      mutate(comp = factor(.$comp, depoLab$lab))
-  }
+    simplify_field3logit %>%
+    purrr::imap(~ prepare_block(
+      label = depoLab$label,
+      idarrow = .y,
+      comp = depoLab$lab,
+      from = .x$from,
+      to = .x$to,
+      confregion = .x$confregion
+    )) %>%
+    purrr::reduce(bind_rows) %>%
+    mutate(comp = factor(.$comp, depoLab$lab))
   
   if (wide) {
     x %<>%

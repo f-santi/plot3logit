@@ -160,7 +160,7 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   	))
   }
 
-  if (!is.null(data$idarrow) & all(data$idarrow == 'X')) {
+  if (all(is.na(data[ , mapping$xend]))) {
   	geom <- 'point'
   	params['arrow'] <- NULL
   }
