@@ -7,7 +7,7 @@ vignette: >
   %\VignetteIndexEntry{An overview of package plot3logit}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: "../inst/REFERENCES.bib"
+bibliography: ../inst/REFERENCES.bib
 ---
 
 ```{r setup, include = FALSE}

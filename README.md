@@ -13,7 +13,7 @@ probability distribution of the dependent variable. Such changes may
 involve either a single regressor, or a group of them (composite
 changes), and the package permits both cases to be handled in a
 user-friendly way. Theoretical and methodological details are
-illustrated and discussed in Santi, Dickson and Espa (2019).
+illustrated and discussed in Santi, Dickson, and Espa (2019).
 
 The package can read the results of **both categorical and ordinal
 trinomial logit** regression fitted by various functions (see the next
@@ -21,8 +21,8 @@ section) and creates a `field3logit` object which may be represented by
 means of functions `gg3logit` and `stat_field3logit`.
 
 The `plot3logit` package inherits graphical classes and methods from the
-package `ggtern` (Hamilton 2018) which, in turn, is based on the package
-`ggplot2` (Wickham 2016).
+package `ggtern` (Hamilton and Ferry 2018) which, in turn, is based on
+the package `ggplot2` (Wickham 2017).
 
 Graphical representation based on **standard graphics** is made
 available through the package `Ternary` (Smith 2017) by functions
@@ -85,17 +85,37 @@ plot(field0)
 
 ## References
 
-Hamilton N. E., M. Ferry (2018) “ggtern: Ternary Diagrams Using
-ggplot2”, *Journal of Statistical Software, Code Snippets*, **87**(3),
-pp. 1-17. <https://doi.org/10.18637/jss.v087.c03>
+<div id="refs" class="references">
 
-Santi F., M. M. Dickson, G. Espa (2019) “A graphical tool for
-interpreting regression coefficients of trinomial logit models”, *The
-American Statistician*, **73**(2), pp. 200-207.
-<https://doi.org/10.1080/00031305.2018.1442368>
+<div id="ref-hamilton2018">
 
-Smith M. R. (2017). “Ternary: An R Package for Creating Ternary Plots”,
-*Zenodo*. <https://doi.org/10.5281/zenodo.1068996>
+Hamilton, N. E., and M. Ferry. 2018. “ggtern: Ternary Diagrams Using
+ggplot2.” *Journal of Statistical Software, Code Snippets* 87 (3): 1–17.
+doi:[10.18637/jss.v087.c03](https://doi.org/10.18637/jss.v087.c03).
 
-Wickham, H. (2016) *ggplot2: Elegant Graphics for Data Analysis.*
-Springer-Verlag, New York.
+</div>
+
+<div id="ref-santi2019">
+
+Santi, F., M. M. Dickson, and G. Espa. 2019. “A Graphical Tool for
+Interpreting Regression Coefficients of Trinomial Logit Models.” *The
+American Statistician* 73 (2): 200–207.
+doi:[10.1080/00031305.2018.1442368](https://doi.org/10.1080/00031305.2018.1442368).
+
+</div>
+
+<div id="ref-smith2017">
+
+Smith, Martin R. 2017. “Ternary: An R Package for Creating Ternary
+Plots.” *Zenodo*.
+
+</div>
+
+<div id="ref-wickham2016">
+
+Wickham, H. 2017. *ggplot2: Elegant Graphics for Data Analysis*. New
+York: Springer-Verlag.
+
+</div>
+
+</div>

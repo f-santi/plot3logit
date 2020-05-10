@@ -15,7 +15,6 @@
 #'
 #' @docType data
 #' @name deprecated-functions
-#' @keywords deprecated
 #'
 NULL
 
@@ -25,9 +24,9 @@ NULL
 
 #' Computation and representation of the vector field
 #'
-#' \lifecycle{deprecated}
-#'
 #' @description
+#'
+#' \lifecycle{deprecated}
 #'
 #' This function is deprecated and may be soon removed from the package.
 #'
@@ -44,7 +43,6 @@ NULL
 #' [field3logit()].
 #'
 #' @name plot3logit-deprecated
-#' @keywords deprecated
 #'
 #' @export
 plot3logit <- function(model, delta, label = '<empty>', p0 = NULL,

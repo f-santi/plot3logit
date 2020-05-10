@@ -35,8 +35,8 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
 
 #' `field3logit` simplification function and test
 #'
-#' Given an object of class `field3logit`, `simplify_field3logit` returns
-#' it in the simplified form. Function `is_simplified_field3logit` tests
+#' Given an object of class `field3logit`, [simplify_field3logit()] returns
+#' it in the simplified form. Function [is_simplified_field3logit()] tests
 #' whether an object of class `field3logit` is in the simplified form.
 #'
 #' @param x an object of class `field3logit`.

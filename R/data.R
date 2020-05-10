@@ -28,7 +28,7 @@
 #' }
 #'
 #' @references
-#' \insertRef{santi2019}{plot3logit}
+#' \insertAllCited{}
 #'
 #' @keywords data
 NULL

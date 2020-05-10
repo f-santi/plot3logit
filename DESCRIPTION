@@ -32,6 +32,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Repository: CRAN
-Date: 2020-05-09
+Date: 2020-05-10
 VignetteBuilder: knitr
 RdMacros: Rdpack, lifecycle
