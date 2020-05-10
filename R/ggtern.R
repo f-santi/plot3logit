@@ -162,13 +162,10 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   	))
   }
 
-  if (all(is.na(data[ , mapping$xend]))) {
-  	geom <- 'point'
-  	params['arrow'] <- NULL
-  }
+  geom <- quote(ifelse(any(is.na(data[ , mapping$xend])), 'point', 'segment'))
   
   ggplot2::layer(
-    stat = Stat3Logit, data = data, mapping = mapping, geom = geom,
+    stat = Stat3Logit, data = data, mapping = mapping, geom = eval(geom),
     position = position, show.legend = show.legend,
     inherit.aes = inherit.aes, params = params
   )

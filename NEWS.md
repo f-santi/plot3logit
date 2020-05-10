@@ -1,21 +1,10 @@
 
-# plot3logit 2.0.0.9000
+# plot3logit 2.1.0
 
 
 ## Major changes
 
-*   
-
-
-## Minor changes
-
-* 
-
-
-
-## Typos and other marginal changes
-
-* 
+* Major bug corrected from version 2.0.0
 
 
 
