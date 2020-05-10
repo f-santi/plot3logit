@@ -106,8 +106,8 @@ doi:[10.1080/00031305.2018.1442368](https://doi.org/10.1080/00031305.2018.144236
 
 <div id="ref-smith2017">
 
-Smith, Martin R. 2017. “Ternary: An R Package for Creating Ternary
-Plots.” *Zenodo*.
+Smith, M. R. 2017. “Ternary: An R Package for Creating Ternary Plots.”
+*Zenodo*.
 
 </div>
 
