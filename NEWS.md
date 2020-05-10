@@ -1,4 +1,25 @@
 
+# plot3logit 2.0.0.9000
+
+
+## Major changes
+
+*   
+
+
+## Minor changes
+
+* 
+
+
+
+## Typos and other marginal changes
+
+* 
+
+
+
+
 
 # plot3logit 2.0.0
 
