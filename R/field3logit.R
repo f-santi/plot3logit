@@ -33,6 +33,33 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
 
 
 
+field3logit_list <- function(model, delta, label, p0, alpha, vcov, ncurves,
+  narrows, edge, conf, npoints) {
+    	
+  delta %>%
+  lapply(function(w) {
+  	if (is.list(w)) {
+  	  list(
+  	    model = model, label = label, p0 = p0, alpha = alpha, 
+  	    vcov = vcov, ncurves = ncurves, narrows = narrows,
+  	    edge = edge, conf = conf, npoints
+  	  ) %>%
+  	  modifyList(w) %>%
+  	  do.call('field3logit', .) -> out
+  	} else {
+  	  field3logit(
+  	    model, w, paste(w, collapse = '|'), p0, alpha, vcov,
+  	    ncurves, narrows, edge, conf, npoints
+  	  ) -> out
+  	}
+  	out
+  }) %>%
+  Reduce(`+`, .) %>%
+  return
+}
+
+
+
 #' `field3logit` simplification function and test
 #'
 #' Given an object of class `field3logit`, [simplify_field3logit()] returns
@@ -101,7 +128,10 @@ is_simplified_field3logit <- function(x) {
 #'   This could be either a `numeric` vector, the name of a covariate
 #'   (passed either as a `character` or an `expression`), or a mathematical
 #'   expression involving one or more than one covariates (passed either as
-#'   a `character` or an `expression`). See details and examples.
+#'   a `character` or an `expression`). If a list is passed to `delta`,
+#'   multiple fields are computed according to parameters passed as
+#'   components of a 2-level list. See details and examples.
+#
 #' @param p0 `list` of starting points (ternary coordinates) of the curves
 #'   of the field. If not specified, `field3logit` automatically compute
 #'   `ncurves` candidate points so that arrows are evenly distributed over
@@ -138,7 +168,8 @@ is_simplified_field3logit <- function(x) {
 #'   the slow index, whereas the covariates are the fast index.
 #'
 #' @return
-#' `S3` object of class `field3logit` structured as a named `list`.
+#' `S3` object of class `field3logit` structured as a named `list` or an object
+#' of class `multifield3logit` if `delta` is a `list`.
 #'
 #' @seealso
 #' [multifield3logit()], [gg3logit()], [autoplot()].
@@ -176,6 +207,14 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   alpha = NULL, vcov = NULL, ncurves = 8, narrows = Inf, edge = 0.01,
   conf = NA, npoints = 100) {
 
+  # Check argument "delta"
+  if (is.list(delta)) {
+  	field3logit_list(
+  	  model, delta, label, p0, alpha, vcov,
+  	  ncurves, narrows, edge, conf, npoints
+    ) %>%
+      return
+  }
   # Read input
   modB <- read_model(model, 'logit', alpha, vcov)
   vdelta <- get_vdelta(delta, modB)

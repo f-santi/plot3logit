@@ -4,7 +4,8 @@
 
 ## Major changes
 
-* 
+* `list` objects can be passed to argument `delta` of `field3logit` for
+  computing multiple fields (a `multifield3logit` object is returned)
   
 
 
