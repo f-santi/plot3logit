@@ -12,8 +12,21 @@ read_dta('data-raw/USvote2016.dta') %>%
     birthyr_baseline, gender_baseline, race_baseline, educ_baseline,
     faminc_baseline
   ) %>%
+  # Vote against / in favour
+  mutate(against = fct_recode(vote_for_against_2016,
+    'no' = 'Vote in favor',
+    'yes' = 'Vote against opponent'
+  )) %>%
+  mutate(against = factor(against, levels = c('no', 'yes'))) %>%
   # Birth year
   mutate(birthyr = as.integer(as.character(birthyr_baseline))) %>%
+  mutate(birthyr = cut(
+    x = birthyr,
+    breaks = c(1920, 1940, 1950, 1960, 1970, 1980, 2000),
+    dig.lab = 10, right = FALSE
+  )) %>%
+  # Education
+  mutate(educ = fct_relevel(educ_baseline, '2-year')) %>%
   # Race
   mutate(race = fct_lump_min(race_baseline, 100)) %>%
   # Vote
@@ -22,16 +35,10 @@ read_dta('data-raw/USvote2016.dta') %>%
     'Clinton' = 'Hillary Clinton',
     'Trump' = 'Donald Trump'
   )) %>%
-  # Vote against / in favour
-  mutate(against = fct_recode(vote_for_against_2016,
-    'no' = 'Vote in favor',
-    'yes' = 'Vote against opponent'
-  )) %>%
-  mutate(against = factor(against, levels = c('no', 'yes'))) %>%
   # Rename variables
   rename(
     idcode = case_identifier, famincome = faminc_baseline,
-    educ = educ_baseline, gender = gender_baseline
+    gender = gender_baseline
   ) %>%
   # Variable selection
   select(idcode, vote, race, educ, gender, birthyr, famincome) -> USvote2016
