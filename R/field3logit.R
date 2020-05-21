@@ -212,45 +212,45 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   	field3logit_list(
   	  model, delta, label, p0, alpha, vcov,
   	  ncurves, narrows, edge, conf, npoints
-    ) %>%
-      return
-  }
-  # Read input
-  modB <- read_model(model, 'logit', alpha, vcov)
-  vdelta <- get_vdelta(delta, modB)
-  DeltaB <- as.numeric(crossprod(vdelta, modB$B))
-
-  # Compute the starting points of the curves
-  if (is.null(p0)) {
-    modB$DeltaB2pc(DeltaB, ncurves, edge) %>%
-      pc2p0(DeltaB, edge, modB[c('XB2P','P2XB')]) -> p0
+    ) -> out
   } else {
-    p0 <- list(pp = p0)
-    p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
-  }
+    # Read input
+    modB <- read_model(model, 'logit', alpha, vcov)
+    vdelta <- get_vdelta(delta, modB)
+    DeltaB <- as.numeric(crossprod(vdelta, modB$B))
 
-  # Compute the arrows
-  if (p0$status == 'p') {
-  	lapply(p0$pp, function(x) {
-  	  list(A1 = list(from = x, to = rep(NA, 3)))
-  	}) -> out
-  } else {
-    out <- lapply(p0$pp, gen_path, DeltaB = DeltaB,
-      edge = edge, nmax = narrows, flink = modB[c('XB2P','P2XB')])
-  }
+    # Compute the starting points of the curves
+    if (is.null(p0)) {
+      modB$DeltaB2pc(DeltaB, ncurves, edge) %>%
+        pc2p0(DeltaB, edge, modB[c('XB2P','P2XB')]) -> p0
+    } else {
+      p0 <- list(pp = p0)
+      p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
+    }
 
-  # Create field3logit object
-  names(out) %<>% paste0('C', 1:length(out), .)
-  out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
-    vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
-    effects = out, label = label, vcovB = modB$vcovB,
-    ordinal = modB$ordinal, conf = conf
-  )
-  class(out) <- 'field3logit'
+    # Compute the arrows
+    if (p0$status == 'p') {
+    	  lapply(p0$pp, function(x) {
+  	    list(A1 = list(from = x, to = rep(NA, 3)))
+  	  }) -> out
+    } else {
+      out <- lapply(p0$pp, gen_path, DeltaB = DeltaB,
+        edge = edge, nmax = narrows, flink = modB[c('XB2P','P2XB')])
+    }
+
+    # Create field3logit object
+    names(out) %<>% paste0('C', 1:length(out), .)
+    out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
+      vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
+      effects = out, label = label, vcovB = modB$vcovB,
+      ordinal = modB$ordinal, conf = conf
+    )
+    class(out) <- 'field3logit'
   
-  # Compute the confidence regions
-  if (!is.null(out$vcov) & !is.na(conf)) {
-  	out %<>% add_confregions(conf, npoints)
+    # Compute the confidence regions
+    if (!is.null(out$vcov) & !is.na(conf)) {
+  	  out %<>% add_confregions(conf, npoints)
+    }
   }
   
   # Output
