@@ -1,7 +1,8 @@
-inst/doc
-man/*.Rd
+/inst/doc
+/man/*.Rd
 .DS_Store
 .Rapp.history
 .Rproj.user
 .RData
 .Rhistory
+/flavio/
