@@ -39,7 +39,8 @@ regression estimates from the output of the following functions:
 
   - `multinom` of package `nnet` (logit regression);
   - `polr` of package `MASS` (ordinal logit regression);
-  - `mlogit` of package `mlogit` (logit regression).
+  - `mlogit` of package `mlogit` (logit regression);
+  - `vgam` of package `VGAM` (logit regression).
 
 Moreover, explicit matrix of regression coefficients can be passed to
 `field3logit`. See the help of the package (type `?
