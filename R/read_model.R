@@ -41,6 +41,8 @@ read_model <- function(model, type, alpha = NULL, vcov = NULL) {
   	out %<>% modifyList(read_from_polr(model))
   } else if (inherits(model, 'mlogit')) {
   	out %<>% modifyList(read_from_mlogit(model))
+  } else if (inherits(model, 'vgam')) {
+  	out %<>% modifyList(read_from_vgam(model))
   } else {
   	out %<>% modifyList(read_from_matrix(model, alpha, vcov))
   }
@@ -159,6 +161,56 @@ read_from_mlogit <- function(model, ...) {
     ordinal = FALSE,
     readfrom = 'mlogit::mlogit',
     lab = names(model$freq)
+  )
+}
+
+
+
+#' @rdname read_model
+#' @keywords internal
+read_from_vgam <- function(model, ...) {
+  # Check the object
+  if (!inherits(model@family, 'vglmff')) {
+  	stop('Object of class "VGAM" should be of family "vglmff"')
+  }
+  if (!identical(model@family@vfamily, c('multinomial', 'VGAMcategorical'))) {
+  	stop('Object of class "VGAM" (family "vglmff") does not refer to a multinomial categorical regression')
+  }
+  if (!identical(model@misc$link, 'multilogitlink')) {
+  	stop('The multinomial regression is not a multilogit')
+  }
+  
+  # Set the parameters
+  depoL <- list(
+    ref = model@misc$ynames[model@misc$refLevel],
+    oth = model@misc$ynames[-model@misc$refLevel]
+  )
+  depo <- length(stats::coef(model))
+  indxP <- c(
+    seq(from = 1, to = depo, by = 2),
+  	seq(from = 2, to = depo, by = 2)
+  )
+  
+  # Read the matrix of coefficients
+  model %>%
+    stats::coef(matrix = TRUE) %>%
+    as.matrix %>%
+    set_colnames(depoL$oth) -> depoB
+  
+  # Read the covariance matrix of coefficients
+  model %>%
+    stats::vcov() %>%
+    extract(indxP, indxP) -> depoV
+   
+  # Prepare the output
+  list(
+    B = depoB,
+  	vcovB = depoV,
+    alpha = NULL,
+    model = 'logit',
+    ordinal = FALSE,
+    readfrom = 'VGAM::vgam',
+    lab = c(depoL$ref, depoL$oth)
   )
 }
 

@@ -42,7 +42,8 @@
 #' output of the following functions:
 #' * [`multinom`][nnet::multinom] of package `nnet` (logit regression);
 #' * [`polr`][MASS::polr] of package `MASS` (ordinal logit regression);
-#' * [`mlogit`][mlogit::mlogit] of package `mlogit` (logit regression).
+#' * [`mlogit`][mlogit::mlogit] of package `mlogit` (logit regression);
+#' * [`vgam`][VGAM::vgam] of package `VGAM` (logit regression).
 #'
 #' Moreover, explicit matrix of regression coefficients can be passed to
 #' [field3logit()]. See examples and function [field3logit()] for further
