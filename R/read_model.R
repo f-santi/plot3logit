@@ -75,7 +75,13 @@ read_model <- function(model, type, alpha = NULL, vcov = NULL) {
   
   # Residual setting
   if (is.null(out$lab)) { out$lab <- c('p1', 'p2', 'p3') }
+  if (out$ordinal) {
+  	colnames(out$B) <- 'Coef.'
+  } else {
+  	colnames(out$B) <- out$lab[-1]
+  }
   
+  # Output
   out
 }
 
@@ -226,7 +232,7 @@ read_from_matrix <- function(model, alpha, vcov, ...) {
     model = 'logit',
     ordinal = !is.null(alpha),
   	readfrom = 'matrix',
-  	lab = attr(model, 'labs')
+  	lab = attr(model, 'levels')
   )
 }
 
