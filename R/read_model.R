@@ -219,11 +219,8 @@ read_from_vgam <- function(model, ...) {
 #' @rdname read_model
 #' @keywords internal
 read_from_matrix <- function(model, alpha, vcov, ...) {
-  depo <- as.matrix(model)
-  if ((nrow(depo) == 2) & (ncol(depo) == 1)) { depo %<>% t }
-  
   list(
-    B = depo,
+    B = as.matrix(model),
     vcovB = vcov,
     alpha = alpha,
     model = 'logit',
