@@ -35,6 +35,10 @@ NULL
 #' `field3logit` objects instead.
 #'
 #' @inheritParams field3logit
+#' @param ncurves number of curves of the field to be computed. In case
+#'   of ordinal models, this parameter is ineffective, as only one curve
+#'   can be drawn. The parameter is ineffective also in case that argument
+#'   `p0` is set.
 #'
 #' @return
 #' `S3` object of class `field3logit` structured as a named `list`.
@@ -51,7 +55,7 @@ plot3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   lifecycle::deprecate_warn()
   
   depo <- field3logit(model = model, delta = delta, p0 = p0,
-    alpha = alpha, ncurves = ncurves, narrows = narrows,
+    alpha = alpha, nstreams = ncurves, narrows = narrows,
     edge = edge, label = label)
   
   graphics::plot(depo, ...)

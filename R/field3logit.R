@@ -33,7 +33,7 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
 
 
 
-field3logit_list <- function(model, delta, label, p0, alpha, vcov, ncurves,
+field3logit_list <- function(model, delta, label, p0, alpha, vcov, nstreams,
   narrows, edge, conf, npoints) {
     	
   delta %>%
@@ -41,7 +41,7 @@ field3logit_list <- function(model, delta, label, p0, alpha, vcov, ncurves,
   	if (is.list(w)) {
   	  list(
   	    model = model, label = label, p0 = p0, alpha = alpha, 
-  	    vcov = vcov, ncurves = ncurves, narrows = narrows,
+  	    vcov = vcov, nstreams = nstreams, narrows = narrows,
   	    edge = edge, conf = conf, npoints
   	  ) %>%
   	  modifyList(w) %>%
@@ -49,7 +49,7 @@ field3logit_list <- function(model, delta, label, p0, alpha, vcov, ncurves,
   	} else {
   	  field3logit(
   	    model, w, paste(w, collapse = '|'), p0, alpha, vcov,
-  	    ncurves, narrows, edge, conf, npoints
+  	    nstreams, narrows, edge, conf, npoints
   	  ) -> out
   	}
   	out
@@ -134,12 +134,12 @@ is_simplified_field3logit <- function(x) {
 #
 #' @param p0 `list` of starting points (ternary coordinates) of the curves
 #'   of the field. If not specified, `field3logit` automatically compute
-#'   `ncurves` candidate points so that arrows are evenly distributed over
+#'   `nstreams` candidate points so that arrows are evenly distributed over
 #'   the ternary plot area. See Examples.
 #' @param alpha `numeric` vector of length two where constants \eqn{\alpha^{(1)}}
 #'   and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
 #'   defined in Equation (7) of \insertCite{santi2019;textual}{plot3logit}.
-#' @param ncurves number of curves of the field to be computed. In case
+#' @param nstreams number of curves of the field to be computed. In case
 #'   of ordinal models, this parameter is ineffective, as only one curve
 #'   can be drawn. The parameter is ineffective also in case that argument
 #'   `p0` is set.
@@ -204,14 +204,14 @@ is_simplified_field3logit <- function(x) {
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
-  alpha = NULL, vcov = NULL, ncurves = 8, narrows = Inf, edge = 0.01,
+  alpha = NULL, vcov = NULL, nstreams = 8, narrows = Inf, edge = 0.01,
   conf = NA, npoints = 100) {
 
   # Check argument "delta"
   if (is.list(delta)) {
   	field3logit_list(
   	  model, delta, label, p0, alpha, vcov,
-  	  ncurves, narrows, edge, conf, npoints
+  	  nstreams, narrows, edge, conf, npoints
     ) -> out
   } else {
     # Read input
@@ -221,7 +221,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
 
     # Compute the starting points of the curves
     if (is.null(p0)) {
-      modB$DeltaB2pc(DeltaB, ncurves, edge) %>%
+      modB$DeltaB2pc(DeltaB, nstreams, edge) %>%
         pc2p0(DeltaB, edge, modB[c('XB2P','P2XB')]) -> p0
     } else {
       p0 <- list(pp = p0)
@@ -283,7 +283,7 @@ print.field3logit <- function(x, ...) {
   }
   
   cat('Model has been read from :', x$readfrom, '\n')
-  cat('Number of curves         :', length(x$effects), '\n')
+  cat('Number of stream lines   :', length(x$effects), '\n')
   cat('Number of arrows         :', na, '\n')
   cat('Covariance matrix        :', vcovB, '\n')
   cat('Confidence regions       :', conf, '\n')
