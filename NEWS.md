@@ -4,8 +4,16 @@
 
 ## Major changes
 
+* now `field3logit` can read categorical trinomial models fitted through
+  function `vgam` of package `VGAM` (included amongst suggested packages).
 * `list` objects can be passed to argument `delta` of `field3logit` for
-  computing multiple fields (a `multifield3logit` object is returned)
+  computing multiple fields (a `multifield3logit` object is returned).
+* argument `ncurves` of function `field3logit` has been renamed to `nstreams`.
+  No backward compatibility has been implemented.
+* point estimates are passed to argument `model` of `field3logit`, matrix
+  should have an attribute with the values the dependent variable may take.
+  The attribute has been renamed from `labs` to `levels`. No backward
+  compatibility has been implemented.
   
 
 
@@ -28,7 +36,7 @@
 
 ## Major changes
 
-* Major bug corrected from version 2.0.0
+* Major bug corrected from version 2.0.0.
 
 
 
