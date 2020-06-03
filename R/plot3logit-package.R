@@ -97,6 +97,7 @@
 #' @import magrittr Ternary ggtern
 #'
 #' @importFrom dplyr bind_rows mutate pull select
+#' @importFrom generics tidy
 #' @importFrom ggplot2 fortify unit arrow
 #' @importFrom graphics points arrows plot
 #' @importFrom Rdpack reprompt
@@ -108,4 +109,9 @@
 NULL
 
 utils::globalVariables('.')
+
+
+#' @export
+generics::tidy
+
 

@@ -131,7 +131,6 @@ is_simplified_field3logit <- function(x) {
 #'   a `character` or an `expression`). If a list is passed to `delta`,
 #'   multiple fields are computed according to parameters passed as
 #'   components of a 2-level list. See details and examples.
-#
 #' @param p0 `list` of starting points (ternary coordinates) of the curves
 #'   of the field. If not specified, `field3logit` automatically compute
 #'   `nstreams` candidate points so that arrows are evenly distributed over
@@ -139,7 +138,7 @@ is_simplified_field3logit <- function(x) {
 #' @param alpha `numeric` vector of length two where constants \eqn{\alpha^{(1)}}
 #'   and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
 #'   defined in Equation (7) of \insertCite{santi2019;textual}{plot3logit}.
-#' @param nstreams number of curves of the field to be computed. In case
+#' @param nstreams number of stream lines of the field to be computed. In case
 #'   of ordinal models, this parameter is ineffective, as only one curve
 #'   can be drawn. The parameter is ineffective also in case that argument
 #'   `p0` is set.
@@ -151,8 +150,9 @@ is_simplified_field3logit <- function(x) {
 #'   should be added to an existing plot (`add = TRUE`) or a new
 #'   ternary plot should be drawn (`add = FALSE`).
 #' @param ... other arguments passed to or from other methods.
-#' @param wide it allows to choose whether `as.data.frme` should return a
-#'   `data.frame` object in wide (default) or long form.
+#' @param wide it allows to choose whether `as.data.frame`, `as_tibble`,
+#'   `fortify` and `tidy` should return a `data.frame` or a `tibble` in wide
+#'   (default) or long form.
 #' @param label label to be used for identifying the field when multiple
 #'   fields are plotted. See [multifield3logit()].
 #' @param data not used. Argument included only for interface compatibility with
@@ -363,8 +363,17 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
 
 #' @rdname field3logit
 #' @export
-fortify.field3logit <- function(model, data, ...) {
-  as_tibble.field3logit(model, ...) %>%
+fortify.field3logit <- function(model, data, ..., wide = TRUE) {
+  as_tibble.field3logit(model, ..., wide = wide) %>%
+    return
+}
+
+
+
+#' @rdname field3logit
+#' @export
+tidy.field3logit <- function(x, ..., wide = TRUE) {
+  as_tibble.field3logit(x, ..., wide = wide) %>%
     return
 }
 
