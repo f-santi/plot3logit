@@ -98,7 +98,7 @@
 #'
 #' @importFrom dplyr bind_rows mutate pull select
 #' @importFrom generics tidy
-#' @importFrom ggplot2 fortify unit arrow
+#' @importFrom ggplot2 arrow autoplot fortify unit
 #' @importFrom graphics points arrows plot
 #' @importFrom Rdpack reprompt
 #' @importFrom stats uniroot
@@ -113,5 +113,8 @@ utils::globalVariables('.')
 
 #' @export
 generics::tidy
+
+#' @export
+ggplot2::autoplot
 
 

@@ -300,9 +300,11 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #'
 #' @inheritParams stat_3logit
 #' @inheritParams add_confregions
+#' @inheritParams ggplot2::autoplot
 #' @param conf if `TRUE` and if confidence regions are available, the layer of
 #'   [stat_conf3logit()] is added, otherwise only a [gg3logit()] object with the
 #'   layer of [stat_field3logit()] is returned.
+#' @param object an object of class `field3logit` or `multifield3logit`.
 #'
 #' @family gg functions
 #'
@@ -317,15 +319,15 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #' }
 #'
 #' @export
-autoplot <- function(x, mapping_field = aes(), mapping_conf = aes(),
-  data = NULL, params_field = list(), params_conf = list(),
-  show.legend = NA, conf = TRUE) {
+autoplot.field3logit <- function(object, ..., mapping_field = aes(),
+  mapping_conf = aes(), data = NULL, params_field = list(),
+  params_conf = list(), show.legend = NA, conf = TRUE) {
   
-  if (!inherits(x, 'field3logit')) {
+  if (!inherits(object, 'field3logit')) {
   	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
   }
   
-  gg3logit(x) +
+  gg3logit(object) +
     stat_3logit(
       mapping_field = mapping_field, mapping_conf = mapping_conf,
       params_field = params_field, params_conf = params_conf,
