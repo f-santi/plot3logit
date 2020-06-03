@@ -111,16 +111,6 @@ print.multifield3logit <- function(x, maxitems = 10, ...) {
 
 #' @rdname multifield3logit
 #' @export
-fortify.multifield3logit <- function(model, data, ...) {
-  lapply(model, fortify) %>%
-    Reduce(rbind, .) %>%
-    mutate(group = forcats::fct_anon(factor(paste0(.$label, .$idarrow)), 'H')) %>%
-    return
-}
-
-
-#' @rdname multifield3logit
-#' @export
 plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   legend = TRUE, ...) {
   	
@@ -143,6 +133,46 @@ plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   
   invisible(out)
 }
+
+
+
+#' @rdname multifield3logit
+#' @export
+as_tibble.multifield3logit <- function(x, ..., wide = TRUE) {
+  lapply(x, as_tibble.field3logit, wide = wide) %>%
+    purrr::reduce(bind_rows) %>%
+    mutate(group = forcats::fct_anon(factor(paste0(.$label, .$idarrow)), 'H')) %>%
+    return
+}
+
+
+
+#' @rdname multifield3logit
+#' @export
+as.data.frame.multifield3logit <- function(x, ..., wide = TRUE) {
+  as_tibble.multifield3logit(x, ..., wide = wide) %>%
+    as.data.frame %>%
+    return
+}
+
+
+
+#' @rdname multifield3logit
+#' @export
+fortify.multifield3logit <- function(model, data, ..., wide = TRUE) {
+  as_tibble.multifield3logit(model, ..., wide = wide) %>%
+    return
+}
+
+
+
+#' @rdname multifield3logit
+#' @export
+tidy.multifield3logit <- function(x, ..., wide = TRUE) {
+  as_tibble.multifield3logit(x, ..., wide = wide) %>%
+    return
+}
+
 
 
 
