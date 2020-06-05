@@ -50,7 +50,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #'     confidence regions;
 #' * `xend`, `yend`, `zend`: required by [stat_field3logit()] as ternary
 #'   coordinates of the ending points of the arrows;
-#' * `group`: identifier of groups of graphical objets (arrows and their confidence
+#' * `group`: identifier of groups of graphical objects (arrows and their confidence
 #'   regions);
 #' * `type`: type of graphical object (arrows or confidence regions).
 #'
@@ -59,9 +59,9 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' `colour`, ...):
 #' * `label` identifies a field through a label, thus it is useful for
 #'   distinguishing the fields in a `multifield3logit` object.
-#' * `idarrow` identifies each group of graphical objets (arrows and their
+#' * `idarrow` identifies each group of graphical objects (arrows and their
 #'   confidence regions) *within* every field. Unlike variable `group`,
-#'  `idarrow` is not a global identifier of graphical objets.
+#'  `idarrow` is not a global identifier of graphical objects.
 #' 
 #' @family gg functions
 #'
