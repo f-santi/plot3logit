@@ -24,22 +24,22 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' `gg3logit` initialises a [`ggplot`][ggplot2::ggplot] object through
 #' [`ggtern`][ggtern::ggtern]. If a fortified `field3logit` or a
 #' `multifield3logit` object is passed to argument `data`, the mandatory
-#' aestetics of the ternary plot are automatically set.
+#' aesthetics of the ternary plot are automatically set.
 #'
 #' @param data a `field3logit` object, a `multifield3logit` object, or
 #'   a `data.frame` structured like a fortified `field3logit` or a
 #'   `multifield3logit` object. If a `field3logit` or a `multifield3logit`
-#'   is passed, none of the aestetics mappings listed in Section
+#'   is passed, none of the aesthetics mappings listed in Section
 #'   "Aesthetic mappings" below has to be specified.
 #' @param mapping list of aesthetic mappings to use for plot. If a
 #'   `field3logit` or a `multifield3logit` is passed to `data`, none of the
-#'   aestetics mappings listed in section *Aesthetic mappings* below has to be
+#'   aesthetics mappings listed in section *Aesthetic mappings* below has to be
 #'   specified (if specified, they will be overwritten). 
 #' @param ... additional arguments passed through to [`ggtern`][ggtern::ggtern].
 #'
 #' @section Aesthetic mappings:
 #'
-#' The following aestetics are required by at least one of the available stats.
+#' The following aesthetics are required by at least one of the available stats.
 #' None of them should be specified if a `field3logit` or a `multifield3logit`
 #' is passed to the argument `data` of [gg3logit()], [stat_field3logit()] or
 #' [stat_conf3logit()]:
@@ -55,7 +55,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' * `type`: type of graphical object (arrows or confidence regions).
 #'
 #' The following variables of a fortified `field3logit` or a `multifield3logit`
-#' object may be useful for defining other standard aestetics (such as `fill`,
+#' object may be useful for defining other standard aesthetics (such as `fill`,
 #' `colour`, ...):
 #' * `label` identifies a field through a label, thus it is useful for
 #'   distinguishing the fields in a `multifield3logit` object.
@@ -112,7 +112,7 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' @inheritParams gg3logit
 #' @param data a `field3logit` or a `multifield3logit` object.
 #' @param mapping list of aesthetic mappings to be used for plot. Mandatory
-#'   aestetics should not be specified if `field3loglit` or `multifield3logit`
+#'   aesthetics should not be specified if `field3loglit` or `multifield3logit`
 #'   object is passed to `data`. See secion"Aesthetic mappings" of
 #'   [gg3logit()] for details.
 #' @param arrow. specification for arrow heads, as created by
