@@ -186,6 +186,18 @@ labels.multifield3logit <- function(object, ...) {
 
 #' @rdname multifield3logit
 #' @export
+`labels<-.multifield3logit` <- function(x, value) {
+  if(length(x) != length(value)) { stop('length mismatch') }
+  
+  for (i in length(x)) { labels(x[i]) <- value[i] }
+
+  return(x)
+}
+
+
+
+#' @rdname multifield3logit
+#' @export
 `[.multifield3logit` <- function(x, i) {
   return(x[[i]])
 }
@@ -205,4 +217,5 @@ labels.multifield3logit <- function(object, ...) {
   x[[i]] <- value
   return(x)
 }
+
 

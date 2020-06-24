@@ -403,3 +403,12 @@ labels.field3logit <- function(object, ...) {
 
 
 
+#' @rdname field3logit
+#' @export
+`labels<-.field3logit` <- function(x, value) {
+  x$label <- as.character(value)[1]
+  return(x)
+}
+
+
+
