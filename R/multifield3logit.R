@@ -63,7 +63,6 @@ multifield3logit <- function(x, ...) {
   } else if (depo[2] == 0) {
   	x %<>%
   	  list %>%
-  	  set_names(x$label) %>%
   	  structure(class = c('multifield3logit', 'field3logit'))
   }
   return(x)
@@ -90,13 +89,13 @@ print.multifield3logit <- function(x, maxitems = 10, ...) {
   cat('Labels\n')
   
   x %>%
+    labels %>%
     extract(1:min(maxitems, length(x))) %>%
-    names %>%
     nchar %>%
     max -> depoL
   for (j in 1:min(length(x), maxitems)) {
-  	cat('  ', j, '. ', names(x)[j],
-  	  paste0(rep(' ', depoL - nchar(names(x)[j])), collapse = ''),
+  	cat('  ', j, '. ', labels(x)[j],
+  	  paste0(rep(' ', depoL - nchar(labels(x)[j])), collapse = ''),
   	  '  (dX: ', paste(x[[j]]$delta, collapse = ', '), ')\n', sep = '')
   }
   if (length(x) > maxitems) {
@@ -126,7 +125,7 @@ plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   
   if (legend) {
   	legend(
-  	  x = 'topright', legend = names(x),
+  	  x = 'topright', legend = labels(x),
   	  col = col, lwd = 2
   	)
   }
@@ -178,7 +177,8 @@ tidy.multifield3logit <- function(x, ..., wide = TRUE) {
 #' @rdname multifield3logit
 #' @export
 labels.multifield3logit <- function(object, ...) {
-  object %>% names %>% return
+  object %>% lapply(labels) %>% unlist %>% return
 }
+
 
 
