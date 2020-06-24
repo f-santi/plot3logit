@@ -12,7 +12,6 @@
 #'   class `multifield3logit` is printed.
 #' @param col,legend graphical parameters if `Ternary` package is used.
 #' @param i index of the `field3logit` object to be selected.
-#' @param value object of class `field3logit` to be assigned.
 #'
 #' @return
 #' `S3` object of class `multifield3logit` structured as a named `list`.

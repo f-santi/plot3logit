@@ -166,6 +166,7 @@ is_simplified_field3logit <- function(x) {
 #'   of the variance-covariance matrix should be ordered according to the matrix 
 #'   of parameter estimates where the categories of the dependent variable are
 #'   the slow index, whereas the covariates are the fast index.
+#' @param value value to be assigned.
 #'
 #' @return
 #' `S3` object of class `field3logit` structured as a named `list` or an object
