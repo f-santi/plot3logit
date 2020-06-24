@@ -175,5 +175,10 @@ tidy.multifield3logit <- function(x, ..., wide = TRUE) {
 
 
 
+#' @rdname multifield3logit
+#' @export
+labels.multifield3logit <- function(object, ...) {
+  object %>% names %>% return
+}
 
 
