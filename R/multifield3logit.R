@@ -11,6 +11,8 @@
 #' @param maxitems maximum number of items to be enumerated when an object of
 #'   class `multifield3logit` is printed.
 #' @param col,legend graphical parameters if `Ternary` package is used.
+#' @param i index of the `field3logit` object to be selected.
+#' @param value object of class `field3logit` to be assigned.
 #'
 #' @return
 #' `S3` object of class `multifield3logit` structured as a named `list`.
@@ -181,4 +183,26 @@ labels.multifield3logit <- function(object, ...) {
 }
 
 
+
+#' @rdname multifield3logit
+#' @export
+`[.multifield3logit` <- function(x, i) {
+  return(x[[i]])
+}
+
+
+
+#' @rdname multifield3logit
+#' @export
+`[<-.multifield3logit` <- function(x, i, value) {
+  if (!inherits(value, 'field3logit')) {
+  	stop('Only objects of class "field3logit" are allowed')
+  }
+  if (inherits(value, 'multifield3logit')) {
+  	stop('Objects of class "multifield3logit" are not allowed')
+  }
+  
+  x[[i]] <- value
+  return(x)
+}
 
