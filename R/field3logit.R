@@ -395,4 +395,11 @@ vcov.field3logit <- function(object, ...) {
 
 
 
+#' @rdname field3logit
+#' @export
+labels.field3logit <- function(object, ...) {
+  return(object$label)
+}
+
+
 
