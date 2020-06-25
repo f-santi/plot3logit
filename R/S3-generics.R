@@ -12,7 +12,7 @@
 #'
 #' @export
 `labels<-` <- function(x, value) {
-  UseMethod(`labels<-`)
+  UseMethod('labels<-')
 }
 
 
