@@ -12,6 +12,8 @@
 #'   class `multifield3logit` is printed.
 #' @param col,legend graphical parameters if `Ternary` package is used.
 #' @param i index of the `field3logit` object to be selected.
+#' @param drop if `TRUE`, a `field3logit` object is returned if the
+#'   subsetted `multifield3logit` object has length one.
 #'
 #' @return
 #' `S3` object of class `multifield3logit` structured as a named `list`.
@@ -197,10 +199,15 @@ labels.multifield3logit <- function(object, ...) {
 
 #' @rdname multifield3logit
 #' @export
-`[.multifield3logit` <- function(x, i) {
-  return(x[[i]])
+`[.multifield3logit` <- function(x, i, drop = TRUE) {
+  out <- NextMethod()
+  if (drop & (length(out) == 1)) {
+  	out <- out[[1]]
+  } else {
+  	class(out) <- class(x)
+  }
+  return(out)
 }
-
 
 
 #' @rdname multifield3logit
