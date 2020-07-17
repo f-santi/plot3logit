@@ -120,6 +120,18 @@ is_simplified_field3logit <- function(x) {
 #'
 #' See examples for comparing all three methods.
 #'
+#' **It is also possible to pass a `list` to argument `delta`.** In such a case,
+#' the function `field3logit` is run once for every component of `delta`,
+#' and the set of generated `field3logit` objects is combined into a single
+#' object of class `multifield3logit`. The compoments of the list passed to
+#' `delta` must be named lists whose elements are used as arguments of each call
+#' of function `field3logit`, whereas the arguments specified in the parent call
+#' of `field3logit` are used as default values. It follows that arguments shared
+#' by all fields can be specified once in the parent call of `field3logit`, and
+#' only arguments which changes from field to field (such as `delta` and
+#' `label`) should be set in the lists making up the list passed to `delta`. See
+#' the last example in section Examples and the help of [multifield3logit()].
+#'
 #' @inheritParams effect
 #' @param model either a fitted trinomial model or a matrix of regressor
 #'   coefficients. See section *Compatibility* and examples of
@@ -202,6 +214,17 @@ is_simplified_field3logit <- function(x) {
 #' field0 <- field3logit(mod0, 'finalgradeHigh - 10 * hsscore')
 #' gg3logit(field0) + stat_field3logit()
 #' }
+#'
+#' # List passed to argument "delta" for generating "multifield3logit" objects
+#' refpoint <- list(c(0.7, 0.15, 0.15))
+#' depo <- list(
+#'   list(delta = 'durationShort',  label = 'Short duration'),
+#'   list(delta = 'durationLong',   label = 'Long duration'),
+#'   list(delta = 'finalgradeHigh', label = 'High final grade'),
+#'   list(delta = 'finalgradeLow',  label = 'Low final grade')
+#' )
+#' mfields <- field3logit(mod0, delta = depo, p0 = refpoint, narrows = 1)
+#' mfields
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
