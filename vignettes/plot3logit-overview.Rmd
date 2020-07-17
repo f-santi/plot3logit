@@ -59,7 +59,8 @@ estimates from the output of the following functions:
 
 * `multinom` of package `nnet` (logit regression);
 * `polr` of package `MASS` (ordinal logit regression);
-* `mlogit` of package `mlogit` (logit regression).
+* `mlogit` of package `mlogit` (logit regression);
+* `vgam` of package `VGAM` (logit regression).
 
 Moreover, explicit matrix of regression coefficients can be passed to
 `field3logit`. See the help of the package (type `? 'plot3logit-package'`) for
@@ -274,6 +275,20 @@ and the `multifield3logit` object `mfield` can be represented in a graph:
 gg3logit(mfields) +
   stat_field3logit(aes(colour = label)) +
   theme_zoom_L(0.45)
+```
+
+The code needed for generating the object `mfields` may be conveniently made
+shorter in this way (see the help of `field3logit` for details on syntax):
+```{r}
+depo <- list(
+  list(delta = 'durationShort', label = 'Short duration'),
+  list(delta = 'durationLong', label = 'Long duration'),
+  list(delta = 'finalgradeHigh', label = 'High final grade'),
+  list(delta = 'finalgradeLow', label = 'Low final grade')
+)
+
+mfields <- field3logit(mod0, delta = depo, p0 = refpoint, narrows = 1)
+mfields
 ```
 
 
