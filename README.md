@@ -30,7 +30,12 @@ available through the package `Ternary` (Smith 2017) by functions
 `field3logit` objects.
 
 See the help of `field3logit` for representing composite effects and
-`multifield3logit` for drawing multiple fields.
+`multifield3logit` for drawing multiple fields and the presentation
+vignette `plot3logit-overview` by typing:
+
+``` r
+vignette('plot3logit-overview', package = 'plot3logit')
+```
 
 ## Compatibility
 

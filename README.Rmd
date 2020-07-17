@@ -42,7 +42,11 @@ through the package `Ternary` [@smith2017] by functions `plot3logit` and
 `TernaryField`, and by the `plot` method of `field3logit` objects.
 
 See the help of `field3logit` for representing composite effects and
-`multifield3logit` for drawing multiple fields.
+`multifield3logit` for drawing multiple fields and the presentation vignette
+`plot3logit-overview` by typing:
+```{r, eval = FALSE}
+vignette('plot3logit-overview', package = 'plot3logit')
+```
 
 
 

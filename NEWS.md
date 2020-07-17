@@ -1,31 +1,41 @@
 
-# plot3logit 2.1.0.9000
+# plot3logit 2.2.0
 
 
 ## Major changes
 
-* now `field3logit` can read categorical trinomial models fitted through
+* Now `field3logit` can read categorical trinomial models fitted through
   function `vgam` of package `VGAM` (included amongst suggested packages).
 * `list` objects can be passed to argument `delta` of `field3logit` for
   computing multiple fields (a `multifield3logit` object is returned).
-* argument `ncurves` of function `field3logit` has been renamed to `nstreams`.
+* Argument `ncurves` of function `field3logit` has been renamed to `nstreams`.
   No backward compatibility has been implemented.
-* point estimates are passed to argument `model` of `field3logit`, matrix
+* Point estimates are passed to argument `model` of `field3logit`, matrix
   should have an attribute with the values the dependent variable may take.
   The attribute has been renamed from `labs` to `levels`. No backward
   compatibility has been implemented.
-  
+* Added package `generics` amongst dependencies in section `Imports`.
+
 
 
 ## Minor changes
 
-* 
-
+* Added dataset `USvote2016`.
+* Corrected bug on reading ordinal models from matrix.
+* Added S3 methods of generics `tidy` for class `field3logit`.
+* Added S3 methods of generics `as.data.frame`, `as_tibble` and `tidy` for
+  class `multifield3logit`.
+* Made `autoplot` the S3 method of generic `autoplot` for `field3logit` objects
+* Added S3 method of generic `label` for class `field3logit`.
+* Added S3 method of generic `label` for class `multifield3logit`.
+* Added S3 method of generics `[` and `[<-` for `multifield3logit` class.
+* Added the generic `labels<-` and the S3 methods for `field3logit` and
+  `multifield3logit` class.
 
 
 ## Typos and other marginal changes
 
-* 
+* Removed names from components of `multifield3logit` objects.
 
 
 
