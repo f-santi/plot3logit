@@ -5,7 +5,7 @@ library(haven)
 
 read_dta('data-raw/USvote2016.dta') %>%
   # Reencode from file of "stata"
-  mutate_if(is.labelled, as_factor) %>%
+  mutate(across(where(is.labelled), as_factor)) %>%
   # Preliminary variable selection
   select(
     case_identifier, presvote16post_2016, vote_for_against_2016,
@@ -58,8 +58,10 @@ read_dta('data-raw/USvote2016.dta') %>%
     'Clinton' = 'Hillary Clinton',
     'Trump' = 'Donald Trump'
   )) %>%
+  # Identifier
+  mutate(idcode = as.integer(case_identifier)) %>%
   # Rename variables
-  rename(idcode = case_identifier, gender = gender_baseline) %>%
+  rename(gender = gender_baseline) %>%
   # Variable selection
   select(idcode, vote, race, educ, gender, birthyr, famincome) -> USvote2016
 
