@@ -103,6 +103,13 @@ is_simplified_field3logit <- function(x) {
 #' provided by package `Ternary`. See function [gg3logit()] for plotting
 #' through the package [`ggtern`][ggtern::ggtern-package] based on the grammar
 #' of graphics.
+#' 
+#' Methods [as.data.frame()], [as_tibble()], [fortify()] and [tidy()] permits
+#' the graphical information of a `field3logit` object to be exported in a
+#' standardised format (either a `data.frame` or a `tibble`).
+#'
+#' Methods [labels()] and [labels<-()] enable to read and redefine the
+#' attribute `label` of a `field3logit` object.
 #'
 #' @details
 #'
