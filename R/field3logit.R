@@ -101,7 +101,7 @@ is_simplified_field3logit <- function(x) {
 #'
 #' The method [plot()] draws the ternary plot using standard graphics methods
 #' provided by package `Ternary`. See function [gg3logit()] for plotting
-#' through the package [`ggtern`][ggtern::ggtern-package] based on the grammar
+#' through the package [`ggtern`](ggtern::ggtern-package) based on the grammar
 #' of graphics.
 #' 
 #' Methods [as.data.frame()], [as_tibble()], [fortify()] and [tidy()] permits
@@ -197,10 +197,10 @@ is_simplified_field3logit <- function(x) {
 #' \insertAllCited{}
 #'
 #' @examples
-#' \dontrun{
 #' data(cross_1year)
 #'
-#' # Model fit
+#' \dontrun{
+#' # Fitting the model
 #' mod0 <- nnet::multinom(employment_sit ~ finalgrade + irregularity + hsscore,
 #'   cross_1year)
 #' mod0
@@ -219,6 +219,9 @@ is_simplified_field3logit <- function(x) {
 #' gg3logit(field0) + stat_field3logit()
 #' }
 #'
+#' # Fitting the model
+#' mod1 <- nnet::multinom(employment_sit ~ ., data = cross_1year)
+#'
 #' # List passed to argument "delta" for generating "multifield3logit" objects
 #' refpoint <- list(c(0.7, 0.15, 0.15))
 #' depo <- list(
@@ -227,7 +230,7 @@ is_simplified_field3logit <- function(x) {
 #'   list(delta = 'finalgradeHigh', label = 'High final grade'),
 #'   list(delta = 'finalgradeLow',  label = 'Low final grade')
 #' )
-#' mfields <- field3logit(mod0, delta = depo, p0 = refpoint, narrows = 1)
+#' mfields <- field3logit(mod1, delta = depo, p0 = refpoint, narrows = 1)
 #' mfields
 #'
 #' @export

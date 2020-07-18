@@ -20,7 +20,7 @@ Description: An implementation of the ternary plot for interpreting regression
     and Espa (2019) <doi:10.1080/00031305.2018.1442368>. Ternary plots can be
     drawn using either 'ggtern' package (based on 'ggplot2') or 'Ternary'
     package (based on standard graphics).
-Depends: R (>= 3.1), ggtern (>= 3.3.0), Ternary (>= 1.0.1)
+Depends: R (>= 3.5), ggtern (>= 3.3.0), Ternary (>= 1.0.1)
 Imports: dplyr, ellipse, forcats, generics, ggplot2 (>= 3.3.0), graphics,
     grDevices, lifecycle, magrittr (>= 1.5), purrr, Rdpack, stats, tibble,
     tidyr, tidyselect, utils
@@ -32,6 +32,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Repository: CRAN
-Date: 2020-07-17
+Date: 2020-07-18
 VignetteBuilder: knitr
 RdMacros: Rdpack, lifecycle

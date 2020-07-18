@@ -43,7 +43,7 @@ NULL
 #' \insertCite{dfvsg2017;textual}{plot3logit}. Object `USvote2016` includes only
 #' few variables based on the result of the survey, which are publicly available
 #' online. See file `"data-raw/USvote2016_prepare.R"` in the GitHub repository
-#' `"f-santi/plot3logit"` (\url{https://github. com/f-santi/plot3logit}), where
+#' `"f-santi/plot3logit"` (\url{https://github.com/f-santi/plot3logit}), where
 #' it is documented how the dataset `USvote2016` has been generated.
 #'
 #' @name USvote2016

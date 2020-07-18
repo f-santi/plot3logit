@@ -12,7 +12,7 @@
 #' @inheritParams graphics::arrows
 #'
 #' @section Warning:
-#' Only when [effect()] is passed to [`AddToTernary`][Ternary::AddToTernary]
+#' Only when [effect()] is passed to [Ternary::AddToTernary()]
 #' as the first argument, arrows and points are drawn consistently
 #' with ternary coordinate system, otherwise `effect` draws both
 #' arrows and points according to a Cartesian coorinate system
@@ -57,7 +57,7 @@ effect <- function(x, y, ..., length = 0.05) {
 #'   value is passed, confidence regions at the specified confidence level
 #'   are computed (if not already available) and drawn.
 #' @param conf.args graphical parameters of confidence regions to be passed
-#'   to [TernaryPolygon()].
+#'   to [Ternary::TernaryPolygon()].
 #'
 #' @return
 #' An object of class `field3logit` with confidence regions included, if

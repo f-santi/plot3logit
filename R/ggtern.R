@@ -66,12 +66,14 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' @family gg functions
 #'
 #' @examples
+#' \dontrun{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
 #' field0 <- field3logit(mod0, 'genderFemale')
 #'
 #' gg3logit(field0) + stat_field3logit()
+#' }
 #'
 #' @export
 gg3logit <- function (data = NULL, mapping = aes(), ...) {
