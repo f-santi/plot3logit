@@ -1,4 +1,27 @@
 
+# plot3logit 2.2.0.9000
+
+
+## Major changes
+
+* 
+
+
+
+## Minor changes
+
+* 
+
+
+
+## Typos and other marginal changes
+
+* 
+
+
+
+
+
 # plot3logit 2.2.0
 
 
@@ -32,6 +55,7 @@
 * Added S3 method of generics `[` and `[<-` for `multifield3logit` class.
 * Added the generic `labels<-` and the S3 methods for `field3logit` and
   `multifield3logit` class.
+
 
 
 ## Typos and other marginal changes
