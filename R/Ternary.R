@@ -9,7 +9,10 @@
 #' @param x,y `numeric` vectors of the first two probabilities. If
 #'   the probability distribution is unchanged, `x` and `y` should
 #'   have length one.
-#' @inheritParams graphics::arrows
+#' @param length length of the edges of the arrow head (in inches).
+#' @param ... other graphical parameters such as `xpd` and the line
+#'   characteristics `lend`, `ljoin` and `lmitre`. See
+#'   [graphics::par()].
 #'
 #' @section Warning:
 #' Only when [effect()] is passed to [Ternary::AddToTernary()]
@@ -57,7 +60,7 @@ effect <- function(x, y, ..., length = 0.05) {
 #'   value is passed, confidence regions at the specified confidence level
 #'   are computed (if not already available) and drawn.
 #' @param conf.args graphical parameters of confidence regions to be passed
-#'   to [Ternary::TernaryPolygon()].
+#'   to [`Ternary::TernaryPolygon()`][Ternary::AddToTernary].
 #'
 #' @return
 #' An object of class `field3logit` with confidence regions included, if

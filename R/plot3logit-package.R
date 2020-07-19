@@ -21,16 +21,15 @@
 #' [gg3logit()] and [stat_field3logit()].
 #'
 #' The `plot3logit` package inherits graphical classes and methods from the
-#' package [`ggtern`][ggtern::ggtern-package]
+#' package [`ggtern`][ggtern::ggtern_package]
 #' \insertCite{hamilton2018}{plot3logit} which, in turn, is based on the
 #' [`ggplot2`][ggplot2::ggplot2-package] package
 #' \insertCite{wickham2016}{plot3logit}.
 #'
 #' Graphical representation based on **standard graphics** is made available
-#' through the package [`Ternary`][Ternary::TernaryPlot]
-#' \insertCite{smith2017}{plot3logit} by function [TernaryField()]
-#' and in particular by the method [`plot`][plot.field3logit] of
-#' `field3logit` class.
+#' through the package `Ternary` \insertCite{smith2017}{plot3logit} by function
+#' [TernaryField()] and in particular by the method [`plot`][plot.field3logit]
+#' of `field3logit` class.
 #'
 #' Since version 2.0.0, `plot3logit` permits one to draw also the confidence
 #' regions associated to the covariates effects. See the vignette of the

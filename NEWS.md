@@ -4,6 +4,7 @@
 
 ## Major changes
 
+* Now `plot3logit` depends on R v. 3.5 or later.
 * Now `field3logit` can read categorical trinomial models fitted through
   function `vgam` of package `VGAM` (included amongst suggested packages).
 * `list` objects can be passed to argument `delta` of `field3logit` for
