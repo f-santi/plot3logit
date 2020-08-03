@@ -8,10 +8,13 @@ Authors@R: c(
     person('Maria Michela', 'Dickson', email = 'mariamichela.dickson@unitn.it',
       role = c('aut'), comment = c(ORCID = "0000-0002-4307-0469")),
     person('Giuseppe', 'Espa', email = 'giuseppe.espa@unitn.it',
-      role = c('aut'), comment = c(ORCID = "0000-0002-0331-3630")))
+      role = c('aut'), comment = c(ORCID = "0000-0002-0331-3630"))),
+    person('Diego', 'Giuliani', email = 'diego.giuliani@unitn.it',
+      role = c('aut'), comment = c(ORCID = "0000-0002-7198-6714")))
 Author: Flavio Santi [cre, aut] (<https://orcid.org/0000-0002-2014-1981>),
     Maria Michela Dickson [aut] (<https://orcid.org/0000-0002-4307-0469>),
-    Giuseppe Espa [aut] (<https://orcid.org/0000-0002-0331-3630>)
+    Giuseppe Espa [aut] (<https://orcid.org/0000-0002-0331-3630>),
+    Diego Giuliani [aut] (<https://orcid.org/0000-0002-7198-6714>)
 Maintainer: Flavio Santi <flavio.santi@univr.it>
 URL: https://www.flaviosanti.it/software/plot3logit
 BugReports: https://github.com/f-santi/plot3logit
