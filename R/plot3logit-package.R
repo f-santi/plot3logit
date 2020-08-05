@@ -24,7 +24,7 @@
 #' package [`ggtern`][ggtern::ggtern_package]
 #' \insertCite{hamilton2018}{plot3logit} which, in turn, is based on the
 #' [`ggplot2`][ggplot2::ggplot2-package] package
-#' \insertCite{wickham2016}{plot3logit}.
+#' \insertCite{wickham2016a}{plot3logit}.
 #'
 #' Graphical representation based on **standard graphics** is made available
 #' through the package `Ternary` \insertCite{smith2017}{plot3logit} by function
