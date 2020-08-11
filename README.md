@@ -22,7 +22,7 @@ means of functions `gg3logit` and `stat_field3logit`.
 
 The `plot3logit` package inherits graphical classes and methods from the
 package `ggtern` (Hamilton and Ferry 2018) which, in turn, is based on
-the package `ggplot2` (Wickham 2017).
+the package `ggplot2` (Wickham 2016).
 
 Graphical representation based on **standard graphics** is made
 available through the package `Ternary` (Smith 2017) by functions
@@ -117,9 +117,9 @@ Smith, M. R. 2017. “Ternary: An R Package for Creating Ternary Plots.”
 
 </div>
 
-<div id="ref-wickham2016">
+<div id="ref-wickham2016a">
 
-Wickham, H. 2017. *ggplot2: Elegant Graphics for Data Analysis*. New
+Wickham, H. 2016. *ggplot2: Elegant Graphics for Data Analysis*. New
 York: Springer-Verlag.
 
 </div>

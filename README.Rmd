@@ -35,7 +35,7 @@ creates a `field3logit` object which may be represented by means of functions
 
 The `plot3logit` package inherits graphical classes and methods from the
 package `ggtern` [@hamilton2018] which, in turn, is based on the package
-`ggplot2` [@wickham2016].
+`ggplot2` [@wickham2016a].
 
 Graphical representation based on **standard graphics** is made available
 through the package `Ternary` [@smith2017] by functions `plot3logit` and
