@@ -1,22 +1,8 @@
 
-# plot3logit 2.2.0.9000
+# plot3logit 2.2.0.90
 
 
-## Major changes
-
-* 
-
-
-
-## Minor changes
-
-* 
-
-
-
-## Typos and other marginal changes
-
-* 
+* Included the vignette with the paper submitted to JSS.
 
 
 

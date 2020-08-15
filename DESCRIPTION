@@ -1,14 +1,14 @@
 Package: plot3logit
 Type: Package
 Title: Ternary Plots for Trinomial Regression Models
-Version: 2.2.0.9000
+Version: 2.2.0.90
 Authors@R: c(
     person('Flavio', 'Santi', email = 'flavio.santi@univr.it',
       role = c('cre', 'aut'), comment = c(ORCID = "0000-0002-2014-1981")),
     person('Maria Michela', 'Dickson', email = 'mariamichela.dickson@unitn.it',
       role = c('aut'), comment = c(ORCID = "0000-0002-4307-0469")),
     person('Giuseppe', 'Espa', email = 'giuseppe.espa@unitn.it',
-      role = c('aut'), comment = c(ORCID = "0000-0002-0331-3630"))),
+      role = c('aut'), comment = c(ORCID = "0000-0002-0331-3630")),
     person('Diego', 'Giuliani', email = 'diego.giuliani@unitn.it',
       role = c('aut'), comment = c(ORCID = "0000-0002-7198-6714")))
 Author: Flavio Santi [cre, aut] (<https://orcid.org/0000-0002-2014-1981>),
@@ -35,6 +35,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Repository: CRAN
-Date: 2020-07-18
+Date: 2020-08-05
 VignetteBuilder: knitr
 RdMacros: Rdpack, lifecycle
