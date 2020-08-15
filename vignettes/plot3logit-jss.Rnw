@@ -1,0 +1,6 @@
+\documentclass{article}
+\usepackage{pdfpages}
+%\VignetteIndexEntry{plot3logit - Ternary Plots for Interpreting Trinomial Regression Models}
+\begin{document}
+\includepdf[pages=-, fitpaper=true]{jss.pdf}
+\end{document}
