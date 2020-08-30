@@ -20,8 +20,8 @@
 #' \item{model}{argument `type`.}
 #' \item{ordinal}{`logical` variable indicating wheter the model is
 #'   ordinal or not.}
-#' \item{P2XB}{link function.}
-#' \item{XB2P}{inverse of the link function.}
+#' \item{linkfun}{link function.}
+#' \item{linkinv}{inverse of the link function.}
 #' \item{DeltaB2pc}{function that computes the points the curve of
 #'   the field should pass through (see [DeltaB2pc()]).}
 #'
@@ -32,7 +32,7 @@ read_model <- function(model, type, alpha = NULL, vcov = NULL) {
   # Initialise the output object
   out <- list(B = NULL, vcovB = vcov, alpha = alpha, model = type,
     ordinal = !is.null(alpha), readfrom = NULL,
-    P2XB = NULL, XB2P = NULL, DeltaB2pc = NULL)
+    linkfun = NULL, linkinv = NULL, DeltaB2pc = NULL)
   
   # Read models
   if (all(inherits(model, c('multinom', 'nnet'), TRUE))) {
@@ -49,12 +49,12 @@ read_model <- function(model, type, alpha = NULL, vcov = NULL) {
   
   # Add link functions
   if ((out$model == 'logit') & !out$ordinal) {
-  	out$XB2P <- XB2P_cat3logit
-  	out$P2XB <- P2XB_cat3logit
+  	out$linkinv <- linkinv_cat3logit
+  	out$linkfun <- linkfun_cat3logit
   	out$DeltaB2pc <- DeltaB2pc_cat3logit
   } else if ((out$model == 'logit') & out$ordinal) {
-  	out$XB2P <- function(x) XB2P_ord3logit(x, out$alpha)
-  	out$P2XB <- function(x) P2XB_ord3logit(x, out$alpha)
+  	out$linkinv <- function(x) linkinv_ord3logit(x, out$alpha)
+  	out$linkfun <- function(x) linkfun_ord3logit(x, out$alpha)
   	out$DeltaB2pc <- function(x, ...) DeltaB2pc_ord3logit(x, out$alpha, ...)
   }
   

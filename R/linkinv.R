@@ -1,16 +1,16 @@
 
 #' Computes trinomial probability distributions implied by linear predictors
 #'
-#' `XB2P_cat3logit` and `XB2P_ord3logit` compute the matrix
+#' `linkinv_cat3logit` and `linkinv_ord3logit` compute the matrix
 #' \eqn{P\in[0,\,1]^{n\times 3}} of probability distributions of the
 #' dependent variable for categorical and ordinal models respectively.
 #' Functions `X2P_cat3logit` and `X2P_ord3logit` perform the same computation,
 #' except that the design matrix \eqn{X\in\textbf{R}^{n\times k}} and
 #' the coefficient matrix \eqn{B\in\textbf{R}^{k\times 2}} are taken as
-#' separate input arguments. `XB2P` and `X2P` apply the proper function
+#' separate input arguments. `linkinv` and `X2P` apply the proper function
 #' according to the type of model passed to argument `model`.
 #'
-#' @inheritParams P2XB
+#' @inheritParams linkfun
 #' @param XB object of class `matrix` (or other coercible classes) such that
 #'   \eqn{XB\in\textbf{R}^{n\times 2}} for *categorical* models or
 #'   \eqn{XB\in\textbf{R}^n} for *ordinal* models.
@@ -23,23 +23,23 @@
 #' @return
 #' Numeric matrix \eqn{[0,\,1]^{n\times 3}} of probability distributions.
 #'
-#' @inherit P2XB references
+#' @inherit linkfun references
 #'
-#' @seealso [`P2XB`].
+#' @seealso [`linkfun`].
 #'
-#' @name XB2P
-XB2P <- function(XB, model) {
+#' @name linkinv
+linkinv <- function(XB, model) {
   if (model$ordinal) {
-  	out <- XB2P_ord3logit(XB)
+  	out <- linkinv_ord3logit(XB)
   } else {
-  	out <- XB2P_cat3logit(XB)
+  	out <- linkinv_cat3logit(XB)
   }
   return(out)
 }
 
 
 
-#' @rdname XB2P
+#' @rdname linkinv
 #' @keywords internal
 X2P <- function(X, B, model) {
   if (model$ordinal) {
@@ -52,9 +52,9 @@ X2P <- function(X, B, model) {
 
 
 
-#' @rdname XB2P
+#' @rdname linkinv
 #' @keywords internal
-XB2P_cat3logit<- function(XB) {
+linkinv_cat3logit<- function(XB) {
   if (is.vector(XB)) { XB %<>% matrix(1) }
   
   XB %>%
@@ -68,15 +68,15 @@ XB2P_cat3logit<- function(XB) {
 
 
 
-#' @rdname XB2P
+#' @rdname linkinv
 #' @keywords internal
-X2P_cat3logit <- function(X, B) { XB2P_cat3logit(X %*% B) }
+X2P_cat3logit <- function(X, B) { linkinv_cat3logit(X %*% B) }
 
 
 
-#' @rdname XB2P
+#' @rdname linkinv
 #' @keywords internal
-XB2P_ord3logit<- function(XB, alpha) {
+linkinv_ord3logit<- function(XB, alpha) {
   outer(-XB, alpha, '+') %>%
     exp %>%
     { . / (1 + .) } %>%
@@ -88,7 +88,7 @@ XB2P_ord3logit<- function(XB, alpha) {
 
 
 
-#' @rdname XB2P
+#' @rdname linkinv
 #' @keywords internal
-X2P_ord3logit <- function(X, B, alpha) { XB2P_ord3logit(X %*% B, alpha) }
+X2P_ord3logit <- function(X, B, alpha) { linkinv_ord3logit(X %*% B, alpha) }
 

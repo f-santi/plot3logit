@@ -53,7 +53,7 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
   # Compute the ellipse
   ellipse::ellipse(x = Sig, centre = mu, level = conf) %>%
     # Compute the ternary coordinates
-    XB2P_cat3logit %>%
+    linkinv_cat3logit %>%
     # Prepare the output
     data.frame %>%
     set_colnames(c('p1', 'p2', 'p3')) %>%
@@ -97,7 +97,7 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
   # Compute the confidence regions
   x$effects %<>%
     lapply(function(w) lapply(w, function(y) {
-    	  P2XB(y$to, x) %>%
+    	  linkfun(y$to, x) %>%
         confregion(SigMa) %>%
         set_colnames(x$lab) -> y$confregion
         

@@ -32,8 +32,8 @@ v2vedge<- function(v, edge) {
 #'   [DeltaB2pc_cat3logit()] or [DeltaB2pc_ord3logit()].
 #'   Function `pc2p0_single` accepts only a single point
 #'   (that is a `numeric` vector of length three).
-#' @param flink named `list` of two functions: `P2XB`
-#'   and `XB2P`. The former is the link function, whereas
+#' @param flink named `list` of two functions: `linkfun`
+#'   and `linkinv`. The former is the link function, whereas
 #'   the latter is its inverse.
 #'
 #' @return
@@ -48,16 +48,16 @@ v2vedge<- function(v, edge) {
 #' depoDeltaB <- c(0.05, 0.08)
 #' plot3logit:::DeltaB2pc_cat3logit(depoDeltaB) %>%
 #'   plot3logit:::pc2p0(depoDeltaB, flink = list(
-#'     P2XB = plot3logit:::P2XB_cat3logit,
-#'     XB2P = plot3logit:::XB2P_cat3logit))
+#'     linkfun = plot3logit:::linkfun_cat3logit,
+#'     linkinv = plot3logit:::linkinv_cat3logit))
 #'
 #' # For the ordinal logit model
 #' depoDeltaB <- 0.08
 #' depoalpha <- c(-0.4, 0.4)
 #' plot3logit:::DeltaB2pc_ord3logit(depoDeltaB, depoalpha) %>%
 #'   plot3logit:::pc2p0(depoDeltaB, flink = list(
-#'     P2XB = function(x) plot3logit:::P2XB_ord3logit(x, depoalpha),
-#'     XB2P = function(x) plot3logit:::XB2P_ord3logit(x, depoalpha)))
+#'     linkfun = function(x) plot3logit:::linkfun_ord3logit(x, depoalpha),
+#'     linkinv = function(x) plot3logit:::linkinv_ord3logit(x, depoalpha)))
 #'
 #' @keywords internal
 pc2p0<- function(pc, DeltaB, edge = 0.01, flink) {
@@ -78,10 +78,10 @@ pc2p0<- function(pc, DeltaB, edge = 0.01, flink) {
 #' @rdname pc2p0
 #' @keywords internal
 pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
-  XBc<- flink$P2XB(pc)
+  XBc<- flink$linkfun(pc)
 
   fnorma<- function(x) {
-  	flink$XB2P(XBc - x * DeltaB) %>%
+  	flink$linkinv(XBc - x * DeltaB) %>%
   	  extract(w == 1) %>%
   	  min %>%
   	  subtract(edge) %>%
@@ -89,11 +89,11 @@ pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
   }
 
   alpha <- 10
-  while (all(flink$XB2P(XBc - alpha * DeltaB) > edge)) { alpha %<>% multiply_by(3) }
+  while (all(flink$linkinv(XBc - alpha * DeltaB) > edge)) { alpha %<>% multiply_by(3) }
 
   uniroot(fnorma, lower = 0, upper = alpha * max(abs(DeltaB)), extendInt = 'downX') %>%
     use_series('root') %>%
-    { flink$XB2P(XBc - . * DeltaB) } %>%
+    { flink$linkinv(XBc - . * DeltaB) } %>%
     return()
 }
 
@@ -115,20 +115,20 @@ pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
 #' of the arrow, and the ternary coordinates of the tip of the
 #' arrow.
 #'
-#' @seealso [P2XB()], [XB2P()].
+#' @seealso [linkfun()], [linkinv()].
 #'
 #' @keywords internal
 gen_path <- function(p0, DeltaB, edge = 0.01, nmax = Inf, flink) {
-  xB <- flink$P2XB(p0)
+  xB <- flink$linkfun(p0)
   out <- NULL
   n <- 1
   continua <- TRUE
   inter<- 0.1 * DeltaB / max(abs(DeltaB))
 
   while(continua & (n <= nmax)) {
-  	out %<>% rbind(cbind(n, flink$XB2P(xB)))
+  	out %<>% rbind(cbind(n, flink$linkinv(xB)))
   	xB %<>% add(DeltaB)
-  	out %<>% rbind(cbind(n, flink$XB2P(xB)))
+  	out %<>% rbind(cbind(n, flink$linkinv(xB)))
   	xB %<>% add(inter)
   	n %<>% add(1)
   	if (any(tail(out, n = 1)[-1] < edge)) { continua <- FALSE }

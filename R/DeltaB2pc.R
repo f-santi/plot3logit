@@ -124,16 +124,16 @@ DeltaB2pc_cat3logit_dim3 <- function(DeltaB, n, edge) {
 DeltaB2pc_ord3logit <- function(DeltaB, alpha, n = 8, edge = 0.01) {
   if (DeltaB != 0) {
   	c(0.5, NA, NA) %>%
-  	  P2XB_ord3logit(alpha) %>%
-  	  XB2P_ord3logit(alpha) %>%
+  	  linkfun_ord3logit(alpha) %>%
+  	  linkinv_ord3logit(alpha) %>%
   	  apply(1, list) %>%
   	  Reduce(c, .) %>%
   	  { list(status = 'pc', fo = NULL, pp = .) } -> out
   	  if (DeltaB > 0) { out$fo <- c(0, 1, 1) } else { out$fo <- c(1, 1, 0) }
   } else {
   	cbind((0.5 + (0 : (n - 1))) / n, NA, NA) %>%
-  	  P2XB_ord3logit(alpha) %>%
-  	  XB2P_ord3logit(alpha) %>%
+  	  linkfun_ord3logit(alpha) %>%
+  	  linkinv_ord3logit(alpha) %>%
   	  apply(1, list) %>%
   	  Reduce(c, .) %>%
   	  { list(status = 'p', fo = NULL, pp = .) } -> out

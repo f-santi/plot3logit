@@ -253,7 +253,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
     # Compute the starting points of the curves
     if (is.null(p0)) {
       modB$DeltaB2pc(DeltaB, nstreams, edge) %>%
-        pc2p0(DeltaB, edge, modB[c('XB2P','P2XB')]) -> p0
+        pc2p0(DeltaB, edge, modB[c('linkinv','linkfun')]) -> p0
     } else {
       p0 <- list(pp = p0)
       p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
@@ -266,7 +266,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   	  }) -> out
     } else {
       out <- lapply(p0$pp, gen_path, DeltaB = DeltaB,
-        edge = edge, nmax = narrows, flink = modB[c('XB2P','P2XB')])
+        edge = edge, nmax = narrows, flink = modB[c('linkinv','linkfun')])
     }
 
     # Create field3logit object
