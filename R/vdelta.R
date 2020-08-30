@@ -1,4 +1,19 @@
 
+handle_factor_vdelta <- function(delta, covnames, pattern = '<<(.+?)>>') {
+  if (stringr::str_detect(delta, pattern)) {
+  	cand <- stringr::str_match(delta, pattern)[1, 2]
+  	elenco <- grep(paste0('^', cand), covnames, value = TRUE)
+  	delta %<>% str_replace(pattern, elenco)
+  	
+  	delta %<>%
+  	  lapply(handle_factor_vdelta, covnames = covnames, pattern = pattern)
+  }
+  
+  unlist(delta)
+}
+
+
+
 #' It computes the vector of covariate change
 #'
 #' Given the argument `delta` passed to [`field3logit`] either as
@@ -40,8 +55,12 @@ get_vdelta <- function(delta, model) {
   if (is.expression(delta)) {
   	depoE <- new.env()
   	n <- nrow(model$B)
-  	mapply(function(x, y) assign(x, versor(y, n), envir = depoE),
-  	  rownames(model$B), 1 : n)
+  	
+  	mapply(
+  	  FUN = function(x, y) assign(x, versor(y, n), envir = depoE),
+  	  rownames(model$B),
+  	  1:n
+  	)
   	delta <- eval(delta, depoE)
   }
   delta
