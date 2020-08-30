@@ -57,7 +57,7 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
     # Prepare the output
     data.frame %>%
     set_colnames(c('p1', 'p2', 'p3')) %>%
-    return
+    return()
 }
 
 

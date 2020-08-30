@@ -85,7 +85,7 @@ pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
   	  extract(w == 1) %>%
   	  min %>%
   	  subtract(edge) %>%
-  	  return
+  	  return()
   }
 
   alpha <- 10
@@ -94,7 +94,7 @@ pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
   uniroot(fnorma, lower = 0, upper = alpha * max(abs(DeltaB)), extendInt = 'downX') %>%
     use_series('root') %>%
     { flink$XB2P(XBc - . * DeltaB) } %>%
-    return
+    return()
 }
 
 

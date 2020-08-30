@@ -78,7 +78,7 @@ multifield3logit <- function(x, ...) {
 `+.field3logit` <- function(x, y) {
   c(multifield3logit(x), multifield3logit(y)) %>%
     structure(class = c('multifield3logit', 'field3logit')) %>%
-    return
+    return()
 }
 
 
@@ -144,7 +144,7 @@ as_tibble.multifield3logit <- function(x, ..., wide = TRUE) {
   lapply(x, as_tibble.field3logit, wide = wide) %>%
     purrr::reduce(bind_rows) %>%
     mutate(group = forcats::fct_anon(factor(paste0(.$label, .$idarrow)), 'H')) %>%
-    return
+    return()
 }
 
 
@@ -154,7 +154,7 @@ as_tibble.multifield3logit <- function(x, ..., wide = TRUE) {
 as.data.frame.multifield3logit <- function(x, ..., wide = TRUE) {
   as_tibble.multifield3logit(x, ..., wide = wide) %>%
     as.data.frame %>%
-    return
+    return()
 }
 
 
@@ -162,8 +162,7 @@ as.data.frame.multifield3logit <- function(x, ..., wide = TRUE) {
 #' @rdname multifield3logit
 #' @export
 fortify.multifield3logit <- function(model, data, ..., wide = TRUE) {
-  as_tibble.multifield3logit(model, ..., wide = wide) %>%
-    return
+  as_tibble.multifield3logit(model, ..., wide = wide)
 }
 
 
@@ -171,8 +170,7 @@ fortify.multifield3logit <- function(model, data, ..., wide = TRUE) {
 #' @rdname multifield3logit
 #' @export
 tidy.multifield3logit <- function(x, ..., wide = TRUE) {
-  as_tibble.multifield3logit(x, ..., wide = wide) %>%
-    return
+  as_tibble.multifield3logit(x, ..., wide = wide)
 }
 
 
@@ -180,7 +178,7 @@ tidy.multifield3logit <- function(x, ..., wide = TRUE) {
 #' @rdname multifield3logit
 #' @export
 labels.multifield3logit <- function(object, ...) {
-  object %>% lapply(labels) %>% unlist %>% return
+  object %>% lapply(labels) %>% unlist %>% return()
 }
 
 

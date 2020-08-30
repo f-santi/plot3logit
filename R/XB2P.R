@@ -63,7 +63,7 @@ XB2P_cat3logit<- function(XB) {
     cbind(1, .) %>%
     apply(1, function(x) x / sum(x)) %>%
     t %>%
-    return
+    return()
 }
 
 
@@ -83,7 +83,7 @@ XB2P_ord3logit<- function(XB, alpha) {
     cbind(0, ., 1) %>%
     apply(1, diff) %>%
     t %>%
-    return
+    return()
 }
 
 

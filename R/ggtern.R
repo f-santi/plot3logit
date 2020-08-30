@@ -3,7 +3,7 @@ Stat3Logit <- ggplot2::ggproto('StatIdentity', Stat,
   compute_group = function(data, scales) {
   	data %>%
   	  dplyr::filter(type == 'arrow') %>%
-  	  return
+  	  return()
   }
 )
 
@@ -11,7 +11,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
   compute_group = function(data, scales) {
   	data %>%
   	  dplyr::filter(type == 'region') %>%
-  	  return
+  	  return()
   }
 )
 

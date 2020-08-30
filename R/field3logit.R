@@ -6,7 +6,7 @@ prepare_arrow <- function(comp, from, to) {
     mutate(comp = paste0(.$comp, ifelse(.$role == 'from', '', '_to'))) %>%
     select(-'role') %>%
     pivot_wider(names_from = 'comp') %>%
-    return
+    return()
 }
 
 
@@ -28,7 +28,7 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
   depo %>%
     mutate(label = label, idarrow = idarrow, group = NA) %>%
     select('label', 'idarrow', 'group', tidyselect::everything()) %>%
-    return
+    return()
 }
 
 
@@ -55,7 +55,7 @@ field3logit_list <- function(model, delta, label, p0, alpha, vcov, nstreams,
   	out
   }) %>%
   Reduce(`+`, .) %>%
-  return
+  return()
 }
 
 
@@ -377,7 +377,7 @@ as_tibble.field3logit <- function(x, ..., wide = TRUE) {
   x %>%
     mutate(group = forcats::fct_anon(factor(paste0(.$label, .$idarrow)), 'H')) %>%
     dplyr::mutate_if(is.character, factor) %>%
-    return
+    return()
 }
 
 
@@ -387,7 +387,7 @@ as_tibble.field3logit <- function(x, ..., wide = TRUE) {
 as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
   as_tibble(x, ..., wide = wide) %>%
     as.data.frame %>%
-    return
+    return()
 }
 
 
@@ -395,8 +395,7 @@ as.data.frame.field3logit <- function(x, ..., wide = TRUE) {
 #' @rdname field3logit
 #' @export
 fortify.field3logit <- function(model, data, ..., wide = TRUE) {
-  as_tibble.field3logit(model, ..., wide = wide) %>%
-    return
+  as_tibble.field3logit(model, ..., wide = wide)
 }
 
 
@@ -404,8 +403,7 @@ fortify.field3logit <- function(model, data, ..., wide = TRUE) {
 #' @rdname field3logit
 #' @export
 tidy.field3logit <- function(x, ..., wide = TRUE) {
-  as_tibble.field3logit(x, ..., wide = wide) %>%
-    return
+  as_tibble.field3logit(x, ..., wide = wide)
 }
 
 

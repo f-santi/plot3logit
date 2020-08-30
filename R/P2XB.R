@@ -42,7 +42,7 @@ P2XB_cat3logit<- function(P) {
     as.matrix %>%
     { .[ , 2:3, drop = FALSE] / .[1] } %>%
     log %>%
-    return
+    return()
 }
 
 
@@ -58,7 +58,7 @@ P2XB_ord3logit<- function(P, alpha) {
     { . / (1 - .) } %>%
     log %>%
     { alpha[1] - . } %>%
-    return
+    return()
 }
 
 

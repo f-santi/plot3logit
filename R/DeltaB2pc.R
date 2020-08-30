@@ -114,7 +114,7 @@ DeltaB2pc_cat3logit_dim3 <- function(DeltaB, n, edge) {
 
   convex_comb((0.5 + (0 : (n - 1))) / n, wA, wB, simplify = FALSE) %>% 
     { list(status = 'pc', fo = 1 - vv$vo, pp = .) } %>%
-    return
+    return()
 }
 
 

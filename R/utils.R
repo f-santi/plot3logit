@@ -70,6 +70,6 @@ tbl2matrix <- function(x, .rownames = NULL) {
   x %>%
     as.matrix %>%
     set_rownames(depo) %>%
-    return
+    return()
 }
 

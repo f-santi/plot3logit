@@ -34,7 +34,7 @@ DeltaB2vroles_cat3logit<- function(DeltaB) {
     c(0,.) %>%
     order %>%
     mapply(function(x,y) { x[y] <- 1; x }, depo, .,SIMPLIFY=FALSE) %>%
-    return
+    return()
 }
 
 
