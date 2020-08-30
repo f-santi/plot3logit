@@ -27,7 +27,14 @@ Depends: R (>= 3.5), ggtern (>= 3.3.0), Ternary (>= 1.0.1)
 Imports: dplyr, ellipse, forcats, generics, ggplot2 (>= 3.3.0), graphics,
     grDevices, lifecycle, magrittr (>= 1.5), purrr, Rdpack, stats, tibble,
     tidyr, tidyselect, utils
-Suggests: knitr, MASS (>= 7.3-51), mlogit, nnet, rmarkdown, VGAM
+Suggests: 
+    knitr,
+    MASS (>= 7.3-51),
+    mlogit,
+    nnet,
+    rmarkdown,
+    VGAM,
+    testthat
 License: GPL (>=2)
 LazyData: true
 NeedsCompilation: no
