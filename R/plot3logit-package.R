@@ -77,7 +77,7 @@
 #' # Read from matrix
 #' M <- matrix(c(-2.05, 0.46, -2.46, 0.37), nrow = 2)
 #' rownames(M) <- c('(Intercept)', 'genderFemale')
-#' attr(M, 'labs') <- c('Employed', 'Unemployed', 'Trainee')
+#' attr(M, 'levels') <- c('Employed', 'Unemployed', 'Trainee')
 #' field3 <- field3logit(M, c(0, 1))
 #' gg3logit(field3) + stat_field3logit()
 #' }
