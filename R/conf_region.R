@@ -140,18 +140,16 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
 #'
 #' @export
 add_confregions <- function(x, conf = 0.95, npoints = 100) {
-  # Check the class of input
-  depo <- inherits(x, c('field3logit','multifield3logit'), which = TRUE)
-  
-  # Compute the confidence regions
-  if (all(depo == 0)) {
-  	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
-  } else if (depo[2] == 0) {
-  	x %<>% add_confregions_field3logit(conf, npoints)
-  } else {
+
+  # Check classes and compute confidence regions
+  if (inherits(x, 'multifield3logit')) {
   	x %<>%
   	  lapply(add_confregions_field3logit, conf = conf, npoints = npoints) %>%
-  	  structure(class = c('multifield3logit', 'field3logit'))
+  	  structure(class = 'multifield3logit')
+  } else if (inherits(x, 'field3logit')) {
+  	x %<>% add_confregions_field3logit(conf, npoints)
+  } else {
+  	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
   }
 
   # Return the updated object

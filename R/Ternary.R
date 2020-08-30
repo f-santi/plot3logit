@@ -83,7 +83,7 @@ TernaryField <- function(field, ..., length = 0.05, conf = FALSE,
   npoints = 100, conf.args = list()) {
   	
   # Check the input
-  if (!inherits(field, 'field3logit')) {
+  if (!inherits(field, c('field3logit', 'multifield3logit'))) {
   	warning('A non-standard object "field" has been processed.')
   }
   

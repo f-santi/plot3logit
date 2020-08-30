@@ -60,13 +60,12 @@
 multifield3logit <- function(x, ...) {
   if (is.null(x)) { return(NULL) }
   
-  depo <- inherits(x, c('field3logit','multifield3logit'), which = TRUE)
-  if (all(depo == 0)) {
+  if (!inherits(x, c('field3logit','multifield3logit'))) {
   	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
-  } else if (depo[2] == 0) {
+  } else if (inherits(x, 'field3logit')) {
   	x %<>%
   	  list %>%
-  	  structure(class = c('multifield3logit', 'field3logit'))
+  	  structure(class = c('multifield3logit', 'Hfield3logit'))
   }
   return(x)
 }
@@ -75,9 +74,9 @@ multifield3logit <- function(x, ...) {
 
 #' @rdname multifield3logit
 #' @export
-`+.field3logit` <- function(x, y) {
+`+.Hfield3logit` <- function(x, y) {
   c(multifield3logit(x), multifield3logit(y)) %>%
-    structure(class = c('multifield3logit', 'field3logit')) %>%
+    structure(class = c('multifield3logit', 'Hfield3logit')) %>%
     return()
 }
 
@@ -213,9 +212,6 @@ labels.multifield3logit <- function(object, ...) {
 `[<-.multifield3logit` <- function(x, i, value) {
   if (!inherits(value, 'field3logit')) {
   	stop('Only objects of class "field3logit" are allowed')
-  }
-  if (inherits(value, 'multifield3logit')) {
-  	stop('Objects of class "multifield3logit" are not allowed')
   }
   
   x[[i]] <- value

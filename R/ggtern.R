@@ -79,7 +79,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 gg3logit <- function (data = NULL, mapping = aes(), ...) {
 
   if (!is.null(data)) {
-    if (inherits(data, 'field3logit')) {
+    if (inherits(data, c('field3logit', 'multifield3logit'))) {
     	  data %<>% fortify
       
       mapping %<>%
@@ -141,7 +141,7 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
   params <- list(arrow = arrow., ...)
   
   if (!is.null(data)) {
-    if (inherits(data, 'field3logit')) {
+    if (inherits(data, c('field3logit', 'multifield3logit'))) {
       data %<>% fortify
       
       mapping %<>%
@@ -204,7 +204,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
     modifyList(list(...)) -> params
     
   if (!is.null(data)) {
-  	if (inherits(data, 'field3logit')) { data %<>% fortify }
+  	if (inherits(data, c('field3logit', 'multifield3logit'))) { data %<>% fortify }
   	mapping %<>%
       modifyList(ggplot2::aes_(
           x     = as.symbol(colnames(data)[5]),
@@ -325,7 +325,7 @@ autoplot.field3logit <- function(object, ..., mapping_field = aes(),
   mapping_conf = aes(), data = NULL, params_field = list(),
   params_conf = list(), show.legend = NA, conf = TRUE) {
   
-  if (!inherits(object, 'field3logit')) {
+  if (!inherits(object, c('field3logit', 'multifield3logit'))) {
   	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
   }
   

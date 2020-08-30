@@ -276,7 +276,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
       effects = out, label = label, vcovB = modB$vcovB,
       ordinal = modB$ordinal, conf = conf
     )
-    class(out) <- 'field3logit'
+    class(out) <- c('field3logit', 'Hfield3logit')
   
     # Compute the confidence regions
     if (!is.null(out$vcov) & !is.na(conf)) {
