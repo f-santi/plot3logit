@@ -1,15 +1,54 @@
 
-handle_factor_vdelta <- function(delta, covnames, pattern = '<<(.+?)>>') {
-  if (stringr::str_detect(delta, pattern)) {
-  	cand <- stringr::str_match(delta, pattern)[1, 2]
-  	elenco <- grep(paste0('^', cand), covnames, value = TRUE)
-  	delta %<>% str_replace(pattern, elenco)
-  	
-  	delta %<>%
-  	  lapply(handle_factor_vdelta, covnames = covnames, pattern = pattern)
+handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
+  if (stringr::str_detect(block$delta, pattern)) {
+  	# Find matches
+    cand <- stringr::str_match(block$delta, pattern)[1, 2]
+ 
+    # List of matching covatiates
+  	grep(paste0('^', cand), covnames, value = TRUE) %>%
+  	  # Generate new blocks
+  	  lapply(function(x) {
+  	  	newblock <- block
+  	  	newblock$delta <- stringr::str_replace(newblock$delta, pattern, x)
+  	  	newblock$label2 %<>% c(x)
+  	  	return(newblock)
+  	  }) %>%
+  	  # Recursion
+  	  lapply(handle_block_delta, covnames = covnames, pattern = pattern) -> block
+  	  
+  	  if (is.list(block[[1]][[1]])) {
+  	    block %<>% unlist(recursive = FALSE)
+  	  }
+  } else { block %<>% list }
+  
+  return(block)
+}
+
+
+pre_process_delta <- function(delta, model) {
+  # Check and structure
+  if (is.numeric(delta)) {
+  	delta <- list(list(delta = delta))
+  } else if (is.character(delta)) {
+  	delta <- lapply(delta, function(x) { list(delta = x) })
+  } else {
+  	delta <- as.list(delta)
   }
   
-  unlist(delta)
+  # Elaborate
+  lapply(delta, handle_block_delta, covnames = rownames(model$B)) %>%
+    # Reduce last level
+    unlist(recursive = FALSE) %>%
+    # Prepare labels
+    lapply(function(x) {
+    	  if (!is.null(x$label2)) {
+    	    x$label %<>% paste0(' (', paste(x$label2, collapse = '; '), ')')
+    	    x$label2 <- NULL
+    	  }
+    	  x
+    }) %>%
+    # Output
+    return()
 }
 
 

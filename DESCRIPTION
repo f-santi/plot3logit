@@ -25,8 +25,8 @@ Description: An implementation of the ternary plot for interpreting regression
     package (based on standard graphics).
 Depends: R (>= 3.5), ggtern (>= 3.3.0), Ternary (>= 1.0.1)
 Imports: dplyr, ellipse, forcats, generics, ggplot2 (>= 3.3.0), graphics,
-    grDevices, lifecycle, magrittr (>= 1.5), purrr, Rdpack, stats, tibble,
-    tidyr, tidyselect, utils
+    grDevices, lifecycle, magrittr (>= 1.5), purrr, Rdpack, stats, stringr,
+    tibble, tidyr, tidyselect, utils
 Suggests: 
     knitr,
     MASS (>= 7.3-51),
