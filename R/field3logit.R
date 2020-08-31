@@ -33,29 +33,48 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
 
 
 
-field3logit_list <- function(model, delta, label, p0, alpha, vcov, nstreams,
-  narrows, edge, conf, npoints) {
-    	
-  delta %>%
-  lapply(function(w) {
-  	if (is.list(w)) {
-  	  list(
-  	    model = model, label = label, p0 = p0, alpha = alpha, 
-  	    vcov = vcov, nstreams = nstreams, narrows = narrows,
-  	    edge = edge, conf = conf, npoints
-  	  ) %>%
-  	  modifyList(w) %>%
-  	  do.call('field3logit', .) -> out
-  	} else {
-  	  field3logit(
-  	    model, w, paste(w, collapse = '|'), p0, alpha, vcov,
-  	    nstreams, narrows, edge, conf, npoints
-  	  ) -> out
-  	}
-  	out
-  }) %>%
-  Reduce(`+`, .) %>%
-  return()
+field3logit_mono <- function(model, delta, label, p0,
+  alpha, vcov, nstreams, narrows, edge, conf, npoints) {
+
+  # Read input
+  vdelta <- get_vdelta(delta, model)
+  DeltaB <- as.numeric(crossprod(vdelta, model$B))
+
+  # Compute the starting points of the curves
+  if (is.null(p0)) {
+    model$DeltaB2pc(DeltaB, nstreams, edge) %>%
+      pc2p0(DeltaB, edge, model[c('linkinv','linkfun')]) -> p0
+  } else {
+    p0 <- list(pp = p0)
+    p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
+  }
+
+  # Compute the arrows
+  if (p0$status == 'p') {
+  	  lapply(p0$pp, function(x) {
+      list(A1 = list(from = x, to = rep(NA, 3)))
+    }) -> out
+  } else {
+    out <- lapply(p0$pp, gen_path, DeltaB = DeltaB,
+      edge = edge, nmax = narrows, flink = model[c('linkinv', 'linkfun')])
+  }
+
+  # Create field3logit object
+  names(out) %<>% paste0('C', 1:length(out), .)
+  out <- list(B = model$B, alpha = model$alpha, delta = delta,
+    vdelta = vdelta, lab = model$lab, readfrom = model$readfrom,
+    effects = out, label = label, vcovB = model$vcovB,
+    ordinal = model$ordinal, conf = conf
+  )
+  class(out) <- c('field3logit', 'Hfield3logit')
+  
+  # Compute the confidence regions
+  if (!is.null(out$vcov) & !is.na(conf)) {
+    out %<>% add_confregions(conf, npoints)
+  }
+
+  # Output
+  out
 }
 
 
@@ -238,52 +257,24 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   alpha = NULL, vcov = NULL, nstreams = 8, narrows = Inf, edge = 0.01,
   conf = NA, npoints = 100) {
 
-  # Check argument "delta"
-  if (is.list(delta)) {
-  	field3logit_list(
-  	  model, delta, label, p0, alpha, vcov,
-  	  nstreams, narrows, edge, conf, npoints
-    ) -> out
-  } else {
-    # Read input
-    modB <- read_model(model, 'logit', alpha, vcov)
-    vdelta <- get_vdelta(delta, modB)
-    DeltaB <- as.numeric(crossprod(vdelta, modB$B))
-
-    # Compute the starting points of the curves
-    if (is.null(p0)) {
-      modB$DeltaB2pc(DeltaB, nstreams, edge) %>%
-        pc2p0(DeltaB, edge, modB[c('linkinv','linkfun')]) -> p0
-    } else {
-      p0 <- list(pp = p0)
-      p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
-    }
-
-    # Compute the arrows
-    if (p0$status == 'p') {
-    	  lapply(p0$pp, function(x) {
-  	    list(A1 = list(from = x, to = rep(NA, 3)))
-  	  }) -> out
-    } else {
-      out <- lapply(p0$pp, gen_path, DeltaB = DeltaB,
-        edge = edge, nmax = narrows, flink = modB[c('linkinv','linkfun')])
-    }
-
-    # Create field3logit object
-    names(out) %<>% paste0('C', 1:length(out), .)
-    out <- list(B = modB$B, alpha = modB$alpha, delta = delta,
-      vdelta = vdelta, lab = modB$lab, readfrom = modB$readfrom,
-      effects = out, label = label, vcovB = modB$vcovB,
-      ordinal = modB$ordinal, conf = conf
-    )
-    class(out) <- c('field3logit', 'Hfield3logit')
+  # Read input
+  modB <- read_model(model, 'logit', alpha, vcov)
+  delta <- pre_process_delta(delta, modB)
   
-    # Compute the confidence regions
-    if (!is.null(out$vcov) & !is.na(conf)) {
-  	  out %<>% add_confregions(conf, npoints)
-    }
-  }
-  
+  # Compute the field(s)
+  delta %>%
+    lapply(function(w) {
+  	  list(
+  	    model = modB, label = label, p0 = p0, alpha = alpha, 
+  	    vcov = vcov, nstreams = nstreams, narrows = narrows,
+  	    edge = edge, conf = conf, npoints
+  	  ) %>%
+  	  modifyList(w) %>%
+  	  do.call('field3logit_mono', .) %>%
+  	  return()
+    }) %>%
+    Reduce(`+`, .) -> out
+
   # Output
   out
 }
