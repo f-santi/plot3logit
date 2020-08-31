@@ -265,11 +265,12 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   delta %>%
     lapply(function(w) {
   	  list(
-  	    model = modB, label = label, p0 = p0, alpha = alpha, 
+  	    model = modB, p0 = p0, alpha = alpha, 
   	    vcov = vcov, nstreams = nstreams, narrows = narrows,
   	    edge = edge, conf = conf, npoints
   	  ) %>%
   	  modifyList(w) %>%
+  	  { .[['label']] %<>% paste(label, .); . } %>%
   	  do.call('field3logit_mono', .) %>%
   	  return()
     }) %>%

@@ -1,6 +1,6 @@
 
 handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
-  if (stringr::str_detect(block$delta, pattern)) {
+  if (!is.numeric(block$delta) & (stringr::str_detect(block$delta[1], pattern))) {
   	# Find matches
     cand <- stringr::str_match(block$delta, pattern)[1, 2]
  
@@ -10,7 +10,9 @@ handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
   	  lapply(function(x) {
   	  	newblock <- block
   	  	newblock$delta <- stringr::str_replace(newblock$delta, pattern, x)
-  	  	newblock$label2 %<>% c(x)
+  	  	newblock$label2 %<>% c(paste0(
+  	  	  cand, ': ', stringr::str_replace(x, paste0('^', cand), '')
+  	  	))
   	  	return(newblock)
   	  }) %>%
   	  # Recursion
@@ -23,6 +25,7 @@ handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
   
   return(block)
 }
+
 
 
 pre_process_delta <- function(delta, model) {
@@ -42,7 +45,7 @@ pre_process_delta <- function(delta, model) {
     # Prepare labels
     lapply(function(x) {
     	  if (!is.null(x$label2)) {
-    	    x$label %<>% paste0(' (', paste(x$label2, collapse = '; '), ')')
+    	    x[['label']] %<>% paste0('(', paste(x$label2, collapse = '; '), ')')
     	    x$label2 <- NULL
     	  }
     	  x
