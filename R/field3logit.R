@@ -268,7 +268,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   }
 
   # Read input
-  modB <- read_model(model, 'logit')
+  modB <- read_model(model)
   delta <- pre_process_delta(delta, modB)
   
   # Compute the field(s)

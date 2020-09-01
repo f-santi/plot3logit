@@ -6,10 +6,6 @@
 #' and the other needed model-specific functions.
 #'
 #' @inheritParams field3logit
-#' @param model see [field3logit()].
-#' @param type class of the model. Currently, forced to `"logit"`
-#'   by [field3logit()] when [read_model()] is called.
-#' @param alpha see [field3logit()].
 #'
 #' @return
 #' `read_model` returns a named `list` with the following components:
@@ -28,10 +24,10 @@
 #' @seealso [`plot3logit-package`], [field3logit()].
 #'
 #' @keywords internal
-read_model <- function(model, type, alpha = NULL, vcov = NULL) {
+read_model <- function(model) {
   # Initialise the output object
-  out <- list(B = NULL, vcovB = vcov, alpha = alpha, model = type,
-    ordinal = !is.null(alpha), readfrom = NULL, lab = NULL,
+  out <- list(B = NULL, vcovB = NULL, alpha = NULL, model = 'logit',
+    ordinal = NULL, readfrom = NULL, lab = NULL,
     linkfun = NULL, linkinv = NULL, DeltaB2pc = NULL)
   
   # Read model
