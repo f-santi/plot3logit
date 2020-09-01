@@ -249,7 +249,7 @@ is_simplified_field3logit <- function(x) {
 #' mfields
 #'
 #' @export
-field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
+field3logit <- function(model, delta, label = '', p0 = NULL,
   nstreams = 8, narrows = Inf, edge = 0.01, conf = NA, npoints = 100,
   alpha = deprecated(), vcov = deprecated()) {
   	
@@ -279,7 +279,7 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   	    edge = edge, conf = conf, npoints
   	  ) %>%
   	  modifyList(w) %>%
-  	  { .[['label']] %<>% paste(label, .); . } %>%
+  	  { .[['label']] %<>% paste0(label, .); . } %>%
   	  do.call('field3logit_mono', .) %>%
   	  return()
     }) %>%
@@ -305,7 +305,7 @@ print.field3logit <- function(x, ...) {
   
   cat(' Object of class "field3logit"\n')
   cat('-------------------------------\n')
-  cat('Label                    :', x$label, '\n')
+  cat('Label                    : ', ifelse(x$label == '', '<empty>', x$label), '\n', sep = '')
   cat('Possible outcomes        :', paste(x$lab, collapse = '; '), '\n')
   cat('Type of model            :', type, '\n')
   cat('Effect                   :', x$delta, '\n')
