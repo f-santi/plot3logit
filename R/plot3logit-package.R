@@ -99,6 +99,7 @@
 #' @importFrom generics tidy
 #' @importFrom ggplot2 arrow autoplot fortify unit
 #' @importFrom graphics points arrows plot
+#' @importFrom lifecycle deprecated
 #' @importFrom Rdpack reprompt
 #' @importFrom stats uniroot
 #' @importFrom tibble as_tibble tibble

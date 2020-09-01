@@ -255,13 +255,13 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   	
   # Check for deprecated arguments
   if (lifecycle::is_present(alpha)) {
-  	deprecate_stop(
+  	lifecycle::deprecate_stop(
   	  '3.0.0', 'plot3logit::field3logit(alpha = )',
   	  'see the help of "extract3logit"'
   	)
   }
   if (lifecycle::is_present(vcov)) {
-  	deprecate_stop(
+  	lifecycle::deprecate_stop(
   	  '3.0.0', 'plot3logit::field3logit(vcov = )',
   	  'see the help of "extract3logit"'
   	)
