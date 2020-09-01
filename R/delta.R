@@ -10,9 +10,10 @@ handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
   	  lapply(function(x) {
   	  	newblock <- block
   	  	newblock$delta <- stringr::str_replace(newblock$delta, pattern, x)
-  	  	newblock$label2 %<>% c(paste0(
-  	  	  cand, ': ', stringr::str_replace(x, paste0('^', cand), '')
-  	  	))
+  	  	#newblock$label2 %<>% c(paste0(
+  	  	#  cand, ': ', stringr::str_replace(x, paste0('^', cand), '')
+  	  	#))
+  	  	newblock$label2 %<>% c(stringr::str_replace(x, paste0('^', cand), ''))
   	  	return(newblock)
   	  }) %>%
   	  # Recursion
