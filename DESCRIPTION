@@ -17,7 +17,7 @@ Author: Flavio Santi [cre, aut] (<https://orcid.org/0000-0002-2014-1981>),
     Diego Giuliani [aut] (<https://orcid.org/0000-0002-7198-6714>)
 Maintainer: Flavio Santi <flavio.santi@univr.it>
 URL: https://www.flaviosanti.it/software/plot3logit
-BugReports: https://github.com/f-santi/plot3logit
+BugReports: https://github.com/f-santi/plot3logit/issues
 Description: An implementation of the ternary plot for interpreting regression
     coefficients of trinomial regression models, as proposed in Santi, Dickson
     and Espa (2019) <doi:10.1080/00031305.2018.1442368>. Ternary plots can be
