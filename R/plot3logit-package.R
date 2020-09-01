@@ -70,7 +70,7 @@
 #' gg3logit(field1) + stat_field3logit()
 #'
 #' # Read from list
-#' mod3 <- list(
+#' mod2 <- list(
 #'   B = matrix(
 #'     data = c(-2.05, 0.46, -2.46, 0.37),
 #'     nrow = 2,
@@ -78,8 +78,8 @@
 #'   ),
 #'   levels = c('Employed', 'Unemployed', 'Trainee')
 #' )
-#' field3 <- field3logit(mod3, c(0, 1))
-#' gg3logit(field3) + stat_field3logit()
+#' field2 <- field3logit(mod2, c(0, 1))
+#' gg3logit(field2) + stat_field3logit()
 #' }
 #'
 #' @references
