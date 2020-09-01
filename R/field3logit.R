@@ -248,6 +248,13 @@ is_simplified_field3logit <- function(x) {
 #' mfields <- field3logit(mod1, delta = depo, p0 = refpoint, narrows = 1)
 #' mfields
 #'
+#' # List passed to argument "delta" for generating "multifield3logit" objects
+#' mfields <- field3logit(
+#'   model = mod1, delta = '<<finalgrade>>', label = 'Final grade',
+#'   p0 = refpoint, narrows = 1
+#' )
+#' mfields
+#'
 #' @export
 field3logit <- function(model, delta, label = '', p0 = NULL,
   nstreams = 8, narrows = Inf, edge = 0.01, conf = NA, npoints = 100,

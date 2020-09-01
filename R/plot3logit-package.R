@@ -31,7 +31,7 @@
 #' [TernaryField()] and in particular by the method [`plot`][plot.field3logit]
 #' of `field3logit` class.
 #'
-#' Since version 2.0.0, `plot3logit` permits one to draw also the confidence
+#' Since version 2.0.0, `plot3logit` enables to draw also the confidence
 #' regions associated to the covariates effects. See the vignette of the
 #' package (type `vignette('plot3logit-overview')`) and the help of function
 #' [stat_conf3logit()] for some examples.
@@ -39,14 +39,16 @@
 #' @section Compatibility:
 #' Function [field3logit()] can read trinomial regression estimates from the
 #' output of the following functions:
+#' * [`clm`][ordinal::clm] and [`clm2`][ordinal::clm2] of package `ordinal`
+#'   (ordinal logit regression);
+#' * [`mlogit`][mlogit::mlogit] of package `mlogit` (logit regression);
 #' * [`multinom`][nnet::multinom] of package `nnet` (logit regression);
 #' * [`polr`][MASS::polr] of package `MASS` (ordinal logit regression);
-#' * [`mlogit`][mlogit::mlogit] of package `mlogit` (logit regression);
 #' * [`vgam`][VGAM::vgam] of package `VGAM` (logit regression).
 #'
 #' Moreover, explicit matrix of regression coefficients can be passed to
-#' [field3logit()]. See examples and function [field3logit()] for further
-#' details.
+#' [field3logit()]. See examples and functions [field3logit()] and
+#' [extract3logit()] for further details.
 #'
 #' @examples
 #' \dontrun{
@@ -66,13 +68,6 @@
 #' mod1 <- polr(finalgrade ~ gender + irregularity, data = mydata)
 #' field1 <- field3logit(mod1, 'genderFemale')
 #' gg3logit(field1) + stat_field3logit()
-#'
-#' # Read from "mlogit::mlogit"
-#' library(mlogit)
-#' mydata <- mlogit.data(cross_1year, choice = 'employment_sit', shape = 'wide')
-#' mod2 <- mlogit(employment_sit ~ 0 | gender + finalgrade, data = mydata)
-#' field2 <- field3logit(mod2, 'genderFemale')
-#' gg3logit(field2) + stat_field3logit()
 #'
 #' # Read from list
 #' mod3 <- list(
