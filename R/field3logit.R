@@ -33,8 +33,8 @@ prepare_block <- function(label, idarrow, comp, from, to, confregion) {
 
 
 
-field3logit_mono <- function(model, delta, label, p0,
-  alpha, vcov, nstreams, narrows, edge, conf, npoints) {
+field3logit_mono <- function(model, delta, label, p0, nstreams, narrows,
+  edge, conf, npoints) {
 
   # Read input
   vdelta <- get_vdelta(delta, model)
@@ -170,9 +170,8 @@ is_simplified_field3logit <- function(x) {
 #'   of the field. If not specified, `field3logit` automatically compute
 #'   `nstreams` candidate points so that arrows are evenly distributed over
 #'   the ternary plot area. See Examples.
-#' @param alpha `numeric` vector of length two where constants \eqn{\alpha^{(1)}}
-#'   and \eqn{\alpha^{(2)}} are stored (only for ordinal models), as
-#'   defined in Equation (7) of \insertCite{santi2019;textual}{plot3logit}.
+#' @param alpha deprecated argument. It may be removed in a future version of
+#'   the package.
 #' @param nstreams number of stream lines of the field to be computed. In case
 #'   of ordinal models, this parameter is ineffective, as only one curve
 #'   can be drawn. The parameter is ineffective also in case that argument
@@ -196,11 +195,8 @@ is_simplified_field3logit <- function(x) {
 #'   arrow** of the field.
 #' @param npoints number of points of the border to be computed **for each
 #'   confidence region**.
-#' @param vcov (**only if** the model is read from a matrix, otherwise it will
-#'   be ignored) variance-covariance matrix of parameter estimates. The elements
-#'   of the variance-covariance matrix should be ordered according to the matrix 
-#'   of parameter estimates where the categories of the dependent variable are
-#'   the slow index, whereas the covariates are the fast index.
+#' @param vcov deprecated argument. It may be removed in a future version of the
+#'   package.
 #' @param value value to be assigned.
 #'
 #' @return
@@ -254,19 +250,32 @@ is_simplified_field3logit <- function(x) {
 #'
 #' @export
 field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
-  alpha = NULL, vcov = NULL, nstreams = 8, narrows = Inf, edge = 0.01,
-  conf = NA, npoints = 100) {
+  nstreams = 8, narrows = Inf, edge = 0.01, conf = NA, npoints = 100,
+  alpha = deprecated(), vcov = deprecated()) {
+  	
+  # Check for deprecated arguments
+  if (lifecycle::is_present(alpha)) {
+  	deprecate_stop(
+  	  '3.0.0', 'plot3logit::field3logit(alpha = )',
+  	  'see the help of "extract3logit"'
+  	)
+  }
+  if (lifecycle::is_present(vcov)) {
+  	deprecate_stop(
+  	  '3.0.0', 'plot3logit::field3logit(vcov = )',
+  	  'see the help of "extract3logit"'
+  	)
+  }
 
   # Read input
-  modB <- read_model(model, 'logit', alpha, vcov)
+  modB <- read_model(model, 'logit')
   delta <- pre_process_delta(delta, modB)
   
   # Compute the field(s)
   delta %>%
     lapply(function(w) {
   	  list(
-  	    model = modB, p0 = p0, alpha = alpha, 
-  	    vcov = vcov, nstreams = nstreams, narrows = narrows,
+  	    model = modB, p0 = p0, nstreams = nstreams, narrows = narrows,
   	    edge = edge, conf = conf, npoints
   	  ) %>%
   	  modifyList(w) %>%

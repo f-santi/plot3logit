@@ -24,6 +24,6 @@ test_rfield3logit<- function(delta = NULL, vcov = FALSE) {
   	lab = c('Class A', 'Class B', 'Class C')
   )
   
-  field3logit(model, delta, vcov = vcov)
+  field3logit(model, delta)
 }
 
