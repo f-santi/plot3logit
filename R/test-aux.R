@@ -17,8 +17,13 @@ test_rfield3logit<- function(delta = NULL, vcov = FALSE) {
   
   M <- matrix(stats::rnorm(2 * k), k, 2)
   rownames(M) <- paste0('X', 0:(k - 1))
-  attr(M, 'levels') <- c('Class A', 'Class B', 'Class C')
   
-  field3logit(M, delta, vcov = vcov)
+  model <- list(
+    B = M,
+    vcovB = vcov,
+  	lab = c('Class A', 'Class B', 'Class C')
+  )
+  
+  field3logit(model, delta, vcov = vcov)
 }
 
