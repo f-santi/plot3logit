@@ -82,10 +82,7 @@ mod0 <- multinom(employment_sit ~ ., data = cross_1year)
 ```
 
 The gender effect is analysed by means of a ternary plot which is generated in
-two steps, however, package `plot3logit` should be loaded:
-```{r}
-library(plot3logit)
-```
+two steps.
 
 Firstly, the vector field is computed:
 ```{r}
