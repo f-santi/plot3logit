@@ -43,7 +43,7 @@ field3logit_mono <- function(model, delta, label, p0, nstreams, narrows,
   # Compute the starting points of the curves
   if (is.null(p0)) {
     model$DeltaB2pc(DeltaB, nstreams, edge) %>%
-      pc2p0(DeltaB, edge, model[c('linkinv','linkfun')]) -> p0
+      pc2p0(DeltaB, edge, model[c('linkinv', 'linkfun')]) -> p0
   } else {
     p0 <- list(pp = p0)
     p0$status <- ifelse(all(DeltaB == 0), 'p', 'p0')
@@ -255,13 +255,13 @@ field3logit <- function(model, delta, label = '<empty>', p0 = NULL,
   	
   # Check for deprecated arguments
   if (lifecycle::is_present(alpha)) {
-  	lifecycle::deprecate_stop(
+    lifecycle::deprecate_stop(
   	  '3.0.0', 'plot3logit::field3logit(alpha = )',
   	  'see the help of "extract3logit"'
   	)
   }
   if (lifecycle::is_present(vcov)) {
-  	lifecycle::deprecate_stop(
+    lifecycle::deprecate_stop(
   	  '3.0.0', 'plot3logit::field3logit(vcov = )',
   	  'see the help of "extract3logit"'
   	)
