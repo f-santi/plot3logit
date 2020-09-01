@@ -21,29 +21,6 @@ extract3logit <- function(x, ...) {
 
 #' @rdname extract3logit
 #' @export
-extract3logit.model3logit <- function(x, ...) return(x)
-
-
-
-#' @rdname extract3logit
-#' @export
-extract3logit.multinom <- function(x, ...) {
-  list(
-    B = t(stats::coef(x)),
-  	vcovB = stats::vcov(x),
-    alpha = NULL,
-    model = 'logit',
-    ordinal = FALSE,
-    readfrom = 'nnet::multinom',
-    lab = x$lab
-  ) %>%
-    structure(class = 'model3logit')
-}
-
-
-
-#' @rdname extract3logit
-#' @export
 extract3logit.clm <- function(x, ...) {
   # Checks
   if (length(x[['alpha']]) != 2) {
@@ -96,15 +73,15 @@ extract3logit.clm2 <- function(x, ...) {
 
 #' @rdname extract3logit
 #' @export
-extract3logit.polr <- function(x, ...) {
+extract3logit.list <- function(x, ...) {
   list(
-  	B = as.matrix(stats::coef(x)),
-  	vcovB = NULL,
-  	alpha = cumsum(x$zeta),
-  	x = ifelse(x$method == 'logistic', 'logit', x$method),
-  	ordinal = TRUE,
-  	readfrom = 'MASS::polr',
-  	lab = x$lev
+    B = x$B,
+    vcovB = x$vcov,
+    alpha = x$alpha,
+    model = 'logit',
+    ordinal = !is.null(x$alpha),
+  	readfrom = 'list',
+  	lab = x$levels
   ) %>%
     structure(class = 'model3logit')
 }
@@ -165,6 +142,46 @@ extract3logit.mlogit <- function(x, ...) {
 
 #' @rdname extract3logit
 #' @export
+extract3logit.model3logit <- function(x, ...) return(x)
+
+
+
+#' @rdname extract3logit
+#' @export
+extract3logit.multinom <- function(x, ...) {
+  list(
+    B = t(stats::coef(x)),
+  	vcovB = stats::vcov(x),
+    alpha = NULL,
+    model = 'logit',
+    ordinal = FALSE,
+    readfrom = 'nnet::multinom',
+    lab = x$lab
+  ) %>%
+    structure(class = 'model3logit')
+}
+
+
+
+#' @rdname extract3logit
+#' @export
+extract3logit.polr <- function(x, ...) {
+  list(
+  	B = as.matrix(stats::coef(x)),
+  	vcovB = NULL,
+  	alpha = cumsum(x$zeta),
+  	x = ifelse(x$method == 'logistic', 'logit', x$method),
+  	ordinal = TRUE,
+  	readfrom = 'MASS::polr',
+  	lab = x$lev
+  ) %>%
+    structure(class = 'model3logit')
+}
+
+
+
+#' @rdname extract3logit
+#' @export
 extract3logit.vgam <- function(x, ...) {
   # Check the object
   if (!inherits(x@family, 'vglmff')) {
@@ -211,22 +228,4 @@ extract3logit.vgam <- function(x, ...) {
   ) %>%
     structure(class = 'model3logit')
 }
-
-
-
-#' @rdname extract3logit
-#' @export
-extract3logit.list <- function(x, ...) {
-  list(
-    B = x$B,
-    vcovB = x$vcov,
-    alpha = x$alpha,
-    model = 'logit',
-    ordinal = !is.null(x$alpha),
-  	readfrom = 'list',
-  	lab = x$levels
-  ) %>%
-    structure(class = 'model3logit')
-}
-
 
