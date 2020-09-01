@@ -44,6 +44,58 @@ extract3logit.multinom <- function(x, ...) {
 
 #' @rdname extract3logit
 #' @export
+extract3logit.clm <- function(x, ...) {
+  # Checks
+  if (length(x[['alpha']]) != 2) {
+  	stop('Only models with trinomial dependent variable are allowed')
+  }
+  if (x[['link']] != 'logit') {
+  	stop('Only logit link function is allowed')
+  }
+  
+  # Prepare the output
+  list(
+  	B = as.matrix(x[['beta']]),
+  	vcovB = NULL,
+  	alpha = cumsum(x[['alpha']]),
+  	x = 'logit',
+  	ordinal = TRUE,
+  	readfrom = 'ordinal::clm',
+  	lab = x[['y.levels']]
+  ) %>%
+    structure(class = 'model3logit')
+}
+
+
+
+#' @rdname extract3logit
+#' @export
+extract3logit.clm2 <- function(x, ...) {
+  # Checks
+  if (length(x[['Alpha']]) != 2) {
+  	stop('Only models with trinomial dependent variable are allowed')
+  }
+  if (x[['link']] != 'logistic') {
+  	stop('Only logit link function is allowed')
+  }
+  
+  # Prepare the output
+  list(
+  	B = as.matrix(x[['beta']]),
+  	vcovB = NULL,
+  	alpha = cumsum(x[['Alpha']]),
+  	x = 'logit',
+  	ordinal = TRUE,
+  	readfrom = 'ordinal::clm2',
+  	lab = x[['lev']]
+  ) %>%
+    structure(class = 'model3logit')
+}
+
+
+
+#' @rdname extract3logit
+#' @export
 extract3logit.polr <- function(x, ...) {
   list(
   	B = as.matrix(stats::coef(x)),
@@ -176,4 +228,5 @@ extract3logit.list <- function(x, ...) {
   ) %>%
     structure(class = 'model3logit')
 }
+
 
