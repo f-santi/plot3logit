@@ -1,6 +1,6 @@
 
 # Generate a random "field3logit" object from matrix
-test_rfield3logit<- function(delta = NULL, vcov = FALSE) {
+test_rfield3logit <- function(delta = NULL, vcov = FALSE) {
   if (is.null(delta)) {
     k <- sample(2:9, 1)
     delta <- versor(sample(2:k, 1), k)	
