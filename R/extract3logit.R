@@ -19,6 +19,25 @@ extract3logit <- function(x, ...) {
 
 
 
+#' @export
+print.model3logit <- function(x, ...) {
+ 
+  type  <- ifelse(x$ordinal, 'ordinal', 'categorical')
+  vcovB <- ifelse(is.null(x$vcovB), 'not available', 'available')
+  
+  cat('\n Object of class "model3logit"\n')
+  cat('-------------------------------------------\n')
+  cat('Model has been read from :', x$readfrom, '\n')
+  cat('Type of model            :', type, '\n')
+  cat('Possible outcomes        :', paste(x$lab, collapse = '; '), '\n')
+  cat('Matrix of coefficients   :', paste(dim(x$B), collapse = ' x '), '\n')
+  cat('Covariance matrix        :', vcovB, '\n\n')
+
+  invisible(x)
+}
+
+
+
 #' @rdname extract3logit
 #' @export
 extract3logit.clm <- function(x, ...) {
