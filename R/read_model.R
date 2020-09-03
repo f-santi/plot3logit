@@ -60,11 +60,11 @@ read_model <- function(model) {
   }
   
   # Residual setting
-  if (is.null(out$lab)) { out$lab <- c('p1', 'p2', 'p3') }
+  if (is.null(out$levels)) { out$levels <- c('p1', 'p2', 'p3') }
   if (out$ordinal) {
   	colnames(out$B) <- 'Coef.'
   } else {
-  	colnames(out$B) <- out$lab[-1]
+  	colnames(out$B) <- out$levels[-1]
   }
   
   # Output

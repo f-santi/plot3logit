@@ -99,7 +99,7 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
     lapply(function(w) lapply(w, function(y) {
     	  linkfun(y$to, x) %>%
         confregion(SigMa) %>%
-        set_colnames(x$lab) -> y$confregion
+        set_colnames(x$levels) -> y$confregion
         
       return(y)
     }))

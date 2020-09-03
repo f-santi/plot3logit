@@ -29,7 +29,7 @@ print.model3logit <- function(x, ...) {
   cat('-------------------------------------------\n')
   cat('Model has been read from :', x$readfrom, '\n')
   cat('Type of model            :', type, '\n')
-  cat('Possible outcomes        :', paste(x$lab, collapse = '; '), '\n')
+  cat('Possible outcomes        :', paste(x$levels, collapse = '; '), '\n')
   cat('Matrix of coefficients   :', paste(dim(x$B), collapse = ' x '), '\n')
   cat('Covariance matrix        :', vcovB, '\n\n')
 
@@ -57,7 +57,7 @@ extract3logit.clm <- function(x, ...) {
   	x = 'logit',
   	ordinal = TRUE,
   	readfrom = 'ordinal::clm',
-  	lab = x[['y.levels']]
+  	levels = x[['y.levels']]
   ) %>%
     structure(class = 'model3logit')
 }
@@ -83,7 +83,7 @@ extract3logit.clm2 <- function(x, ...) {
   	x = 'logit',
   	ordinal = TRUE,
   	readfrom = 'ordinal::clm2',
-  	lab = x[['lev']]
+  	levels = x[['lev']]
   ) %>%
     structure(class = 'model3logit')
 }
@@ -100,7 +100,7 @@ extract3logit.list <- function(x, ...) {
     model = 'logit',
     ordinal = !is.null(x$alpha),
   	readfrom = 'list',
-  	lab = x$levels
+  	levels = x$levels
   ) %>%
     structure(class = 'model3logit')
 }
@@ -152,7 +152,7 @@ extract3logit.mlogit <- function(x, ...) {
     model = 'logit',
     ordinal = FALSE,
     readfrom = 'mlogit::mlogit',
-    lab = names(x$freq)
+    levels = names(x$freq)
   ) %>%
     structure(class = 'model3logit')
 }
@@ -175,7 +175,7 @@ extract3logit.multinom <- function(x, ...) {
     model = 'logit',
     ordinal = FALSE,
     readfrom = 'nnet::multinom',
-    lab = x$lab
+    levels = x$lab
   ) %>%
     structure(class = 'model3logit')
 }
@@ -192,7 +192,7 @@ extract3logit.polr <- function(x, ...) {
   	x = ifelse(x$method == 'logistic', 'logit', x$method),
   	ordinal = TRUE,
   	readfrom = 'MASS::polr',
-  	lab = x$lev
+  	levels = x$lev
   ) %>%
     structure(class = 'model3logit')
 }
@@ -243,7 +243,7 @@ extract3logit.vgam <- function(x, ...) {
     model = 'logit',
     ordinal = FALSE,
     readfrom = 'VGAM::vgam',
-    lab = c(depoL$ref, depoL$oth)
+    levels = c(depoL$ref, depoL$oth)
   ) %>%
     structure(class = 'model3logit')
 }

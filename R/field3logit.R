@@ -62,7 +62,7 @@ field3logit_mono <- function(model, delta, label, p0, nstreams, narrows,
   # Create field3logit object
   names(out) %<>% paste0('C', 1:length(out), .)
   out <- list(B = model$B, alpha = model$alpha, delta = delta,
-    vdelta = vdelta, lab = model$lab, readfrom = model$readfrom,
+    vdelta = vdelta, levels = model$levels, readfrom = model$readfrom,
     effects = out, label = label, vcovB = model$vcovB,
     ordinal = model$ordinal, conf = conf
   )
@@ -313,7 +313,7 @@ print.field3logit <- function(x, ...) {
   cat(' Object of class "field3logit"\n')
   cat('-------------------------------\n')
   cat('Label                    : ', ifelse(x$label == '', '<empty>', x$label), '\n', sep = '')
-  cat('Possible outcomes        :', paste(x$lab, collapse = '; '), '\n')
+  cat('Possible outcomes        :', paste(x[['levels']], collapse = '; '), '\n')
   cat('Type of model            :', type, '\n')
   cat('Effect                   :', x$delta, '\n')
   
@@ -337,8 +337,8 @@ print.field3logit <- function(x, ...) {
 plot.field3logit <- function(x, ..., add = FALSE, length = 0.05) {
 
   if (!add)  {
-  	TernaryPlot(atip = x$lab[1], btip = x$lab[2], ctip = x$lab[3],
-  	  alab = x$lab[1], blab = x$lab[2], clab = x$lab[3],
+  	TernaryPlot(atip = x$levels[1], btip = x$levels[2], ctip = x$levels[3],
+  	  alab = x$levels[1], blab = x$levels[2], clab = x$levels[3],
   	  grid.minor.lines = 1)
   }
   
@@ -352,7 +352,7 @@ plot.field3logit <- function(x, ..., add = FALSE, length = 0.05) {
 #' @rdname field3logit
 #' @export
 as_tibble.field3logit <- function(x, ..., wide = TRUE) {
-  depoLab <- list(label = x$label, lab = x$lab)
+  depoLab <- list(label = x$label, levels = x$levels)
   
   x %<>%
     use_series('effects') %>%
@@ -360,13 +360,13 @@ as_tibble.field3logit <- function(x, ..., wide = TRUE) {
     purrr::imap(~ prepare_block(
       label = depoLab$label,
       idarrow = .y,
-      comp = depoLab$lab,
+      comp = depoLab$levels,
       from = .x$from,
       to = .x$to,
       confregion = .x$confregion
     )) %>%
     purrr::reduce(bind_rows) %>%
-    mutate(comp = factor(.$comp, depoLab$lab))
+    mutate(comp = factor(.$comp, depoLab$levels))
   
   if (wide) {
     x %<>%
