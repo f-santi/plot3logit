@@ -19,6 +19,24 @@ extract3logit <- function(x, ...) {
 
 
 
+#' @rdname extract3logit
+#' @export
+extract3logit.default <- function(x, ...) {
+  list(
+    B = x$B,
+    vcovB = x$vcov,
+    alpha = x$alpha,
+    model = 'logit',
+    ordinal = !is.null(x$alpha),
+    readfrom = paste('obj. of class', paste(paste0('"', class(x), '"'), collapse = ', ')),
+    levels = x$levels,
+    ool = 1:3
+  ) %>%
+    structure(class = 'model3logit')
+}
+
+
+
 #' @export
 print.model3logit <- function(x, ...) {
  
@@ -61,7 +79,7 @@ extract3logit.clm <- function(x, ...) {
   	levels = x[['y.levels']],
   	ool = 1:3
   ) %>%
-    structure(class = 'model3logit')
+    extract3logit.default(...)
 }
 
 
@@ -88,25 +106,7 @@ extract3logit.clm2 <- function(x, ...) {
   	levels = x[['lev']],
   	ool = 1:3
   ) %>%
-    structure(class = 'model3logit')
-}
-
-
-
-#' @rdname extract3logit
-#' @export
-extract3logit.list <- function(x, ...) {
-  list(
-    B = x$B,
-    vcovB = x$vcov,
-    alpha = x$alpha,
-    model = 'logit',
-    ordinal = !is.null(x$alpha),
-  	readfrom = 'list',
-  	levels = x$levels,
-  	ool = 1:3
-  ) %>%
-    structure(class = 'model3logit')
+    extract3logit.default(...)
 }
 
 
@@ -159,7 +159,7 @@ extract3logit.mlogit <- function(x, ...) {
     levels = names(x$freq),
     ool = 1:3
   ) %>%
-    structure(class = 'model3logit')
+    extract3logit.default(...)
 }
 
 
@@ -183,7 +183,7 @@ extract3logit.multinom <- function(x, ...) {
     levels = x$lab,
     ool = 1:3
   ) %>%
-    structure(class = 'model3logit')
+    extract3logit.default(...)
 }
 
 
@@ -201,7 +201,7 @@ extract3logit.polr <- function(x, ...) {
   	levels = x$lev,
   	ool = 1:3
   ) %>%
-    structure(class = 'model3logit')
+    extract3logit.default(...)
 }
 
 
@@ -253,7 +253,7 @@ extract3logit.vgam <- function(x, ...) {
     levels = c(depoL$ref, depoL$oth),
     ool = order(c(x@misc$refLevel, (1:3)[-x@misc$refLevel]))
   ) %>%
-    structure(class = 'model3logit')
+    extract3logit.default(...)
 }
 
 

@@ -1,4 +1,17 @@
 
+# default
+test_that('extract trilogit by means of the default method', {
+  list(
+    B = matrix(rnorm(8), 4, 2, dimnames = list(paste0('X', 0:3))),
+    levels = LETTERS[1:3]
+  ) %>% 
+    extract3logit -> model
+  
+  expect_is(model, 'model3logit')
+})
+
+
+
 # ordinal::clm
 test_that('extract trilogit from "ordinal::clm"', {
   cross_1year %>%
