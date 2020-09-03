@@ -64,7 +64,7 @@ field3logit_mono <- function(model, delta, label, p0, nstreams, narrows,
   out <- list(B = model$B, alpha = model$alpha, delta = delta,
     vdelta = vdelta, levels = model$levels, readfrom = model$readfrom,
     effects = out, label = label, vcovB = model$vcovB,
-    ordinal = model$ordinal, conf = conf
+    ordinal = model$ordinal, conf = conf, ool = model$ool
   )
   class(out) <- c('field3logit', 'Hfield3logit')
   
@@ -314,6 +314,7 @@ print.field3logit <- function(x, ...) {
   cat('-------------------------------\n')
   cat('Label                    : ', ifelse(x$label == '', '<empty>', x$label), '\n', sep = '')
   cat('Possible outcomes        :', paste(x[['levels']], collapse = '; '), '\n')
+  cat('Reference level          :', x[['levels']][1], '\n')
   cat('Type of model            :', type, '\n')
   cat('Effect                   :', x$delta, '\n')
   
