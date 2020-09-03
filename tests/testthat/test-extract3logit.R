@@ -20,6 +20,7 @@ test_that('extract trilogit from "ordinal::clm"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
+  expect_identical(model$lab, modref$lab)
   expect_equal(model$B, modref$B, tolerance = 1e-6)
   expect_equal(model$alpha, modref$alpha, tolerance = 1e-6)
 })
@@ -47,6 +48,7 @@ test_that('extract trilogit from "ordinal::clm2"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
+  expect_identical(model$lab, modref$lab)
   expect_equal(model$B, modref$B, tolerance = 1e-6)
   expect_equal(model$alpha, modref$alpha, tolerance = 1e-6)
 })
@@ -68,6 +70,7 @@ test_that('extract trilogit from "mlogit::mlogit"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
+  #expect_identical(model$lab, modref$lab)
   expect_equal(model$B[ , 2:1], modref$B, tolerance = 1e-4)
   #expect_equal(model$vcovB, modref$vcovB)
 })
@@ -123,6 +126,7 @@ test_that('extract trilogit from "VGAM::vgam"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
+  #expect_identical(model$lab, modref$lab)
   #expect_equal(model$B, modref$B)
   #expect_equal(model$vcovB, modref$vcovB)
 })
