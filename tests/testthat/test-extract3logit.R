@@ -132,3 +132,29 @@ test_that('extract trilogit from "VGAM::vgam"', {
 })
 
 
+
+# VGAM::vglm
+test_that('extract trilogit from "VGAM::vglm"', {
+  cross_1year %>%
+    nnet::multinom(
+      formula = employment_sit ~ gender + finalgrade,
+      data = ., 
+      trace = FALSE
+    ) %>%
+    extract3logit -> modref
+  
+  cross_1year %>%
+    VGAM::vglm(
+      formula = employment_sit ~ gender + finalgrade,
+      family = VGAM::multinomial(),
+      data = .
+    ) %>%
+    extract3logit -> model
+  
+  expect_is(model, 'model3logit')
+  #expect_identical(model$lab, modref$lab)
+  #expect_equal(model$B, modref$B)
+  #expect_equal(model$vcovB, modref$vcovB)
+})
+
+

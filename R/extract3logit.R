@@ -256,3 +256,13 @@ extract3logit.vgam <- function(x, ...) {
     structure(class = 'model3logit')
 }
 
+
+
+#' @rdname extract3logit
+#' @export
+extract3logit.vglm <- function(x, ...) {
+  out <- extract3logit.vgam(x, ...)
+  out[['readfrom']] <- 'VGAM::vglm'
+  return(out)
+}
+
