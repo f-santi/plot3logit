@@ -420,7 +420,16 @@ tidy.field3logit <- function(x, ..., wide = TRUE) {
 #' @rdname field3logit
 #' @export
 coef.field3logit <- function(object, ...) {
-  return(object$B)
+  if (object$ordinal) {
+  	out <- list(
+  	  alpha = object$alpha,
+  	  B = object$B
+  	)
+  } else {
+  	out <- object$B
+  }
+  
+  return(out)
 }
 
 
