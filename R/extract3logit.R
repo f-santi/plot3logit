@@ -251,7 +251,7 @@ extract3logit.vgam <- function(x, ...) {
     ordinal = FALSE,
     readfrom = 'VGAM::vgam',
     levels = c(depoL$ref, depoL$oth),
-    ool = c(3, 1, 2)
+    ool = order(c(x@misc$refLevel, (1:3)[-x@misc$refLevel]))
   ) %>%
     structure(class = 'model3logit')
 }
