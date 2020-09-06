@@ -8,6 +8,7 @@ test_that('extract trilogit by means of the default method', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
+  expect_identical(model[['readfrom']], 'list')
 })
 
 
@@ -33,7 +34,8 @@ test_that('extract trilogit from "ordinal::clm"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
-  expect_identical(model$lab, modref$lab)
+  expect_identical(model[['readfrom']], 'ordinal::clm')
+  expect_identical(model$levels[model$ool], modref$levels)
   expect_equal(model$B, modref$B, tolerance = 1e-6)
   expect_equal(model$alpha, modref$alpha, tolerance = 1e-6)
 })
@@ -61,7 +63,8 @@ test_that('extract trilogit from "ordinal::clm2"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
-  expect_identical(model$lab, modref$lab)
+  expect_identical(model[['readfrom']], 'ordinal::clm2')
+  expect_identical(model$levels[model$ool], modref$levels)
   expect_equal(model$B, modref$B, tolerance = 1e-6)
   expect_equal(model$alpha, modref$alpha, tolerance = 1e-6)
 })
@@ -83,8 +86,9 @@ test_that('extract trilogit from "mlogit::mlogit"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
-  #expect_identical(model$lab, modref$lab)
-  expect_equal(model$B[ , 2:1], modref$B, tolerance = 1e-4)
+  expect_identical(model[['readfrom']], 'mlogit::mlogit')
+  #expect_identical(model$levels[model$ool], modref$levels)
+  #expect_equal(model$B[ , 2:1], modref$B, tolerance = 1e-4)
   #expect_equal(model$vcovB, modref$vcovB)
 })
 
@@ -97,9 +101,11 @@ test_that('extract trilogit from "nnet::multinom"', {
       formula = employment_sit ~ gender + finalgrade,
       data = ., 
       trace = FALSE
-    ) -> model
+    ) %>%
+    extract3logit -> model
   
-  expect_is(extract3logit(model), 'model3logit')
+  expect_is(model, 'model3logit')
+  expect_identical(model[['readfrom']], 'nnet::multinom')
 })
 
 
@@ -116,6 +122,7 @@ test_that('extract trilogit from "MASS::polr"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
+  expect_identical(model[['readfrom']], 'MASS::polr')
 })
 
 
@@ -139,7 +146,9 @@ test_that('extract trilogit from "VGAM::vgam"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
-  #expect_identical(model$lab, modref$lab)
+  expect_identical(model[['readfrom']], 'VGAM::vgam')
+  expect_identical(model[['ool']], c(2L, 3L, 1L))
+  expect_identical(model$levels[model$ool], modref$levels)
   #expect_equal(model$B, modref$B)
   #expect_equal(model$vcovB, modref$vcovB)
 })
@@ -165,7 +174,9 @@ test_that('extract trilogit from "VGAM::vglm"', {
     extract3logit -> model
   
   expect_is(model, 'model3logit')
-  #expect_identical(model$lab, modref$lab)
+  expect_identical(model[['readfrom']], 'VGAM::vglm')
+  expect_identical(model[['ool']], c(2L, 3L, 1L))
+  expect_identical(model$levels[model$ool], modref$levels)
   #expect_equal(model$B, modref$B)
   #expect_equal(model$vcovB, modref$vcovB)
 })
