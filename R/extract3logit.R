@@ -31,7 +31,7 @@
 #'
 #' **In any case**, once the list has been created, the new method should invoke
 #' the default method [extract3logit.default()] and return its ouput. By so
-#' doing, automatic checks and initialisations are run before `model3logit`
+#' doing, automatic checks and initialisations are run before the `model3logit`
 #' object is returned.
 #'
 #' @param x an object of any of the classes listed below. If a list is
