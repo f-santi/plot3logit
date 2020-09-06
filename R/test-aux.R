@@ -21,7 +21,7 @@ test_rfield3logit <- function(delta = NULL, vcov = FALSE) {
   model <- list(
     B = M,
     vcovB = vcov,
-  	lab = c('Class A', 'Class B', 'Class C')
+  	levels = c('Class A', 'Class B', 'Class C')
   )
   
   field3logit(model, delta)
