@@ -206,11 +206,6 @@ is_simplified_field3logit <- function(x) {
 #' @seealso
 #' [multifield3logit()], [gg3logit()], [autoplot()].
 #'
-#' @inherit cross_1year references
-#'
-#' @references
-#' \insertAllCited{}
-#'
 #' @examples
 #' data(cross_1year)
 #'
