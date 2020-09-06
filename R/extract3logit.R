@@ -22,17 +22,38 @@ extract3logit <- function(x, ...) {
 #' @rdname extract3logit
 #' @export
 extract3logit.default <- function(x, ...) {
+
+  if (all('list' == class(x))) {
+    depo <- 'list'
+  } else {
+    depo <- paste0('class [', paste(class(x), collapse = ', '), ']')
+  }
+
+  # Structure the list and set default values
   list(
-    B = x$B,
-    vcovB = x$vcov,
-    alpha = x$alpha,
-    model = 'logit',
-    ordinal = !is.null(x$alpha),
-    readfrom = paste('obj. of class', paste(paste0('"', class(x), '"'), collapse = ', ')),
-    levels = x$levels,
-    ool = 1:3
-  ) %>%
-    structure(class = 'model3logit')
+    B        = NULL,
+    vcovB    = NULL,
+    alpha    = NULL,
+    model    = 'logit',
+    ordinal  = FALSE,
+    readfrom = depo,
+    levels   = NULL,
+    ool      = 1:3
+  ) -> depoD
+
+  depoD %>%
+    # Update the list
+    modifyList(x, keep.null = TRUE) %>%
+    # Select components
+    `[`(names(depoD)) %>%
+    # Set the class
+    structure(class = 'model3logit') -> out
+  
+  # Checks on the attributes
+  if (is.null(out$B)) { stop('The matrix of coefficients is not available') }
+  
+  # Return the object
+  return(out)
 }
 
 
