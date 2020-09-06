@@ -8,19 +8,26 @@
 #'
 #' When a specific method is not available for a fitted model, it is possible to
 #' pass a list to argument `x`. In that case, the list should consists of the
-#' following components:
+#' following components (the order is irrelevant):
 #' 
-#' * `levels`: the character vector with the three possible values of the
-#'   dependent variable. The first value will be interpreted as the reference
-#'   level.
-#' * `B`: the matrix of regression coefficients. It should be a matrix (or any
-#'   coercible object) with two columns if the model is cardinal, with only one
-#'   column if the model is ordinal. The row names of `B` are used as names
-#'   of covariates, hence they must be unique and valid variable names.
-#' * `alpha`: if the the model is ordinal, it should be a numeric vector of
-#'   length two, otherwise this component should be either set to `NULL` or not
-#'   set at all.
-#' * `vcovB`: the covariance matrix
+#' * `levels`: vector of possible values of the dependent variable.  It should
+#'   be a character vector of lenght three, whose first element is interpreted
+#'   as the reference level, whereas the second and the third elements are
+#'   associated to the first and second columns of matrix `B` respectively.
+#' * `B`: matrix of regression coefficients. It should be a numeric matrix
+#'   (or any coercible object) with two columns if the model is cardinal, with
+#'   only one column if the model is ordinal. The number of rows should be equal
+#'   to the number of covariates and the names of covariates should be added as
+#'   row names. The intercepts should be included only in case of categorical
+#'   models, whereas column names, if provided, are ignored.
+#' * `alpha`: intercepts of ordinal models. It should be a numerical vector of
+#'   length two if the the model is ordinal, otherwise this component should be
+#'   either set to \code{NULL} or missing.
+#' * `vcovB`: covariance matrix of regression coefficients. It  should be a
+#'   numeric matrix (or any coercible object) where the number of rows and
+#'   columns equals the number of elements of \code{B}. Rows and columns should
+#'   be ordered according to the labels of the dependent variable (slower index),
+#'   and then to the covariates (faster index).
 #'
 #' If a new `S3` method for generic [extract3logit()] has to be implemented, the
 #' following components may be set:
