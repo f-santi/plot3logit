@@ -35,7 +35,7 @@ extract3logit.default <- function(x, ...) {
     vcovB    = NULL,
     alpha    = NULL,
     model    = 'logit',
-    ordinal  = FALSE,
+    ordinal  = NULL,
     readfrom = depo,
     levels   = NULL,
     ool      = 1:3
@@ -49,8 +49,25 @@ extract3logit.default <- function(x, ...) {
     # Set the class
     structure(class = 'model3logit') -> out
   
-  # Checks on the attributes
-  if (is.null(out$B)) { stop('The matrix of coefficients is not available') }
+  # Check and complete the attributes
+  if (is.null(out[['B']])) { stop('The matrix of coefficients is not available') }
+  out[['B']] %<>% as.matrix
+  out[['ordinal']] <- !is.null(out[['alpha']])
+  
+  if (out[['ordinal']]) {
+    if (ncol(out[['B']]) != 1) {
+      stop('Dimension mismatch on the matrix of coefficients')
+    }
+    out[['alpha']] %<>% as.numeric
+  } else {
+    if (ncol(out[['B']]) != 2) {
+      stop('Dimension mismatch on the matrix of coefficients')
+    }
+  }
+  
+  if (out[['model']] != 'logit') {
+    stop('Current implementation of "plot3logit" works only with logit links')
+  }
   
   # Return the object
   return(out)
