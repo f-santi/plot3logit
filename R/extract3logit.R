@@ -1,11 +1,42 @@
 
 #' Extract information from fitted models
 #'
-#' [extract3logit()] reads argument `x` properly sets the matrix of
-#' coefficients and the other needed x-specific functions.
+#' [extract3logit()] extracts all information which is relevant for
+#' computing the vector field(s) from the object passed to argument `x`. See
+#' **Details** for information on how new `S3` methods of generic 
+#' [extract3logit()] should be implemented.
 #'
-#' @param x see [field3logit()].
-#' @param ... other arguments.
+#' When a specific method is not available for a fitted model, it is possible to
+#' pass a list to argument `x`. In that case, the list should consists of the
+#' following components:
+#' 
+#' * `levels`: the character vector with the three possible values of the
+#'   dependent variable. The first value will be interpreted as the reference
+#'   level.
+#' * `B`: the matrix of regression coefficients. It should be a matrix (or any
+#'   coercible object) with two columns if the model is cardinal, with only one
+#'   column if the model is ordinal. The row names of `B` are used as names
+#'   of covariates, hence they must be unique and valid variable names.
+#' * `alpha`: if the the model is ordinal, it should be a numeric vector of
+#'   length two, otherwise this component should be either set to `NULL` or not
+#'   set at all.
+#' * `vcovB`: the covariance matrix
+#'
+#' If a new `S3` method for generic [extract3logit()] has to be implemented, the
+#' following components may be set:
+#' 
+#' * `readfrom`: character with information about the function that returned the
+#'   estimates in the form `package::function` (for example `nnet::multinom`,
+#'   `MASS::polr`, ...)
+#'
+#' **In any case**, once the list has been created, the new method should invoke
+#' the default method [extract3logit.default()] and return its ouput. By so
+#' doing, automatic checks and initialisations are run before `model3logit`
+#' object is returned.
+#'
+#' @param x an object of any of the classes listed below. If a list is
+#'   passed, it should be structured as described in section **Details**.
+#' @param ... other arguments passed to other methods.
 #'
 #' @return
 #' An object of class `model3logit`.
