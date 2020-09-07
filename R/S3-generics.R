@@ -11,7 +11,7 @@
 #' @name labels
 #'
 #' @export
-`labels<-` <- function(x, value) {
+`labels<-` <- function(x, value, ...) {
   UseMethod('labels<-')
 }
 
