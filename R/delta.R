@@ -46,7 +46,7 @@ pre_process_delta <- function(delta, model) {
     # Prepare labels
     lapply(function(x) {
     	  if (!is.null(x$label2)) {
-    	    x[['label']] %<>% paste0(' (', paste(x$label2, collapse = '; '), ')')
+    	    x[['label']] %<>% paste(paste(x$label2, collapse = '; '))
     	    x$label2 <- NULL
     	  }
     	  x
