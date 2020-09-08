@@ -9,7 +9,7 @@ handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
   	  # Generate new blocks
   	  lapply(function(x) {
   	  	newblock <- block
-  	  	newblock$delta <- stringr::str_replace(newblock$delta, pattern, x)
+  	  	newblock$delta <- stringr::str_replace(newblock$delta, pattern, paste0('`', x, '`'))
   	  	#newblock$label2 %<>% c(paste0(
   	  	#  cand, ': ', stringr::str_replace(x, paste0('^', cand), '')
   	  	#))
@@ -98,7 +98,6 @@ get_vdelta <- function(delta, model) {
   if (is.expression(delta)) {
   	depoE <- new.env()
   	n <- nrow(model$B)
-  	
   	mapply(
   	  FUN = function(x, y) assign(x, versor(y, n), envir = depoE),
   	  rownames(model$B),

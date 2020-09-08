@@ -47,6 +47,18 @@ test_that("factor delimiters syntax works", {
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 25L)
   
+  depo <- field3logit(modVote, '<<educ>> + <<race>>')
+  expect_is(depo, 'multifield3logit')
+  expect_identical(length(depo), 25L)
+  
+  depo <- field3logit(modVote, '<<race>> + <<birthyr>>')
+  expect_is(depo, 'multifield3logit')
+  expect_identical(length(depo), 25L)
+  
+  depo <- field3logit(modVote, '<<educ>> + <<birthyr>>')
+  expect_is(depo, 'multifield3logit')
+  expect_identical(length(depo), 25L)
+  
   
   # Nested effects
   list(
