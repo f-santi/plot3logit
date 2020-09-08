@@ -31,7 +31,7 @@ test_that("factor delimiters syntax works", {
   
   # Single factor
   depo <- field3logit(modVote, '<<gender>>', , p0, 1, 1)
-  expect_is(depo + NULL, 'multifield3logit', , p0, 1, 1)
+  expect_is(depo + NULL, 'multifield3logit')
   expect_identical(length(depo + NULL), 1L)
   
   depo <- field3logit(modVote, '<<race>>', , p0, 1, 1)
