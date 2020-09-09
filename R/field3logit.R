@@ -119,8 +119,8 @@ is_simplified_field3logit <- function(x) {
 #' explicitly specified.
 #'
 #' The method [plot()] draws the ternary plot using standard graphics methods
-#' provided by package `Ternary`. See function [gg3logit()] for plotting
-#' through the package [`ggtern`][ggtern::ggtern_package] based on the
+#' provided by package `Ternary`. See functions [gg3logit()] and [autoplot()]
+#' for plotting through the package [`ggtern`][ggtern::ggtern_package] based on the
 #' grammar of graphics.
 #' 
 #' Methods [as.data.frame()], [as_tibble()], [fortify()] and [tidy()] permits
@@ -148,12 +148,13 @@ is_simplified_field3logit <- function(x) {
 #' and the set of generated `field3logit` objects is combined into a single
 #' object of class `multifield3logit`. The compoments of the list passed to
 #' `delta` must be named lists whose elements are used as arguments of each call
-#' of function `field3logit`, whereas the arguments specified in the parent call
+#' of function `field3logit`, whilst the arguments specified in the parent call
 #' of `field3logit` are used as default values. It follows that arguments shared
 #' by all fields can be specified once in the parent call of `field3logit`, and
 #' only arguments which changes from field to field (such as `delta` and
 #' `label`) should be set in the lists making up the list passed to `delta`. See
-#' the last example in section Examples and the help of [multifield3logit()].
+#' the penultimate example in section Examples and the help of
+#' [multifield3logit()].
 #'
 #' **Finally**, when argument `delta` is a character, it is possible to indicate
 #' the name of a `factor` covariate between delimiters `<<`, `>>`. In that case,
@@ -164,8 +165,8 @@ is_simplified_field3logit <- function(x) {
 #' **Examples**.
 #'
 #' @inheritParams effect
-#' @param model either a fitted trinomial model or a matrix of regressor
-#'   coefficients. See section *Compatibility* and examples of
+#' @param model either a fitted trinomial model or a list properly structured.
+#'   See section **Details** of [extract3logit()] and the last example of
 #'   [`plot3logit-package`].
 #' @param delta the change in the values of covariates to be represented.
 #'   This could be either a `numeric` vector, the name of a covariate
@@ -182,9 +183,8 @@ is_simplified_field3logit <- function(x) {
 #'   the package.
 #' @param nstreams number of stream lines of the field to be computed. In case
 #'   of ordinal models, this parameter is ineffective, as only one curve
-#'   can be drawn. The parameter is ineffective also in case that argument
-#'   `p0` is set.
-#' @param narrows maximum number of arrows to be drawn per curve.
+#'   can be drawn. The parameter is ineffective also if argument `p0` is set.
+#' @param narrows maximum number of arrows to be drawn per stream line.
 #' @param edge minimum distance between each arrow (or point) and
 #'   the edge of the ternary plot.
 #' @param x,object object of class `field3logit`.
@@ -200,7 +200,7 @@ is_simplified_field3logit <- function(x) {
 #' @param data not used. Argument included only for interface compatibility with
 #'   the generic `fortify`.
 #' @param conf confidence level of confidence regions to be computed **for each
-#'   arrow** of the field.
+#'   arrow** of the vector field.
 #' @param npoints number of points of the border to be computed **for each
 #'   confidence region**.
 #' @param vcov deprecated argument. It may be removed in a future version of the
@@ -209,7 +209,8 @@ is_simplified_field3logit <- function(x) {
 #'
 #' @return
 #' `S3` object of class `field3logit` structured as a named `list` or an object
-#' of class `multifield3logit` if `delta` is a `list`.
+#' of class `multifield3logit` if `delta` is a `list` or syntax `<<...>>` is
+#' used.
 #'
 #' @seealso
 #' [multifield3logit()], [gg3logit()], [autoplot()].
@@ -251,7 +252,7 @@ is_simplified_field3logit <- function(x) {
 #' mfields <- field3logit(mod1, delta = depo, p0 = refpoint, narrows = 1)
 #' mfields
 #'
-#' # List passed to argument "delta" for generating "multifield3logit" objects
+#' # Sintax "<<...>>" for categorical covariates
 #' mfields <- field3logit(
 #'   model = mod1, delta = '<<finalgrade>>', label = 'Final grade',
 #'   p0 = refpoint, narrows = 1

@@ -21,7 +21,7 @@
 #'   row names. The intercepts should be included only in case of categorical
 #'   models, whereas column names, if provided, are ignored.
 #' * `alpha`: intercepts of ordinal models. It should be a numerical vector of
-#'   length two if the the model is ordinal, otherwise this component should be
+#'   length two if the model is ordinal, otherwise this component should be
 #'   either set to \code{NULL} or missing.
 #' * `vcovB`: covariance matrix of regression coefficients. It  should be a
 #'   numeric matrix (or any coercible object) where the number of rows and
@@ -41,7 +41,7 @@
 #' doing, automatic checks and initialisations are run before the `model3logit`
 #' object is returned.
 #'
-#' @param x an object of any of the classes listed below. If a list is
+#' @param x an object of any of the classes listed above. If instead, a list is
 #'   passed, it should be structured as described in section **Details**.
 #' @param ... other arguments passed to other methods.
 #'

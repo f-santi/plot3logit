@@ -16,9 +16,9 @@
 #' \insertCite{santi2019;textual}{plot3logit}.
 #'
 #' The package can read the results of **both categorical and ordinal trinomial
-#' logit** regression fitted by various functions (see the next section) and
+#' logit** regression fitted by various functions (see [extract3logit()]) and
 #' creates a `field3logit` object which may be represented by means of functions
-#' [gg3logit()] and [stat_field3logit()].
+#' [autoplot()] and [plot()].
 #'
 #' The `plot3logit` package inherits graphical classes and methods from the
 #' package [`ggtern`][ggtern::ggtern_package]
@@ -31,8 +31,8 @@
 #' [TernaryField()] and in particular by the method [`plot`][plot.field3logit]
 #' of `field3logit` class.
 #'
-#' Since version 2.0.0, `plot3logit` enables to draw also the confidence
-#' regions associated to the covariates effects. See the vignette of the
+#' Since version 2.0.0, `plot3logit` can also compute and draw confidence
+#' regions associated to the covariate effects. See the vignette of the
 #' package (type `vignette('plot3logit-overview')`) and the help of function
 #' [stat_conf3logit()] for some examples.
 #'
@@ -46,21 +46,20 @@
 #' * [`polr`][MASS::polr] of package `MASS` (ordinal logit regression);
 #' * [`vgam`][VGAM::vgam] and [`vglm`][VGAM::vglm] of package `VGAM` (logit regression).
 #'
-#' Moreover, explicit matrix of regression coefficients can be passed to
-#' [field3logit()]. See examples and functions [field3logit()] and
-#' [extract3logit()] for further details.
+#' Moreover, explicit estimates can be passed to [field3logit()]. See examples
+#' and functions [field3logit()] and [extract3logit()] for further details.
 #'
 #' @examples
 #' \dontrun{
 #' data(cross_1year)
 #'
-#' # Read from "nnet::multinom"
+#' # Read from "nnet::multinom" (categorical logit)
 #' library(nnet)
 #' mod0 <- multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
 #' field0 <- field3logit(mod0, 'genderFemale')
 #' gg3logit(field0) + stat_field3logit()
 #'
-#' # Read from "MASS::polr"
+#' # Read from "MASS::polr" (ordinal logit)
 #' library(MASS)
 #' mydata <- cross_1year
 #' mydata$finalgrade <- factor(mydata$finalgrade,

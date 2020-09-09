@@ -22,16 +22,14 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' Create a new gg3logit
 #'
 #' `gg3logit` initialises a [`ggplot`][ggplot2::ggplot] object through
-#' [`ggtern`][ggtern::ggtern]. If a fortified `field3logit` or a
-#' `multifield3logit` object is passed to argument `data`, the mandatory
-#' aesthetics of the ternary plot are automatically set.
+#' [`ggtern`][ggtern::ggtern]. If a `field3logit` or a `multifield3logit`
+#' object is passed to argument `data`, the mandatory aesthetics of the ternary
+#' plot are automatically set.
 #'
 #' @param data a `field3logit` object, a `multifield3logit` object, or
 #'   a `data.frame` structured like a fortified `field3logit` or a
-#'   `multifield3logit` object. If a `field3logit` or a `multifield3logit`
-#'   is passed, none of the aesthetics mappings listed in Section
-#'   "Aesthetic mappings" below has to be specified.
-#' @param mapping list of aesthetic mappings to use for plot. If a
+#'   `multifield3logit` object.
+#' @param mapping list of aesthetic mappings to be used for plot. If a
 #'   `field3logit` or a `multifield3logit` is passed to `data`, none of the
 #'   aesthetics mappings listed in section *Aesthetic mappings* below has to be
 #'   specified (if specified, they will be overwritten). 
@@ -109,13 +107,12 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #'
 #' [stat_field3logit()] adds a field to a [`gg3logit`] plot.
 #'
+#' @inheritParams gg3logit
 #' @inheritParams ggplot2::geom_segment
 #' @inheritParams ggplot2::stat_identity
-#' @inheritParams gg3logit
-#' @param data a `field3logit` or a `multifield3logit` object.
 #' @param mapping list of aesthetic mappings to be used for plot. Mandatory
 #'   aesthetics should not be specified if `field3loglit` or `multifield3logit`
-#'   object is passed to `data`. See secion"Aesthetic mappings" of
+#'   object is passed to `data`. See secion **Aesthetic mappings** of
 #'   [gg3logit()] for details.
 #' @param arrow. specification for arrow heads, as created by
 #'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
@@ -240,7 +237,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 
 #' Add a field and confidence regions to a `gg3logit` plot
 #'
-#' [stat_3logit()] adds a field and its confidence regions to a [`gg3logit`]
+#' [stat_3logit()] adds a field and confidence regions to a [`gg3logit`]
 #' plot. [stat_3logit()] is a wrapper for stats [stat_field3logit()] and
 #' [stat_conf3logit()] which are jointly applied.
 #'

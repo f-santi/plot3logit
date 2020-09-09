@@ -5,7 +5,7 @@
 #' objects simultaneously and permit new `multifield3logit` objects to be
 #' easily created by means of the sum operator "`+`".
 #'
-#' @param x,y,model object of class `field3logit` or `multifield3logit`.
+#' @param x,y,model,object object of class `field3logit` or `multifield3logit`.
 #' @inheritParams field3logit
 #' @param ... other arguments passed to or from other methods.
 #' @param maxitems maximum number of items to be enumerated when an object of

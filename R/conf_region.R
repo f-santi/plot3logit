@@ -116,7 +116,7 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
 
 
 
-#' Computes the confidence regions of covariate effects
+#' Compute the confidence regions of covariate effects
 #'
 #' Given the confidence level, it computes the confidence regions of the effects
 #' for each arrow of the `field3logit` or `multifield3logit` object given in
