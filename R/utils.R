@@ -15,7 +15,7 @@
 #'
 #' @keywords internal
 convex_comb<- function(w, x, y, simplify = TRUE) {
-  out<- sapply(w, function(w) { y + w * (x - y) }, simplify = simplify)
+  out <- sapply(w, function(w) { y + w * (x - y) }, simplify = simplify)
   if (simplify) { out %<>% t }
   out
 }

@@ -118,10 +118,10 @@ plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   x %<>% add(y)
   
   if (is.null(col)) { col <- 'black' }
-  if (is.na(col)) { col <- 1:length(x) }
+  if (is.na(col)) { col <- seq_along(x) }
   if (length(col) == 1) { col %<>% rep(length(x)) }
   
-  lapply(1:length(x), function(j) {
+  lapply(seq_along(x), function(j) {
   	plot(x[[j]], add = (j > 1) + (j == 1) * add, col = col[j], ...)
   }) -> out
   

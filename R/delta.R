@@ -9,7 +9,11 @@ handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
   	  # Generate new blocks
   	  lapply(function(x) {
   	  	newblock <- block
-  	  	newblock$delta <- stringr::str_replace(newblock$delta, pattern, paste0('`', x, '`'))
+  	  	newblock$delta <- stringr::str_replace(
+  	  	  string = newblock$delta,
+  	  	  pattern = pattern,
+  	  	  replacement = paste0('`', x, '`')
+  	  	)
   	  	#newblock$label2 %<>% c(paste0(
   	  	#  cand, ': ', stringr::str_replace(x, paste0('^', cand), '')
   	  	#))

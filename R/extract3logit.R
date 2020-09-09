@@ -26,8 +26,8 @@
 #' * `vcovB`: covariance matrix of regression coefficients. It  should be a
 #'   numeric matrix (or any coercible object) where the number of rows and
 #'   columns equals the number of elements of \code{B}. Rows and columns should
-#'   be ordered according to the labels of the dependent variable (slower index),
-#'   and then to the covariates (faster index).
+#'   be ordered according to the labels of the dependent variable (slower
+#'   index), and then to the covariates (faster index).
 #'
 #' If a new `S3` method for generic [extract3logit()] has to be implemented, the
 #' following components may be set:

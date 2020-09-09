@@ -61,8 +61,8 @@ NULL
 #' \item{educ:}{level of education, a factor with six levels: "No high school",
 #'   "High school grad.", "Some college", "2-year college", "4-year college",
 #'   "Post-grad".}
-#' \item{gender:}{gender, a factor with four levels: "Male", "Female", "Skipped",
-#'   "Not Asked".}
+#' \item{gender:}{gender, a factor with four levels: "Male", "Female",
+#'   "Skipped", "Not Asked".}
 #' \item{birthyr:}{decades when the voter was born, a factor with six levels:
 #'   "[1920,1940)", "[1940,1950)", "[1950,1960)", "[1960,1970)", "[1970,1980)",
 #'   "[1980,2000)".}

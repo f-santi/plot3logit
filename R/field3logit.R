@@ -60,7 +60,7 @@ field3logit_mono <- function(model, delta, label, p0, nstreams, narrows,
   }
 
   # Create field3logit object
-  names(out) %<>% paste0('C', 1:length(out), .)
+  names(out) %<>% paste0('C', seq_along(out), .)
   out <- list(B = model$B, alpha = model$alpha, delta = delta,
     vdelta = vdelta, levels = model$levels, readfrom = model$readfrom,
     effects = out, label = label, vcovB = model$vcovB,
