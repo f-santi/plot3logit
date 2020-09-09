@@ -88,6 +88,8 @@ extract3logit.default <- function(x, ...) {
     structure(class = 'model3logit') -> out
   
   # Check and complete the attributes
+  if (is.null(out[['levels']])) { out[['levels']] <- c('p1', 'p2', 'p3') }
+  
   if (is.null(out[['B']])) { stop('The matrix of coefficients is not available') }
   out[['B']] %<>% as.matrix
   out[['ordinal']] <- !is.null(out[['alpha']])
@@ -96,15 +98,30 @@ extract3logit.default <- function(x, ...) {
     if (ncol(out[['B']]) != 1) {
       stop('Dimension mismatch on the matrix of coefficients')
     }
+    colnames(out[['B']]) <- 'Coef.'
     out[['alpha']] %<>% as.numeric
   } else {
     if (ncol(out[['B']]) != 2) {
       stop('Dimension mismatch on the matrix of coefficients')
     }
+    colnames(out[['B']]) <- out$levels[-1]
   }
   
   if (out[['model']] != 'logit') {
     stop('Current implementation of "plot3logit" works only with logit links')
+  }
+  
+  # Add link functions
+  if ((out[['model']] == 'logit') & !out[['ordinal']]) {
+  	out[['linkinv']] <- linkinv_cat3logit
+  	out[['linkfun']] <- linkfun_cat3logit
+  	out[['DeltaB2pc']] <- DeltaB2pc_cat3logit
+  } else if ((out[['model']] == 'logit') & out[['ordinal']]) {
+  	out[['linkinv']] <- function(w) linkinv_ord3logit(w, out[['alpha']])
+  	out[['linkfun']] <- function(w) linkfun_ord3logit(w, out[['alpha']])
+  	out[['DeltaB2pc']] <- function(w, ...) { 
+  	  DeltaB2pc_ord3logit(w, out[['alpha']], ...)
+  	}
   }
   
   # Return the object
