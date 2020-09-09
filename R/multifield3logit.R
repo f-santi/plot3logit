@@ -115,24 +115,20 @@ print.multifield3logit <- function(x, maxitems = 10, ...) {
 plot.multifield3logit <- function(x, y = NULL, add = FALSE, col = NA,
   legend = TRUE, ...) {
   	
-  x %<>% add(y)
-  
   if (is.null(col)) { col <- 'black' }
   if (is.na(col)) { col <- seq_along(x) }
   if (length(col) == 1) { col %<>% rep(length(x)) }
   
   lapply(seq_along(x), function(j) {
   	plot(x[[j]], add = (j > 1) + (j == 1) * add, col = col[j], ...)
-  }) -> out
+  }) -> void
   
-  if (legend) {
-  	legend(
-  	  x = 'topright', legend = labels(x),
-  	  col = col, lwd = 2
-  	)
-  }
   
-  invisible(out)
+  list(
+    legend_text = labels(x),
+    legend_col = col
+  ) %>%
+    invisible()
 }
 
 
