@@ -22,6 +22,46 @@
 
 
 
+# plot3logit 3.0.0
+
+
+## Major changes
+
+* Changed dependencies of the package both in section "Imports" (added
+  `stringr`) and "Suggests" (added `ordinal` and `testthat`).
+* Implemented syntax for factor covariates based on delimiters `<<...>>`.
+* Implemented the generic `export3logit()` and several S3 methods for reading
+  output from fitted models.
+* Revised the arguments of `field3logit()`: arguments `alpha` and `vcov` are now
+  deprecated and does not work any more.
+* Argument `model` of `field3logit()` cannot accept matrices any more. Direct
+  model estimates can be passed to `field3logit()` by means of a list.
+* Now `field3logit()` can read also trinomial models fitted through function
+  `vglm` of package `VGAM`, and functions `clm` and `clm2` of package `ordinal`
+  (included amongst suggested packages).
+
+
+
+## Minor changes
+
+* Introduced class `model3logit` as output of `export3logit()`.
+* Renamed component `lab` of `field3logit` and `multifield3logit` objects to
+  `levels`.
+* Redefined classes and inheritance of `field3logit` and `multifield3logit`.
+  objects.
+* Revised `coef` method for `field3logit` objects of ordinal models.
+* Redefined the output of `plot.multifield3logit` and remove the legend.
+
+
+
+## Typos and other marginal changes
+
+* Revised the help and the examples.
+
+
+
+
+
 # plot3logit 2.2.0
 
 
