@@ -4,15 +4,16 @@ citHeader("To cite package 'plot3logit' in publications use:")
 year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
 vers <- paste('R package version', meta$Version)
 
-citEntry(entry = 'Manual',
+citEntry(entry = 'manual',
   title       = paste('plot3logit:', meta$Title),
   author      = personList(person('F.', 'Santi'),
                   person('M. M.', 'Dickson'),
-                  person('G.', 'Espa')),
+                  person('G.', 'Espa'),
+                  person('D.', 'Giuliani')),
   year = year,
   note = vers,
   textVersion =
-    paste('Santi, F., M. M. Dickson and G. Espa (',
+    paste('Santi, F., M. M. Dickson, G. Espa, D. Giuliani (',
       year, ') "plot3logit: ', meta$Title, '". ',
       vers, '.', sep = ''
     )
