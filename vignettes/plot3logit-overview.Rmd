@@ -1,6 +1,6 @@
 ---
 title: "An overview of package plot3logit"
-author: "Flavio Santi, Maria Michela Dickson, Giuseppe Espa"
+author: "Flavio Santi, Maria Michela Dickson, Giuseppe Espa, Diego Giuliani"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
