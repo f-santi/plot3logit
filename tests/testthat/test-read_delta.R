@@ -30,33 +30,33 @@ test_that("factor delimiters syntax works", {
   
   
   # Single factor
-  depo <- field3logit(modVote, '<<gender>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<gender>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo + NULL, 'multifield3logit')
   expect_identical(length(depo + NULL), 1L)
   
-  depo <- field3logit(modVote, '<<race>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<race>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 5L)
   
   
   # Two factors
-  depo <- field3logit(modVote, '<<gender>> + <<race>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<gender>> + <<race>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 5L)
   
-  depo <- field3logit(modVote, '<<race>> + <<race>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<race>> + <<race>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 25L)
   
-  depo <- field3logit(modVote, '<<educ>> + <<race>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<educ>> + <<race>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 25L)
   
-  depo <- field3logit(modVote, '<<race>> + <<birthyr>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<race>> + <<birthyr>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 25L)
   
-  depo <- field3logit(modVote, '<<educ>> + <<birthyr>>', , p0, 1, 1)
+  depo <- field3logit(modVote, '<<educ>> + <<birthyr>>', p0 = p0, nstreams =  1, narrows = 1)
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 25L)
   
