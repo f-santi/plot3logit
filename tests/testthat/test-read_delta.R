@@ -66,7 +66,7 @@ test_that("factor delimiters syntax works", {
     list(delta = 'genderFemale', label = 'Female'),
     list(delta = '<<race>>', label = 'Race')
   ) %>%
-    field3logit(modVote, ., , p0, 1, 1) -> depo
+    field3logit(modVote, ., p0 = p0, nstreams =  1, narrows = 1) -> depo
     
   expect_is(depo, 'multifield3logit')
   expect_identical(length(depo), 6L)
