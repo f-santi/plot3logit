@@ -304,7 +304,7 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #'   [stat_conf3logit()] is added, otherwise only a [gg3logit()] object with the
 #'   layer of [stat_field3logit()] is returned.
 #' @param object an object of class `field3logit` or `multifield3logit`.
-#'
+#' 
 #' @family gg functions
 #'
 #' @examples
@@ -318,11 +318,11 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #' }
 #'
 #' @export
-autoplot.field3logit <- function(object, ..., mapping_field = aes(),
+autoplot.Hfield3logit <- function(object, ..., mapping_field = aes(),
   mapping_conf = aes(), data = NULL, params_field = list(),
   params_conf = list(), show.legend = NA, conf = TRUE) {
   
-  if (!inherits(object, c('field3logit', 'multifield3logit'))) {
+  if (!inherits(object, 'Hfield3logit')) {
   	stop('Only objects of class "field3logit" and "multifield3logit" are allowed')
   }
   
@@ -333,6 +333,5 @@ autoplot.field3logit <- function(object, ..., mapping_field = aes(),
       show.legend = show.legend, conf = conf
     )
 }
-
 
 
