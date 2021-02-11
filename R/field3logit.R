@@ -283,14 +283,19 @@ field3logit <- function(model, delta, label = '', p0 = NULL,
   delta <- pre_process_delta(delta, modB)
   
   # Compute the field(s)
+  if ((length(delta) > 1) & (length(label)== 1)) {
+    label %<>% rep(length(delta))
+  }
+  
   delta %>%
-    lapply(function(w) {
+    seq_along() %>%
+    lapply(function(j) {
   	  list(
   	    model = modB, p0 = p0, nstreams = nstreams, narrows = narrows,
   	    edge = edge, conf = conf, npoints
   	  ) %>%
-  	  modifyList(w) %>%
-  	  { .[['label']] %<>% paste0(label, .); . } %>%
+  	  modifyList(delta[[j]]) %>%
+  	  { .[['label']] %<>% paste0(label[j], .); . } %>%
   	  do.call('field3logit_mono', .) %>%
   	  return()
     }) %>%

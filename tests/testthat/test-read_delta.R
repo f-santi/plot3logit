@@ -101,3 +101,23 @@ test_that("function 'namnum2expr' works", {
   expect_error(namnum2expr(c(3, y = 1)))
 })
 
+
+
+test_that("labels of multifield3logit object are properly set", {
+  modVote <- nnet::multinom(vote ~ educ + gender + race + birthyr,
+    data = droplevels(USvote2016), trace = FALSE)
+  
+  depo <- field3logit(modVote, '<<race>>', label = 'Race ')
+  expect_identical(labels(depo), paste('Race', levels(USvote2016$race)[-1]))
+  
+  depo <- field3logit(modVote, '<<race>>', label = '')
+  expect_identical(labels(depo), levels(USvote2016$race)[-1])
+  
+  depo <- field3logit(modVote, c('raceBlack', 'raceAsian'), c('BLACK', 'ASIAN'))
+  expect_identical(labels(depo), c('BLACK', 'ASIAN'))
+  
+  depo <- field3logit(modVote, '<<race>>', label = LETTERS[seq_len(nlevels(USvote2016$race) - 1)])
+  depo2 <-paste0(LETTERS[seq_len(nlevels(USvote2016$race) - 1)], levels(USvote2016$race)[-1])
+  expect_identical(labels(depo), depo2)
+})
+

@@ -35,7 +35,7 @@ handle_block_delta <- function(block, covnames, pattern = '<<(.+?)>>') {
   	# Find matches
     cand <- stringr::str_match(block$delta, pattern)[1, 2]
  
-    # List of matching covatiates
+    # List of matching covariates
   	grep(paste0('^', cand), covnames, value = TRUE) %>%
   	  # Generate new blocks
   	  lapply(function(x) {
@@ -85,7 +85,7 @@ pre_process_delta <- function(delta, model) {
     # Prepare labels
     lapply(function(x) {
     	  if (!is.null(x$label2)) {
-    	    x[['label']] %<>% paste(paste(x$label2, collapse = '; '))
+    	    x[['label']] %<>% paste0(paste(x$label2, collapse = '; '))
     	    x$label2 <- NULL
     	  }
     	  x
