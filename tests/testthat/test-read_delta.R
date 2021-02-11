@@ -117,7 +117,7 @@ test_that("labels of multifield3logit object are properly set", {
   expect_identical(labels(depo), c('BLACK', 'ASIAN'))
   
   depo <- field3logit(modVote, '<<race>>', label = LETTERS[seq_len(nlevels(USvote2016$race) - 1)])
-  depo2 <-paste0(LETTERS[seq_len(nlevels(USvote2016$race) - 1)], levels(USvote2016$race)[-1])
+  depo2 <- paste0(LETTERS[seq_len(nlevels(USvote2016$race) - 1)], levels(USvote2016$race)[-1])
   expect_identical(labels(depo), depo2)
 })
 

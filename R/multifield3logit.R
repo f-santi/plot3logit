@@ -183,7 +183,7 @@ labels.multifield3logit <- function(object, ...) {
 `labels<-.multifield3logit` <- function(object, value) {
   if(length(object) != length(value)) { stop('length mismatch') }
   
-  for (i in length(object)) { labels(object[i]) <- value[i] }
+  for (i in seq_along(object)) { labels(object[i]) <- value[i] }
 
   return(object)
 }
