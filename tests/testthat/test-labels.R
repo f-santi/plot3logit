@@ -4,7 +4,7 @@ test_that('method "labels<-" works', {
     data = droplevels(USvote2016), trace = FALSE)
   
   depo <- field3logit(modVote, '<<race>>')
-  depo2 <- stringi::stri_rand_strings(nlevels(USvote2016$race) - 1, 8)
+  depo2 <- test_rstring(nlevels(USvote2016$race) - 1, 8)
   labels(depo) <- depo2
   expect_identical(labels(depo), depo2)
 })

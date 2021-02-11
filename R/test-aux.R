@@ -27,3 +27,12 @@ test_rfield3logit <- function(delta = NULL, vcov = FALSE) {
   field3logit(model, delta)
 }
 
+
+
+# Generate random strings
+test_rstring <- function(n, m, set = c(LETTERS[1:26], letters[1:26], 0:9)) {
+  matrix(sample(set, n * m, TRUE), n, m) %>%
+    apply(1, paste0, collapse = '') %>%
+    return()
+}
+
