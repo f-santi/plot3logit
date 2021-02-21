@@ -1,4 +1,35 @@
 
+
+# plot3logit 3.0.0.9000 (e554aeb)
+
+
+## Major changes
+
+* Implemented the syntax based on named numeric for argument `delta` of
+  `field3logit()`.
+* Solved a bug on method dispatch of generic `autoplot` for class
+  `multifield3logit`.
+
+
+
+## Minor changes
+
+* Revised and extended the vignette `plot3logit-overview`.
+* Corrected a bug on argument `label` of `field3logit()` and added tests.
+* Corrected a bug on method `label<-` and added tests.
+
+
+
+## Typos and other marginal changes
+
+* Corrected file `CITATION` and list of authors of the vignette
+  `plot3logit-overview`.
+* Syntactical revision of tests.
+
+
+
+
+
 # plot3logit 3.0.0
 
 

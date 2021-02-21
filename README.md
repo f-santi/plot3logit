@@ -98,7 +98,7 @@ plot(field0)
 
 Hamilton, N. E., and M. Ferry. 2018. “ggtern: Ternary Diagrams Using
 ggplot2.” *Journal of Statistical Software, Code Snippets* 87 (3): 1–17.
-doi:[10.18637/jss.v087.c03](https://doi.org/10.18637/jss.v087.c03).
+<https://doi.org/10.18637/jss.v087.c03>.
 
 </div>
 
@@ -107,7 +107,7 @@ doi:[10.18637/jss.v087.c03](https://doi.org/10.18637/jss.v087.c03).
 Santi, F., M. M. Dickson, and G. Espa. 2019. “A Graphical Tool for
 Interpreting Regression Coefficients of Trinomial Logit Models.” *The
 American Statistician* 73 (2): 200–207.
-doi:[10.1080/00031305.2018.1442368](https://doi.org/10.1080/00031305.2018.1442368).
+<https://doi.org/10.1080/00031305.2018.1442368>.
 
 </div>
 
