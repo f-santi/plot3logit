@@ -114,12 +114,6 @@ utils::globalVariables('.')
 ggplot2::autoplot
 
 #' @export
-stats::coef
-
-#' @export
-stats::vcov
-
-#' @export
 generics::tidy
 
 
