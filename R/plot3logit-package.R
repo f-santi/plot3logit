@@ -100,7 +100,7 @@
 #' @importFrom graphics points arrows plot
 #' @importFrom lifecycle deprecated
 #' @importFrom Rdpack reprompt
-#' @importFrom stats uniroot
+#' @importFrom stats coef uniroot vcov
 #' @importFrom tibble as_tibble tibble
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom utils modifyList tail
@@ -111,9 +111,16 @@ utils::globalVariables('.')
 
 
 #' @export
-generics::tidy
+ggplot2::autoplot
 
 #' @export
-ggplot2::autoplot
+stats::coef
+
+#' @export
+stats::vcov
+
+#' @export
+generics::tidy
+
 
 
