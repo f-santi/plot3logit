@@ -57,16 +57,146 @@ See the help of `field3logit` for representing composite effects and
 Function `field3logit` of package `plot3logit` can read trinomial regression
 estimates from the output of the following functions:
 
-* `clm` and `clm2` of package `ordinal` (ordinal logit regression);
+* `polr` of package `MASS` (ordinal logit regression);
 * `mlogit` of package `mlogit` (logit regression);
 * `multinom` of package `nnet` (logit regression);
-* `polr` of package `MASS` (ordinal logit regression);
+* `clm` and `clm2` of package `ordinal` (ordinal logit regression);
 * `vgam` and `vglm` of package `VGAM` (logit regression).
 
-Moreover, explicit estimates can be passed to `field3logit()`. See the help of
-the package (type `? 'plot3logit-package'`) and the help of functions
-`field3logit()` and `extract3logit()` for further details.
+Explicit estimates can be passed to `field3logit()` by means of a named list too
+(see the help of `field3logit`); moreover, users can easily extend the range of
+objects that can be processed by `field3logit()` by implementing the S3 methods
+of the generic `extract3logit` (see the help).
 
+
+In the following, an example is provided for each object `field3logit` can
+work with. First, however, package `plot3logit` must be attached and dataset
+`cross_1year` must be loaded:
+
+
+```{r, message=FALSE}
+library(plot3logit)
+data(cross_1year)
+str(cross_1year)
+```
+
+
+
+### Package `MASS`
+
+Function `polr` of package `MASS` [@venables2002] fits a *proportional odds
+logistic regression* by means of a fairly simple syntax, however the order of
+labels of the dependent variable must be explicitly stated:
+```{r, message=FALSE, results='hide'}
+library(MASS)
+
+mydata <- cross_1year
+mydata$finalgrade <- factor(
+  x = mydata$finalgrade,
+  levels = c('Low', 'Average', 'High'),
+  ordered = TRUE
+)
+
+mod0 <- polr(finalgrade ~ gender + irregularity, data = mydata)
+field3logit(mod0, 'genderFemale')
+```
+
+
+
+### Package `mlogit`
+
+Package `mlogit` of package `mlogit` [@mlogit] can fit a wide range of models.
+The current implementation of `plot3logit` only works with pure trinomial
+models, where only specific coefficients are considered:
+```{r, message=FALSE, results='hide'}
+library(mlogit)
+mydata <- mlogit.data(cross_1year, choice = 'employment_sit', shape = 'wide')
+mod0 <- mlogit(employment_sit ~ 0 | gender + finalgrade, data = mydata)
+field3logit(mod0, 'genderFemale')
+```
+
+
+
+### Package `nnet`
+
+Function `multinom` of package `nnet` [@venables2002] fits a multinomial model
+by means of a very simple syntax:
+```{r, message=FALSE, results='hide'}
+library(nnet)
+mod0 <- multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
+field3logit(mod0, 'genderFemale')
+```
+
+
+
+### Package `ordinal`
+
+Package `ordinal` [@ordinal] permits ordinal multinomial logistic models to be
+fitted by means of two functions: `clm` and `clm2`. The latter is "a new
+improved implementation" of the former (see the help of `clm2`), in both cases
+the syntax is simple and standard. Unlike `polr` of package `MASS`
+[@venables2002], the dependent variable may be an unordered factor, and in that
+case both `clm` and `clm2` consider the vector of the labels as ordered: if this
+is not the case, the dependent variable should be properly redefined.
+```{r, message=FALSE, results='hide'}
+library(ordinal)
+
+mydata$finalgrade <- factor(mydata$finalgrade, c('Low', 'Average', 'High'))
+
+mod0 <- clm(finalgrade ~ gender + irregularity, data = mydata)
+field3logit(mod0, 'genderFemale')
+
+mod0 <- clm2(finalgrade ~ gender + irregularity, data = mydata)
+field3logit(mod0, 'genderFemale')
+```
+
+
+
+### Package `VGAM`
+
+Package `VGAM` [@yee2010] permits multinomial logistic models to be
+fitted by means of two functions: `vgam` and `vglm`. In case of multinomial
+logistic models they share the same syntax:
+```{r, message=FALSE, results='hide'}
+library(VGAM)
+
+mod0 <- vgam(
+  formula = employment_sit ~ gender + finalgrade,
+  family = multinomial(),
+  data = cross_1year
+)
+field3logit(mod0, 'genderFemale')
+
+mod0 <- vglm(
+  formula = employment_sit ~ gender + finalgrade,
+  family = multinomial(),
+  data = cross_1year
+)
+field3logit(mod0, 'genderFemale')
+```
+
+
+
+### Reading from `list`
+
+Point estimates and other information on a fitted model may be passed as a named
+list to `field3logit`. In case of a non-ordinal trinomial model, the matrix of
+coefficients (component `B`) should be a matrix with named rows and two columns,
+whereas possible levels of the dependent variable should be included as a
+separate component (`levels`) which should be a character vector of length
+three, whose first component is the reference level of the model (see the help
+of `extract3logit` for details):
+```{r, message=FALSE, results='hide'}
+mod0 <- list(
+  B = matrix(
+    data = c(-2.05, 0.46, -2.46, 0.37, -1.2, 0.8, 0.7, 0.4),
+    ncol = 2,
+    dimnames = list(c('Intercept', 'X1', 'X2', 'X3'))
+  ),
+  levels = c('Class A', 'Class B', 'Class C')
+)
+field3logit(mod0, 'X1')
+```
 
 
 ## A brief example
@@ -81,6 +211,9 @@ data(cross_1year)
 library(nnet)
 mod0 <- multinom(employment_sit ~ ., data = cross_1year)
 ```
+
+
+
 
 The gender effect is analysed by means of a ternary plot which is generated in
 two steps.
@@ -107,19 +240,16 @@ plot(field0)
 
 Ternary plots represent the effect of a change in covariate values on the
 probability distribution of the dependent variable. The function `field3logit`
-permits such change to be specified in two different ways, which are
-illustrated below.
+permits such change to be specified in three different ways: explicitly, as a
+numeric vector, or implicitly, either by means of a named numeric vector, or by
+means of an R expressions. All three methods are briefly illustrated below.
 
-As an example, the following subsections refer to this dataset:
+As an example, the following subsections refer to this trinomial logistic
+regression model:
 ```{r}
-data(cross_1year)
-str(cross_1year)
-head(cross_1year)
-```
-
-and this trinomial logistic regression model:
-```{r}
-mod0 <- nnet::multinom(employment_sit ~ finalgrade + irregularity + hsscore, cross_1year)
+library(plot3logit)
+library(nnet)
+mod0 <- multinom(employment_sit ~ finalgrade + irregularity + hsscore, cross_1year)
 mod0
 ```
 
@@ -153,8 +283,7 @@ the matrix of coefficients.
 
 It follows that the function `field3logit` can be invoked as it follows:
 ```{r}
-field0 <- field3logit(mod0, c(0, 0, 1, 0, 0, 0))
-field0
+field3logit(mod0, c(0, 0, 1, 0, 0, 0))
 ```
 
 
@@ -174,38 +303,36 @@ we have that:
 \]
 thus:
 ```{r}
-field0 <- field3logit(mod0, c(0, 0, 1, 0, 0, -10))
-field0
+field3logit(mod0, c(0, 0, 1, 0, 0, -10))
 ```
 
 
 
-### Implicit specification of $\Delta x$
+### Implicit specifications of $\Delta x$
 
-Unlike the explicit method, this syntax allows the user to initialise the vector
-$\Delta x$ by writing the name of the covariate which should vary: the function
-`field3logit` will build $\Delta x$ up associated to a unitary change in the
-specified covariate.
-
-If more complex changes in covariate values have to be considered, implicit
-syntax allows the user to express them in terms of `R` expressions involving
-the covariates.
+Unlike the explicit method, the implicit syntaxes allows the user to initialise
+the vector $\Delta x$ by specifying only the covariates which should vary. There
+are two possible syntaxes: one is based on named numeric vectors, the other is
+based on `R` code. In the following, both of them are illustrated.
 
 
 
 #### First example
 
-If the effect of a *high final grade* has to be assessed, the implicit syntax
-which allow to assess the effect of a unitary change of `finalgradeHigh` is the
+If the effect of a *high final grade* has to be assessed, the implicit syntaxes
+which allow to assess the effect of a unitary change of `finalgradeHigh` are the
 following:
 ```{r}
-field0 <- field3logit(mod0, 'finalgradeHigh')
-field0
+# Named numeric vectors:
+field3logit(mod0, c(finalgradeHigh = 1))
+
+# R code:
+field3logit(mod0, 'finalgradeHigh')
 ```
 
-Note that the console output produced by printing `field0` shows both the
-implicit effect (line `Effect`) and the associated vector $\Delta x$ (line
-`Explicit effect`).
+Note that the console output produced by printing the output of `field3logit`
+shows both the implicit effect (line `Effect`) and the associated vector
+$\Delta x$ (line `Explicit effect`).
 
 
 
@@ -213,10 +340,13 @@ implicit effect (line `Effect`) and the associated vector $\Delta x$ (line
 #### Second example
 
 If we want to study the effect of a decrease by 10 in the high school final
-score, associated to an high final grade, the implicit syntax is:
+score, associated to an high final grade, the implicit syntaxes are:
 ```{r}
-field0 <- field3logit(mod0, 'finalgradeHigh - 10 * hsscore')
-field0
+# Named numeric vectors:
+field3logit(mod0, c(finalgradeHigh = 1, hsscore = -10))
+
+# R code:
+field3logit(mod0, 'finalgradeHigh - 10 * hsscore')
 ```
 
 Compare the line `Explicit effect` of this output to the line `Effect` of the
