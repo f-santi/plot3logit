@@ -287,8 +287,7 @@ field3logit <- function(model, delta, label = '', p0 = NULL,
     label %<>% rep(length(delta))
   }
   
-  delta %>%
-    seq_along() %>%
+  seq_along(delta) %>%
     lapply(function(j) {
   	  list(
   	    model = modB, p0 = p0, nstreams = nstreams, narrows = narrows,
