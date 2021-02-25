@@ -1,6 +1,6 @@
 
 
-# plot3logit 3.0.0.9000 (e554aeb)
+# plot3logit 3.0.0.9000
 
 
 ## Major changes
@@ -17,6 +17,8 @@
 * Revised and extended the vignette `plot3logit-overview`.
 * Corrected a bug on argument `label` of `field3logit()` and added tests.
 * Corrected a bug on method `label<-` and added tests.
+* Provided statistical details on the computation of confidence regions in the
+  help of `add_confregions()`.
 
 
 
