@@ -1,43 +1,31 @@
 
 ## Test environments
 
-- MacOS Catalina 10.15.6, R 4.0.2:
+- Ubuntu Linux 20.04 LTS (focal), R 4.0.4:
 
-  * checking for future file timestamps ... NOTE
-  unable to verify current time
-  
-  0 errors | 0 warnings | 1 note
+  0 errors | 0 warnings | 0 note
 
 - Windows (winbuilder):
 
-  revel:        0 errors | 0 warnings | 0 notes 
-  release:      0 errors | 0 warnings | 0 notes 
+  devel:        0 errors | 0 warnings | 0 notes 
+  release:      0 errors | 0 warnings | 0 notes
   old release:  0 errors | 0 warnings | 0 notes 
 
-- Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+- macOS 10.13.6 High Sierra, R-release, brew
 
-  * checking Rd cross-references ... WARNING
-  '[ordinal:clm2]{clm2}'
-  Non-file package-anchored link(s) in documentation object 'plot3logit-package.Rd':
-  See section 'Cross-references' in the 'Writing R Extensions' manual.
+  0 errors | 0 warnings | 0 notes
+
+- macOS 10.13.6 High Sierra, R-release, CRAN's setup
+
+  0 errors | 0 warnings | 0 notes
+
+- Windows Server 2008 R2 SP1, R-release, 32/64 bit
+
+  0 errors | 0 warnings | 0 notes
+
+- Oracle Solaris 10, x86, 32 bit, R-release
   
-  * checking for future file timestamps ... NOTE
-  unable to verify current time
-
-  0 errors | 1 warning | 1 note
-  
-- Ubuntu Linux 16.04 LTS, R-release, GCC
-  
-  * checking for future file timestamps ... NOTE
-  unable to verify current time
-
-  0 errors | 0 warnings | 1 note
-  
-- Fedora Linux, R-devel, clang, gfortran
-
-  0 errors | 0 warnings | 0 notes 
-
-
+  0 errors | 0 warnings | 0 notes
 
 
 
