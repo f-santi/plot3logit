@@ -1,6 +1,6 @@
 
 
-# plot3logit 3.0.0.9000
+# plot3logit 3.1.0
 
 
 ## Major changes
