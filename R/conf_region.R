@@ -201,7 +201,7 @@ add_confregions <- function(x, conf = 0.95, npoints = 100) {
   if (inherits(x, 'multifield3logit')) {
   	x %<>%
   	  lapply(add_confregions_field3logit, conf = conf, npoints = npoints) %>%
-  	  structure(class = 'multifield3logit')
+  	  structure(class = c('multifield3logit', 'Hfield3logit'))
   } else if (inherits(x, 'field3logit')) {
   	x %<>% add_confregions_field3logit(conf, npoints)
   } else {
