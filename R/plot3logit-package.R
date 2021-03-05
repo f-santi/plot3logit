@@ -33,7 +33,7 @@
 #'
 #' Since version 2.0.0, `plot3logit` can also compute and draw confidence
 #' regions associated to the covariate effects. See the vignette of the
-#' package (type `vignette('plot3logit-overview')`) and the help of function
+#' package (type `vignette("plot3logit-overview")`) and the help of function
 #' [stat_conf3logit()] for some examples.
 #'
 #' @section Compatibility:
@@ -44,7 +44,8 @@
 #' * [`mlogit`][mlogit::mlogit] of package `mlogit` (logit regression);
 #' * [`multinom`][nnet::multinom] of package `nnet` (logit regression);
 #' * [`polr`][MASS::polr] of package `MASS` (ordinal logit regression);
-#' * [`vgam`][VGAM::vgam] and [`vglm`][VGAM::vglm] of package `VGAM` (logit regression).
+#' * [`vgam`][VGAM::vgam] and [`vglm`][VGAM::vglm] of package `VGAM` (logit
+#'   regression).
 #'
 #' Moreover, explicit estimates can be passed to [field3logit()]. See examples
 #' and functions [field3logit()] and [extract3logit()] for further details.
@@ -105,7 +106,7 @@
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom utils modifyList tail
 #'
-NULL
+"_PACKAGE"
 
 utils::globalVariables('.')
 
