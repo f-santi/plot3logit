@@ -1,6 +1,6 @@
 
 
-# plot3logit 3.1.1.9000
+# plot3logit 3.1.2.9000
 
 
 ## Major changes
@@ -18,6 +18,17 @@
 ## Typos and other marginal changes
 
 * 
+
+
+
+
+
+# plot3logit 3.1.2
+
+
+## Typos and other marginal changes
+
+* Revision of help and references.
 
 
 
