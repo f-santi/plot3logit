@@ -10,7 +10,7 @@
 
 ## Minor changes
 
-* 
+* Added references and citations to the JSS article about the package.
 
 
 

@@ -171,7 +171,8 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
 #' \frac{e^{\eta_3}}{1+e^{\eta_2}+e^{\eta_3}}
 #' \right]^\top\,.
 #' }
-#' For further details on notation see
+#' For further details and notation see
+#' \insertCite{santi2022;textual}{plot3logit} and 
 #' \insertCite{santi2019;textual}{plot3logit}.
 #'
 #' @param x an object of class `field3logit` or `multifield3logit`.

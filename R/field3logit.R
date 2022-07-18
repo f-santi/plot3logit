@@ -126,9 +126,14 @@ is_simplified_field3logit <- function(x) {
 #' Methods [as.data.frame()], [as_tibble()], [fortify()] and [tidy()] permits
 #' the graphical information of a `field3logit` object to be exported in a
 #' standardised format (either a `data.frame` or a `tibble`).
+#' 
+#' See \insertCite{santi2022;textual}{plot3logit} for details and examples.
 #'
 #' @details
 #'
+#' The content of this section is presented with plenty of details and examples
+#' in Sections 4.1 and 4.3 of \insertCite{santi2022;textual}{plot3logit}.
+#' 
 #' Argument `delta` could be passed in one of the following formats:
 #' * explicitly, as a `numeric` vector corresponding to the change
 #'   \eqn{\Delta x\in\bm{R}^k} in regressors values \eqn{x\in\bm{R}^k};

@@ -13,7 +13,9 @@ probability distribution of the dependent variable. Such changes may
 involve either a single regressor, or a group of them (composite
 changes), and the package permits both cases to be handled in a
 user-friendly way. Theoretical and methodological details are
-illustrated and discussed in Santi, Dickson, and Espa (2019).
+illustrated and discussed in Santi, Dickson, and Espa (2019), whereas a
+detailed illustration of the package and its features is available in
+Santi et al. (2022).
 
 The package can read the results of **both categorical and ordinal
 trinomial logit** regression fitted by various functions (see the next
@@ -109,6 +111,15 @@ Santi, F., M. M. Dickson, and G. Espa. 2019. “A Graphical Tool for
 Interpreting Regression Coefficients of Trinomial Logit Models.” *The
 American Statistician* 73 (2): 200–207.
 <https://doi.org/10.1080/00031305.2018.1442368>.
+
+</div>
+
+<div id="ref-santi2022" class="csl-entry">
+
+Santi, F., M. M. Dickson, G. Espa, and D. Giuliani. 2022. “<span
+class="nocase">plot3logit</span>: Ternary Plots for Interpreting
+Trinomial Regression Models.” *Journal of Statistical Software, Code
+Snippets* 103 (1): 1–27. <https://doi.org/10.18637/jss.v103.c01>.
 
 </div>
 

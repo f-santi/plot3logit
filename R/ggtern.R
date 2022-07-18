@@ -24,7 +24,8 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' `gg3logit` initialises a [`ggplot`][ggplot2::ggplot] object through
 #' [`ggtern`][ggtern::ggtern]. If a `field3logit` or a `multifield3logit`
 #' object is passed to argument `data`, the mandatory aesthetics of the ternary
-#' plot are automatically set.
+#' plot are automatically set. See \insertCite{santi2022;textual}{plot3logit}
+#' for details and examples.
 #'
 #' @param data a `field3logit` object, a `multifield3logit` object, or
 #'   a `data.frame` structured like a fortified `field3logit` or a

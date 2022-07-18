@@ -1,20 +1,20 @@
-
-citHeader("To cite package 'plot3logit' in publications use:")
-
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
-vers <- paste('R package version', meta$Version)
-
-citEntry(entry = 'manual',
-  title       = paste('plot3logit:', meta$Title),
-  author      = personList(person('F.', 'Santi'),
-                  person('M. M.', 'Dickson'),
-                  person('G.', 'Espa'),
-                  person('D.', 'Giuliani')),
-  year = year,
-  note = vers,
-  textVersion =
-    paste('Santi, F., M. M. Dickson, G. Espa, D. Giuliani (',
-      year, ') "plot3logit: ', meta$Title, '". ',
-      vers, '.', sep = ''
-    )
+bibentry(bibtype = "Article",
+  title        = "{plot3logit}: Ternary Plots for Interpreting Trinomial Regression Models",
+  author       = c(person(given = "Flavio",
+                          family = "Santi",
+                          email = "flavio.santi@univr.it"),
+                   person(given = c("Maria", "Michela"),
+                          family = "Dickson"),
+                   person(given = "Giuseppe",
+                          family = "Espa"),
+                   person(given = "Diego",
+                          family = "Giuliani")),
+  journal      = "Journal of Statistical Software, Code Snippets",
+  year         = "2022",
+  volume       = "103",
+  number       = "1",
+  pages        = "1--27",
+  doi          = "10.18637/jss.v103.c01",
+  header       = "To cite plot3logit in publications use:"
 )
+

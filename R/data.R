@@ -39,13 +39,16 @@ NULL
 
 #' Self-reported votes from VOTER Survey in 2016
 #'
-#' Self-reported votes from 2016 VOTER Survey by
-#' \insertCite{dfvsg2017;textual}{plot3logit}. Object `USvote2016` includes only
+#' Dataset based on self-reported votes from 2016 VOTER Survey by
+#' \insertCite{dfvsg2017;textual}{plot3logit}, as used in the examples in
+#' \insertCite{santi2022;textual}{plot3logit}.
+#' 
+#' Object `USvote2016` includes only
 #' few variables based on the result of the survey, which are publicly available
 #' online. See file `"data-raw/USvote2016_prepare.R"` in the GitHub repository
 #' `"f-santi/plot3logit"` (\url{https://github.com/f-santi/plot3logit}), where
 #' it is documented how the dataset `USvote2016` has been generated.
-#'
+#' 
 #' @name USvote2016
 #' @docType data
 #'

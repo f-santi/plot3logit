@@ -50,6 +50,8 @@ through the package `Ternary` [@smith2017] by functions `plot3logit` and
 See the help of `field3logit` for representing composite effects and
 `multifield3logit` for drawing multiple fields.
 
+See @santi2022 for a detailed presentation of the package and its features.
+
 
 
 ## Compatibility

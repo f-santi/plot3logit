@@ -22,7 +22,9 @@ Description: An implementation of the ternary plot for interpreting regression
     coefficients of trinomial regression models, as proposed in Santi, Dickson
     and Espa (2019) <doi:10.1080/00031305.2018.1442368>. Ternary plots can be
     drawn using either 'ggtern' package (based on 'ggplot2') or 'Ternary'
-    package (based on standard graphics).
+    package (based on standard graphics). The package and its features are
+    illustrated in Santi, Dickson, Espa and Giuliani (2022)
+    <doi:10.18637/jss.v103.c01>.
 Depends: R (>= 3.5),
     ggtern (>= 3.3.0),
     Ternary (>= 1.0.1)
@@ -58,7 +60,7 @@ LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Repository: CRAN
 VignetteBuilder: knitr
 RdMacros: Rdpack, lifecycle
