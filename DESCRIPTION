@@ -25,15 +25,15 @@ Description: An implementation of the ternary plot for interpreting regression
     package (based on standard graphics). The package and its features are
     illustrated in Santi, Dickson, Espa and Giuliani (2022)
     <doi:10.18637/jss.v103.c01>.
-Depends: R (>= 3.5),
-    ggtern (>= 3.3.0),
+Depends: R (>= 4.0),
+    ggtern (>= 3.4.0),
     Ternary (>= 1.0.1)
 Imports: 
     dplyr,
     ellipse,
     forcats,
     generics,
-    ggplot2 (>= 3.3.0),
+    ggplot2 (>= 3.4.0),
     graphics,
     grDevices,
     lifecycle,
@@ -60,7 +60,7 @@ LazyData: true
 NeedsCompilation: no
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Repository: CRAN
 VignetteBuilder: knitr
 RdMacros: Rdpack, lifecycle
