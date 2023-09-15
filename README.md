@@ -39,16 +39,23 @@ vignette `plot3logit-overview` by typing:
 vignette('plot3logit-overview', package = 'plot3logit')
 ```
 
+The paper published on *Journal of Statistical Software* (Santi et al.
+2022) can be read as a pdf vignette by typing:
+
+``` r
+vignette('plot3logit-jss', package = 'plot3logit')
+```
+
 ## Compatibility
 
 Function `field3logit` of package `plot3logit` can read trinomial
 regression estimates from the output of the following functions:
 
--   `clm` and `clm2` of package `ordinal` (ordinal logit regression);
--   `mlogit` of package `mlogit` (logit regression);
--   `multinom` of package `nnet` (logit regression);
--   `polr` of package `MASS` (ordinal logit regression);
--   `vgam` and `vglm` of package `VGAM` (logit regression).
+- `clm` and `clm2` of package `ordinal` (ordinal logit regression);
+- `mlogit` of package `mlogit` (logit regression);
+- `multinom` of package `nnet` (logit regression);
+- `polr` of package `MASS` (ordinal logit regression);
+- `vgam` and `vglm` of package `VGAM` (logit regression).
 
 Moreover, explicit estimates can be passed to `field3logit()`. See the
 help of the package (type `? 'plot3logit-package'`) and the help of
@@ -98,10 +105,10 @@ plot(field0)
 
 <div id="ref-hamilton2018" class="csl-entry">
 
-Hamilton, N. E., and M. Ferry. 2018. “<span
-class="nocase">ggtern</span>: Ternary Diagrams Using <span
-class="nocase">ggplot2</span>.” *Journal of Statistical Software, Code
-Snippets* 87 (3): 1–17. <https://doi.org/10.18637/jss.v087.c03>.
+Hamilton, N. E., and M. Ferry. 2018.
+“<span class="nocase">ggtern</span>: Ternary Diagrams Using
+<span class="nocase">ggplot2</span>.” *Journal of Statistical Software,
+Code Snippets* 87 (3): 1–17. <https://doi.org/10.18637/jss.v087.c03>.
 
 </div>
 
@@ -116,8 +123,8 @@ American Statistician* 73 (2): 200–207.
 
 <div id="ref-santi2022" class="csl-entry">
 
-Santi, F., M. M. Dickson, G. Espa, and D. Giuliani. 2022. “<span
-class="nocase">plot3logit</span>: Ternary Plots for Interpreting
+Santi, F., M. M. Dickson, G. Espa, and D. Giuliani. 2022.
+“<span class="nocase">plot3logit</span>: Ternary Plots for Interpreting
 Trinomial Regression Models.” *Journal of Statistical Software, Code
 Snippets* 103 (1): 1–27. <https://doi.org/10.18637/jss.v103.c01>.
 

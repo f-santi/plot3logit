@@ -50,6 +50,12 @@ See the help of `field3logit` for representing composite effects and
 vignette('plot3logit-overview', package = 'plot3logit')
 ```
 
+The paper published on *Journal of Statistical Software* [@santi2022] can be
+read as a pdf vignette by typing:
+```{r, eval = FALSE}
+vignette('plot3logit-jss', package = 'plot3logit')
+```
+
 
 
 ## Compatibility
