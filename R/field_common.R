@@ -10,9 +10,6 @@
 #' @return
 #' `numeric` vector of ternary coordinates of the vertex on the edge.
 #'
-#' @examples
-#' plot3logit:::v2vedge(c(1, 0, 0), 0.02)
-#'
 #' @keywords internal
 v2vedge<- function(v, edge) {
   return((1 - 3 * edge) * v + edge)
@@ -41,23 +38,6 @@ v2vedge<- function(v, edge) {
 #' \item{status}{a `character` always equal to `"p0"`
 #'   (see section *Value* of [DeltaB2pc()]).}
 #' \item{pp}{a `list` of ternary coordinates.}
-#'
-#' @examples
-#' library(magrittr)
-#' # For the categorical logit model
-#' depoDeltaB <- c(0.05, 0.08)
-#' plot3logit:::DeltaB2pc_cat3logit(depoDeltaB) %>%
-#'   plot3logit:::pc2p0(depoDeltaB, flink = list(
-#'     linkfun = plot3logit:::linkfun_cat3logit,
-#'     linkinv = plot3logit:::linkinv_cat3logit))
-#'
-#' # For the ordinal logit model
-#' depoDeltaB <- 0.08
-#' depoalpha <- c(-0.4, 0.4)
-#' plot3logit:::DeltaB2pc_ord3logit(depoDeltaB, depoalpha) %>%
-#'   plot3logit:::pc2p0(depoDeltaB, flink = list(
-#'     linkfun = function(x) plot3logit:::linkfun_ord3logit(x, depoalpha),
-#'     linkinv = function(x) plot3logit:::linkinv_ord3logit(x, depoalpha)))
 #'
 #' @keywords internal
 pc2p0<- function(pc, DeltaB, edge = 0.01, flink) {

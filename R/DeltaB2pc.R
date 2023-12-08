@@ -25,11 +25,6 @@
 #' \item{fo}{the filter of the sides where the field
 #'   originates from.}
 #' \item{pp}{a `list` of ternary coordinates.}
-
-#'
-#' @examples
-#' plot3logit:::DeltaB2pc_cat3logit(c(0.3, 0.7))
-#' plot3logit:::DeltaB2pc_ord3logit(0.12, c(-0.2, 0.1))
 #'
 #' @name DeltaB2pc
 NULL

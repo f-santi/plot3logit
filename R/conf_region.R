@@ -22,9 +22,8 @@ vcovB2vcovDeltaB <- function(vcovB, vdelta) {
 
 #' It computes the confidence region in the ternary space
 #'
-#' Given the parameters of the confidence ellipse in the
-#' space of covariate coefficiets, it returns the confidence
-#' region of the effect.
+#' Given the parameters of the confidence ellipse in the space of covariate
+#' coefficients, it returns the confidence region of the effect.
 #'
 #' @param mu centre of the ellipse.
 #' @param Sig covariance matrix of the ellipse.
@@ -34,19 +33,6 @@ vcovB2vcovDeltaB <- function(vcovB, vdelta) {
 #' @return
 #' `data.frame` with three columns (named `p1`, `p2`, and `p3`)
 #' with ternary coordinates of the points of the ellipse.
-#'
-#' @examples
-#' Ternary::TernaryPlot()
-#' Ternary::TernaryPolygon(
-#'   coordinates = plot3logit:::confregion(1:2, 0.3 * diag(2:1)),
-#'   col = grDevices::rgb(0, 0, 0.5, 0.2),
-#'   border = NA
-#' )
-#' Ternary::TernaryPolygon(
-#'   coordinates = plot3logit:::confregion(1:2, 0.1 * diag(2:1)),
-#'   col = grDevices::rgb(0, 0, 0.5, 0.2),
-#'   border = NA
-#' )
 #'
 #' @keywords internal
 confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
@@ -74,14 +60,6 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
 #'
 #' @return
 #' Object of class `field3logit` with updated confidence regions.
-#'
-#' @examples
-#' data(cross_1year)
-#'
-#' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade,
-#'   data = cross_1year)
-#' field0 <- field3logit(mod0, 'genderFemale')
-#' plot3logit:::add_confregions_field3logit(field0)
 #'
 #' @keywords internal
 add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {

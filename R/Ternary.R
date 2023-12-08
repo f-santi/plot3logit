@@ -21,23 +21,6 @@
 #' arrows and points according to a Cartesian coorinate system
 #' centered on \eqn{(0,0.5,0.5)}.
 #'
-#' @examples
-#' TernaryPlot()
-#'
-#' # Arrow
-#' plot3logit:::effect(c(0.1, 0.2), c(0.3, 0.2))
-#'
-#' # Point
-#' plot3logit:::effect(0.3, 0.2)
-#'
-#' # Compare the two coordinate systems
-#' plot3logit:::effect(0.1, 0.2, pch = 19, col = 'red')
-#' AddToTernary(plot3logit:::effect, list(c(0.1, 0.2, 0.7)), pch = 19, col = 'blue')
-#'
-#' # The origin of Cartesian coordinate systems
-#' plot3logit:::effect(0, 0, pch = 19, col = 'red')
-#' AddToTernary(plot3logit:::effect, list(c(0, 0.5, 0.5)), pch = '+', col = 'white')
-#'
 #' @keywords internal
 effect <- function(x, y, ..., length = 0.05) {
   if (length(x) > 1) { arrows(x[1], y[1], x[2], y[2], ..., length = length) }
