@@ -120,8 +120,7 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' @param arrow. specification for arrow heads, as created by
 #'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
 #'
-#' @returns Layer of `ggplot2` package, object of class `LayerInstance`,
-#' `Layer`, `ggproto`, `gg`.
+#' @returns Layer of `ggplot2` package, object of class `LayerInstance`.
 #'
 #' @family gg functions
 #'
@@ -186,8 +185,7 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #'
 #' @inheritParams stat_field3logit
 #' 
-#' @returns Layer of `ggplot2` package, object of class `LayerInstance`,
-#' `Layer`, `ggproto`, `gg`.
+#' @returns Layer of `ggplot2` package, object of class `LayerInstance`.
 #'
 #' @family gg functions
 #'
@@ -260,9 +258,8 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #'   [stat_field3logit()] is returned.
 #'
 #' @returns If `conf` is set to `FALSE` a layer of `ggplot` package is returned
-#' (object of class `LayerInstance`, `Layer`, `ggproto`, `gg`), otherwise, if
-#' `conf` is set to `TRUE`, `stat_3logit` returns a list of two `ggplot2`
-#' layers.
+#' (object of class `LayerInstance`), otherwise, if `conf` is set to `TRUE`,
+#' `stat_3logit` returns a list of two `ggplot2` layers (class `LayerInstance`).
 #' 
 #' @family gg functions
 #'
