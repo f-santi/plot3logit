@@ -62,6 +62,9 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #'   confidence regions) *within* every field. Unlike variable `group`,
 #'  `idarrow` is not a global identifier of graphical objects.
 #' 
+#' @return
+#' Object of class `ggplot`.
+#' 
 #' @family gg functions
 #'
 #' @examples
@@ -117,6 +120,10 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #'   [gg3logit()] for details.
 #' @param arrow. specification for arrow heads, as created by
 #'   function [`arrow`][grid::arrow] of package [`grid`][grid::grid-package].
+#'
+#' @return
+#' Layer of `ggplot2` package, object of class `LayerInstance`, `Layer`,
+#' `ggproto`, `gg`.
 #'
 #' @family gg functions
 #'
@@ -180,6 +187,10 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #' [stat_conf3logit()] adds a field to a [`gg3logit`] plot.
 #'
 #' @inheritParams stat_field3logit
+#' 
+#' @return
+#' Layer of `ggplot2` package, object of class `LayerInstance`, `Layer`,
+#' `ggproto`, `gg`.
 #'
 #' @family gg functions
 #'
@@ -251,6 +262,11 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #'   [stat_conf3logit()] is added, otherwise only the layer of
 #'   [stat_field3logit()] is returned.
 #'
+#' @return
+#' If `conf` is set to `FALSE` a layer of `ggplot` package is returned (object
+#' of class `LayerInstance`, `Layer`, `ggproto`, `gg`), otherwise, if `conf` is
+#' set to `TRUE`, `stat_3logit` returns a list of two `ggplot2` layers.
+#' 
 #' @family gg functions
 #'
 #' @examples
@@ -305,6 +321,9 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #'   [stat_conf3logit()] is added, otherwise only a [gg3logit()] object with the
 #'   layer of [stat_field3logit()] is returned.
 #' @param object an object of class `field3logit` or `multifield3logit`.
+#' 
+#' @return
+#' Object of class `ggplot`.
 #' 
 #' @family gg functions
 #'
