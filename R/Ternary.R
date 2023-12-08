@@ -45,9 +45,8 @@ effect <- function(x, y, ..., length = 0.05) {
 #' @param conf.args graphical parameters of confidence regions to be passed
 #'   to [`Ternary::TernaryPolygon()`][Ternary::AddToTernary].
 #'
-#' @return
-#' An object of class `field3logit` with confidence regions included, if
-#' computed within [TernaryField()].
+#' @returns An object of class `field3logit` with confidence regions included,
+#' if computed within [TernaryField()].
 #'
 #' @seealso [field3logit()].
 #'

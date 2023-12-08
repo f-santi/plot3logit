@@ -13,8 +13,7 @@
 #'   defined in Equation (7) of \insertCite{santi2019;textual}{plot3logit}.
 #' @param model object of class `field3logit`.
 #'
-#' @return
-#' Numeric matrix \eqn{\textbf{R}^{n\times 2}} of linear predictors.
+#' @returns Numeric matrix \eqn{\textbf{R}^{n\times 2}} of linear predictors.
 #'
 #' @references
 #' \insertAllCited{}

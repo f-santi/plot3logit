@@ -20,8 +20,8 @@
 #'   \eqn{B\in\textbf{R}^{k\times 2}} for *categorical* models or
 #'   \eqn{B\in\textbf{R}^k} for *ordinal* models.
 #'
-#' @return
-#' Numeric matrix \eqn{[0,\,1]^{n\times 3}} of probability distributions.
+#' @returns Numeric matrix \eqn{[0,\,1]^{n\times 3}} of probability
+#' distributions.
 #'
 #' @inherit linkfun references
 #'

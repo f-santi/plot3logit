@@ -14,8 +14,8 @@
 #' @param n number of points (curves of the field).
 #' @param edge width of the border of the ternary plot.
 #'
-#' @return
-#' A named `list` with three components:
+#' @returns A named `list` with three components:
+#' 
 #' \item{status}{a `character` which may be either equal to
 #'	 `"p0"` or `"pc"`. The former value (`"p0"`) is taken
 #'   when the point is the origin of the curve, whereas

@@ -212,7 +212,7 @@ is_simplified_field3logit <- function(x) {
 #'   package.
 #' @param value value to be assigned.
 #'
-#' @return
+#' @returns
 #' `S3` object of class `field3logit` structured as a named `list` or an object
 #' of class `multifield3logit` if `delta` is a `list` or syntax `<<...>>` is
 #' used.

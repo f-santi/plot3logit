@@ -8,8 +8,7 @@
 #' @param value a character with the new label (or labels in case of a
 #'   `multifield3logit` object).
 #'
-#' @return
-#' Object of same class of argument `object` (either `field3logit` or
+#' @returns Object of same class of argument `object` (either `field3logit` or
 #' `multifield3logit`).
 #'
 #' @name labels

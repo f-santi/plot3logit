@@ -7,8 +7,7 @@
 #' @param v `numeric` vector of ternary coordinates.
 #' @param edge `numeric` value of the edge.
 #'
-#' @return
-#' `numeric` vector of ternary coordinates of the vertex on the edge.
+#' @returns `numeric` vector of ternary coordinates of the vertex on the edge.
 #'
 #' @keywords internal
 v2vedge<- function(v, edge) {
@@ -33,8 +32,8 @@ v2vedge<- function(v, edge) {
 #'   and `linkinv`. The former is the link function, whereas
 #'   the latter is its inverse.
 #'
-#' @return
-#' A named `list` with two components:
+#' @returns A named `list` with two components:
+#' 
 #' \item{status}{a `character` always equal to `"p0"`
 #'   (see section *Value* of [DeltaB2pc()]).}
 #' \item{pp}{a `list` of ternary coordinates.}
@@ -89,11 +88,9 @@ pc2p0_single<- function(pc, DeltaB, w, edge, flink) {
 #' @param p0 starting point of the curve.
 #' @param nmax maximum number of vectors.
 #'
-#' @return
-#' Object of class `list`, where each component is a `list` of
-#' two components: the ternary coordinates of the starting point
-#' of the arrow, and the ternary coordinates of the tip of the
-#' arrow.
+#' @returns Object of class `list`, where each component is a `list` of two
+#' components: the ternary coordinates of the starting point of the arrow, and
+#' the ternary coordinates of the tip of the arrow.
 #'
 #' @seealso [linkfun()], [linkinv()].
 #'

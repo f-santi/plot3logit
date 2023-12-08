@@ -8,8 +8,7 @@
 #' @param vcovB variance-covariance matrix of \eqn{vec(B)}.
 #' @param vdelta numeric vector of covariate change.
 #'
-#' @return
-#' Squared numeric matrix of order two.
+#' @returns Squared numeric matrix of order two.
 #'
 #' @keywords internal
 vcovB2vcovDeltaB <- function(vcovB, vdelta) {
@@ -30,8 +29,7 @@ vcovB2vcovDeltaB <- function(vcovB, vdelta) {
 #' @param conf confidence level of the region.
 #' @param npoints number of points of the border.
 #'
-#' @return
-#' `data.frame` with three columns (named `p1`, `p2`, and `p3`)
+#' @returns `data.frame` with three columns (named `p1`, `p2`, and `p3`)
 #' with ternary coordinates of the points of the ellipse.
 #'
 #' @keywords internal
@@ -58,8 +56,7 @@ confregion <- function(mu, Sig, conf = 0.95, npoints = 100) {
 #' @inheritParams confregion
 #' @param x an object of class `field3logit`.
 #'
-#' @return
-#' Object of class `field3logit` with updated confidence regions.
+#' @returns Object of class `field3logit` with updated confidence regions.
 #'
 #' @keywords internal
 add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
@@ -157,8 +154,7 @@ add_confregions_field3logit <- function(x, conf = 0.95, npoints = 100) {
 #' @param conf confidence level of the regions.
 #' @param npoints number of points of the borders of the regions.
 #'
-#' @return
-#' Object of class `field3logit` or `multifield3logit` with updated
+#' @returns Object of class `field3logit` or `multifield3logit` with updated
 #' confidence regions.
 #'
 #' @references

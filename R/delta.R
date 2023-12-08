@@ -106,8 +106,7 @@ pre_process_delta <- function(delta, model) {
 #' @param model object of class `model3logit`returned by [extract3logit()].
 #' @param delta see [`field3logit`].
 #'
-#' @return
-#' `numeric` vector of covariate change \eqn{\Delta\in\textbf{R}^k}.
+#' @returns `numeric` vector of covariate change \eqn{\Delta\in\textbf{R}^k}.
 #'
 #' @keywords internal
 get_vdelta <- function(delta, model) {

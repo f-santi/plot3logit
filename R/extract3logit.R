@@ -45,8 +45,7 @@
 #'   passed, it should be structured as described in section **Details**.
 #' @param ... other arguments passed to other methods.
 #'
-#' @return
-#' An object of class `model3logit`.
+#' @returns An object of class `model3logit`.
 #'
 #' @seealso [`plot3logit-package`], [field3logit()].
 #'
