@@ -22,7 +22,7 @@
 #' [field3logit()].
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ ., data = cross_1year)

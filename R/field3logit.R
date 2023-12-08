@@ -223,7 +223,7 @@ is_simplified_field3logit <- function(x) {
 #' @examples
 #' data(cross_1year)
 #'
-#' \dontrun{
+#' \donttest{
 #' # Fitting the model
 #' mod0 <- nnet::multinom(employment_sit ~ finalgrade + irregularity + hsscore,
 #'   cross_1year)

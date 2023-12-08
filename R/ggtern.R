@@ -65,7 +65,7 @@ Conf3Logit <- ggplot2::ggproto('StatConfidenceTern', Stat,
 #' @family gg functions
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -121,7 +121,7 @@ gg3logit <- function (data = NULL, mapping = aes(), ...) {
 #' @family gg functions
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -184,7 +184,7 @@ stat_field3logit <- function(mapping = aes(), data = NULL, geom = 'segment',
 #' @family gg functions
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -254,7 +254,7 @@ stat_conf3logit <- function(mapping = aes(), data = NULL, geom = 'polygon',
 #' @family gg functions
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)
@@ -309,7 +309,7 @@ stat_3logit <- function(mapping_field = aes(), mapping_conf = aes(),
 #' @family gg functions
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' mod0 <- nnet::multinom(employment_sit ~ gender + finalgrade, data = cross_1year)

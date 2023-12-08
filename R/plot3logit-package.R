@@ -52,7 +52,7 @@
 #' and functions [field3logit()] and [extract3logit()] for further details.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(cross_1year)
 #'
 #' # Read from "nnet::multinom" (categorical logit)
