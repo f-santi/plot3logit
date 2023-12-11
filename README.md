@@ -132,7 +132,7 @@ Snippets* 103 (1): 1–27. <https://doi.org/10.18637/jss.v103.c01>.
 
 <div id="ref-smith2017" class="csl-entry">
 
-Smith, M. R. 2017. “Ternary: An r Package for Creating Ternary Plots.”
+Smith, M. R. 2017. “Ternary: An R Package for Creating Ternary Plots.”
 *Zenodo*.
 
 </div>

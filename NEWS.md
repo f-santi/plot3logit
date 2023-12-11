@@ -1,22 +1,12 @@
 
-# plot3logit 3.1.3.9000
-
-
-## Major changes
-
-* 
-
+# plot3logit 3.1.4
 
 
 ## Minor changes
 
-* 
-
-
-
-## Typos and other marginal changes
-
-* 
+* Included paper published on JSS as a pdf vignette.
+* Revised version of package dependencies.
+* Revised and integrated the help.
 
 
 
