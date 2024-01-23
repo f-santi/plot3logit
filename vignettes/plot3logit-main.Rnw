@@ -1,3 +1,6 @@
+%\VignetteIndexEntry{Ternary Plots for Interpreting Trinomial Regression Models}
+%\VignettePackage{plot3logit}
+  
 \documentclass[nojss]{jss}
 
 %% Recommended packages
@@ -217,12 +220,12 @@ the side opposite the vertex labelled with that component (that is,
 
 \begin{figure}[tp]
 \begin{subfigure}[t]{0.5\textwidth}
-\hspace{-2em}\scalebox{0.58}{\input{Figures/jss4194_coordinate}}
+\hspace{-2em}\scalebox{0.58}{\input{figures/jss4194_coordinate}}
 \caption{}
 \label{fig:ternary:coord}
 \end{subfigure}
 \begin{subfigure}[t]{0.5\textwidth}
-\hspace{-2em}\scalebox{0.58}{\input{Figures/jss4194_variazioni}}
+\hspace{-2em}\scalebox{0.58}{\input{figures/jss4194_variazioni}}
 \caption{}
 \label{fig:ternary:effAB}
 \end{subfigure}
@@ -342,7 +345,7 @@ modVote <- multinom(vote ~ educ + gender + race + birthyr,
 Table~\ref{tab:modVote} shows point estimates and standard errors of
 regression coefficients.
 
-\input{Tables/jss4194_modVote}
+\input{tables/jss4194_modVote}
 
 Consider, for example, the coefficients on the regressor
 \code{genderFemale}. As the estimates in Table~\ref{tab:modVote} show,
@@ -366,12 +369,12 @@ Table~\ref{tab:modVote}.
 
 \begin{figure}[p]
 \begin{subfigure}[t]{0.5\textwidth}
-\scalebox{0.5}{\input{Figures/jss4194_genderFemale}}
+\scalebox{0.5}{\input{figures/jss4194_genderFemale}}
 \caption{}
 \label{fig:USvote2016gender:plain}
 \end{subfigure}
 \begin{subfigure}[t]{0.5\textwidth}
-\scalebox{0.5}{\input{Figures/jss4194_genderFemale_conf}}
+\scalebox{0.5}{\input{figures/jss4194_genderFemale_conf}}
 \caption{}
 \label{fig:USvote2016gender:conf}
 \end{subfigure}
@@ -397,7 +400,7 @@ with respect to a single (common) profile, as in Figure
 
 \begin{figure}[p]
 \centering
-\scalebox{0.7}{\input{Figures/jss4194_genderbyrace}}
+\scalebox{0.7}{\input{figures/jss4194_genderbyrace}}
 \caption{Effect of gender on the probability distribution of voter's choice born
 in the Seventies and graduated at the high school, distinguished by racial or
 ethnic group. 95\% confidence regions are drawn. Coefficient estimates are
@@ -408,7 +411,7 @@ represented in this graph.}
 
 \begin{figure}[tp]
 \centering
-\scalebox{0.7}{\input{Figures/jss4194_race}}
+\scalebox{0.7}{\input{figures/jss4194_race}}
 \caption{Effect of race on the probability distribution of voter's choice with
 respect to a white voter having the same probability of choosing Clinton
 (33.3\%), Trump (33.3\%) or other candidates (33.3\%). 95\% confidence regions
@@ -1104,7 +1107,7 @@ mathematically derived and how they can be computed through package
 they can be represented graphically.
 
 
-\pagebreak
+% \pagebreak
 
 \subsection{Computation}
 \label{sec:confregions:comp}
