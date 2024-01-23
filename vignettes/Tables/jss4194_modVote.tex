@@ -1,0 +1,41 @@
+
+\begin{table}[t]
+\centering
+\caption{Trinomial logit regression of voter choice (reference level is ‘‘Clinton'') based on $7590$ observations of the \citet{dfvsg2017}. All regressors are qualitative: education (ref.: ‘‘no high school''), gender (ref.: ‘‘male''), race/ethnicity (ref.: ‘‘white''), birth year (ref.: $[1920, 1940)$). Table shows point estimates followed by significance symbols ($^*$ for $p$-values between $0.05$ and $0.1$; $^{**}$ for $p$-values between $0.01$ and $0.05$; $^{***}$ for $p$-values smaller than $0.01$). Standard errors are reported in parenthesis.}
+\label{tab:modVote}
+\begin{tabular}{@{} l d{3.5} d{2.5} d{3.6} d{2.4} @{}} 
+\toprule
+\multirow{2}{*}{Regressor} & \multicolumn{4}{c}{\textit{Levels}} \\
+\cmidrule(l){2-5}
+ & \multicolumn{2}{c}{Trump} & \multicolumn{2}{c}{Others} \\ 
+\midrule
+{Constant} & 1.293^{***} & (0.224) & -1.712^{***} & (0.445) \\
+\addlinespace
+{Education} & & & \\
+{\qquad  High school grad.} & -0.379^* & (0.214) & -0.499 & (0.393) \\
+{\qquad  Some college} & -0.739^{***} & (0.215) & -0.670^* & (0.391) \\
+{\qquad  2-year college} & -0.640^{***} & (0.223) & -0.602 & (0.405) \\
+{\qquad  4-year college} & -0.934^{***} & (0.215) & -0.542 & (0.387) \\
+{\qquad  Post-grad} & -1.252^{***} & (0.217) & -0.733^* & (0.391) \\
+\addlinespace
+{Gender (female)} & -0.536^{***} & (0.051) & -0.440^{***} & (0.092) \\
+\addlinespace
+{Race/ethnicity} & & & \\
+{\qquad  Black} & -2.560^{***} & (0.150) & -1.087^{***} & (0.191) \\
+{\qquad  Hispanic} & -0.479^{***} & (0.114) & -0.004 & (0.184) \\
+{\qquad  Asian} & -0.912^{***} & (0.246) & -0.296 & (0.321) \\
+{\qquad  Mixed} & -0.383^{**} & (0.180) & -0.042 & (0.281) \\
+{\qquad  Other} &  0.579^{***} & (0.162) & 0.141 & (0.303) \\
+\addlinespace
+{Birth year (decade)} & & & \\
+{\qquad  $[1940, 1950)$} & -0.058 & (0.109) & 0.117 & (0.291) \\
+{\qquad  $[1950, 1960)$} &  0.012 & (0.104) & 0.638^{**} & (0.270) \\
+{\qquad  $[1960, 1970)$} &  0.081 & (0.107) & 1.058^{***} & (0.268) \\
+{\qquad  $[1970, 1980)$} & -0.302^{**} & (0.123) & 1.166^{***} & (0.279) \\
+{\qquad  $[1980, 2000)$} & -1.001^{***} & (0.141) & 1.365^{***} & (0.280) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+

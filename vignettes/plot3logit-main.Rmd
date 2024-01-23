@@ -1,0 +1,1338 @@
+---
+documentclass: jss
+classoption:
+  - nojss
+author:
+  - name: Flavio Santi
+    orcid: 0000-0002-2014-1981
+    affiliation: 'University of Trento'
+    address: |
+      | Department of Economics and Management
+      | Via Inama 5
+      | 38122 Trento (TN), Italy
+    email: \email{flavio.santi@unitn.it}
+    url: www.flaviosanti.it
+  - name: Maria Michela Dickson
+    orcid: 0000-0002-4307-0469
+    affiliation: 'University of Trento \AND'
+  - name: Giuseppe Espa
+    orcid: 0000-0002-0331-3630
+    affiliation: 'University of Trento'
+  - name: Diego Giuliani
+    orcid: 0000-0002-7198-6714
+    affiliation: 'University of Trento'
+title:
+  formatted: "\\pkg{plot3logit}: Ternary Plots for Interpreting Trinomial Regression
+Models"
+  # If you use tex in the formatted title, also supply version without
+  plain:     "plot3logit: Ternary Plots for Interpreting Trinomial Regression
+Models"
+  # For running headers, if needed
+  short:     "\\pkg{plot3logit}: Ternary Plots for Interpreting Trinomial Regression
+Models"
+abstract: >
+  This paper presents the \proglang{R} package \pkg{plot3logit} which enables the
+  covariate effects of trinomial regression models to be represented graphically
+  by means of a ternary plot. The aim of the plot is helping the interpretation of
+  regression coefficients in terms of the effects that a change in values of
+  regressors has on the probability distribution of the dependent variable. Such
+  changes may involve either a single regressor, or a group of them (composite
+  changes), and the package permits both cases to be handled in a user-friendly
+  way. Moreover, \pkg{plot3logit} can compute and draw confidence regions of the
+  effects of covariate changes and enables multiple changes and profiles to be
+  represented and compared jointly. Upstream and downstream compatibility makes
+  the package able to work with other \proglang{R} packages or applications other
+  than \proglang{R}.
+keywords:
+  # at least one keyword must be supplied
+  formatted: [plotting software, ternary diagrams, "\\proglang{R}", "\\pkg{plot3logit}"]
+  plain:     [plotting software, ternary diagrams, R, plot3logit]
+header-includes:
+  - \usepackage{amsmath}
+  - \usepackage{amsfonts}
+  - \usepackage{tikz}
+  - \usepackage{booktabs}
+  - \usepackage{multirow}
+  - \usepackage{subcaption}
+  - \usepackage{dcolumn}
+  - \renewcommand{\Pr}{\mathbb{P}}
+  - \newcommand{\eu}{\mathrm{e}}
+  - \DeclareMathOperator{\Real}{\mathbb{R}}
+  - \newcolumntype{d}[1]{D..{#1}}
+vignette: >
+  %\VignetteIndexEntry{Ternary Plots for Interpreting Trinomial Regression Models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: ../inst/REFERENCES.bib
+---
+
+```{r, setup, include=FALSE}
+options(prompt = 'R> ', continue = '+ ')
+```
+
+\section{Introduction}
+\label{sec:introduction}
+
+The interpretation of the covariate effect on the probability distribution of
+the dependent variable of a multinomial regression model is usually neither
+immediate nor easy. In case of multinomial logit regression, the coefficient of
+a covariate \(x\) referred to the category \(\nu^{(m)}\) of the dependent
+variable determines the effect of a unitary change in the value of \(x\) on the
+logarithm of the ratio between the probability of category \(\nu^{(m)}\) and the
+probability of the reference category \(\nu^{(1)}\) of the dependent variable.
+This entails that the relation between the covariate coefficients and the
+probability distribution of the dependent variable is non-linear and depends
+also on covariate coefficients of the other regressors
+\citep[see][Equations~5 and~6]{santi2019}.
+
+The interpretive difficulty of the parameters of multilogit models is the reason
+why the coefficient estimates are usually complemented by some estimates or
+graphical representations of covariate marginal effects. Indeed, both approaches
+turned out to be fruitful and led to a wide myriad of variants which have been
+studied from a methodological point of view
+\citep[see, among the others,][]{agresti2013,effects,effectsdiagn,effectsGLM},
+and have been implemented in \proglang{R} packages such as \pkg{effects}
+\citep{effectsmulti}, \pkg{lsmeans} \citep{lsmeans}, \pkg{emmeans}
+\citep{emmeans}, \pkg{MNLpred} \citep{MNLpred}, \pkg{DAMisc} \citep{DAMisc}.
+
+Yet, both estimates and graphical representations of marginal effects are
+computed and plotted conditionally to some specific values of the covariates (or
+a subset of them), thus they cannot exhaustively describe the effect of a
+covariate over the whole space of regressors. In order to overcome this
+limitation, \citet{tutz2013} proposed a diagram, which allows for a
+representation of the direction (increase vs decrease) and the relative
+magnitude of the conditional effect of covariates on the probability
+distribution of the dependent variable. The method, implemented in the
+\proglang{R} package \pkg{EffectStars2} \citep{EffectStars2}, produces a very
+appealing and intuitive graph, which can be drawn for multinomial models with
+any number of categories on the dependent variable, however it relies on a
+reparametrisation of the multinomial logit model based on the symmetric side
+constraint, which, in some circumstances, may be unfeasible or undesirable.
+
+In case of multinomial logit models where the dependent variable can take only
+three values (i.e., the trinomial logit models), \citet{santi2019} show that it
+is possible to represent the effects of covariates in terms of changes in the
+probability distribution of the dependent variable by means of a vector field
+drawn over a ternary plot. Such a representation is possible both conditionally
+and unconditionally to the values of the covariates, and it can be obtained for
+changes involving two or more covariates (composite changes).
+
+The graphical representation proposed in \citet{santi2019} is implemented in
+\proglang{R} \citep{R} through package \pkg{plot3logit} \citep{plot3logit},
+available from the Comprehensive \proglang{R} Archive Network (CRAN) at
+\url{https://CRAN.R-project.org/package=plot3logit} since January 2019.
+
+Package \pkg{plot3logit} can read the results of both categorical and ordinal
+trinomial logit regression fitted by various functions (see
+Section~\ref{sec:features}) and creates a "\code{multifield3logit}" object which
+may be represented by means of functions either based on standard \proglang{R}
+graphics or based on the grammar of graphics \citep{wilkinson2005}. Composite
+changes and multiple changes of covariates can be easily represented through a
+simple and flexible syntax, whereas the analysis proposed in \citet{santi2019}
+has been extended by including functions for adding confidence regions of the
+covariate effects to the plots, in order to enrich and improve the
+interpretation of the results.
+
+The paper is organised as follows. Section~\ref{sec:ternplots} briefly shows how
+to read ternary plots and how the effects of covariate changes on the
+probability distribution of the dependent variable in a trinomial logit
+regression can be represented by means of vector fields and arrows on a ternary
+plot. Section~\ref{sec:features} summarises the features of the package
+\pkg{plot3logit}. Section~\ref{sec:vecfields} illustrates how \pkg{plot3logit}
+reads estimates from fitted models, and how the vector fields can be customised,
+computed and represented graphically. Section \ref{sec:confregions} illustrates
+how confidence regions are computed and drawn. Section~\ref{sec:wrappers}
+introduces some wrappers. Finally, Section~\ref{sec:conclusions} concludes.
+
+
+
+
+\section{Ternary plots and trinomial logit regression}
+\label{sec:ternplots}
+
+Ternary diagrams were firstly proposed in \citet{bancroft1897} as a method for
+representing sets of three numbers from bounded non-negative intervals subject
+to a constraint on their sum. This is the case of composition data as well as
+the probabilities of a trinomial random variable. Here we briefly sum up how
+ternary diagrams work; a more detailed illustration is available in
+\citet{santi2019}, whereas \citet{howarth1996} offers a valuable and intriguing
+history of ternary diagrams.
+
+Consider a random element \(N\) which takes values in a set of three labels
+\(\{\nu^{(1)},\nu^{(2)},\nu^{(3)}\}\) with probability
+\(\pi^{(m)}\equiv\mathbb{P}[N=\nu^{(m)}]\), \(m=1,2,3\). The probability
+distribution of \(N\) can be represented through the triplets
+\((\pi^{(1)},\pi^{(2)},\pi^{(3)})\in[0,1]^3\), however the parameter space is
+actually 2-dimensional, as the sum \(\pi^{(1)}+\pi^{(2)}+\pi^{(3)}\) is
+constrained to equal one, thus if \(\pi^{(1)}\) and \(\pi^{(2)}\) are given,
+\(\pi^{(3)}\) automatically equals \(1-\pi^{(1)}-\pi^{(2)}\).\footnote{Random
+element \(N\) is typically modelled by means of a random vector which is
+distributed according to a single-trial multinomial law and it is defined
+through indicator functions. See \citet{santi2019} for this formalisation of the
+problem, \citet{johnson2005} (pp.~505--524) on the multinomial probability
+distribution, and \citet{agresti2013} on the modellisation of categorical
+responses.} Mathematically, triplets \((\pi^{(1)},\pi^{(2)},\pi^{(3)})\) which
+are valid probability distributions define a 2-dimensional simplex in the
+3-dimensional space \([0,1]^3\), which is denoted by \(S\) in the rest of the
+paper. Formally:
+\begin{equation}
+\label{eq:simplex}
+S=\{(\pi^{(1)},\pi^{(2)},\pi^{(3)})\in[0,1]^3\colon
+\pi^{(1)}+\pi^{(2)}+\pi^{(3)}=1\}\,.
+\end{equation}
+The simplex \(S\) is the equilateral triangle which constitutes the ternary
+diagram (see Figure~\ref{fig:ternary}).
+
+Figure~\ref{fig:ternary:coord} shows how the Cartesian coordinates of a point
+\(P=(p_1,p_2,p_3)\) in the 3-dimensional space \([0,1]^3\) are transposed over
+the 2-dimensional simplex (the ternary diagram). Note that the value of a
+coordinate of the point \(P\) (say, \(p_3\)) is the distance between \(P\) and
+the side opposite the vertex labelled with that component (that is,
+\(\pi^{(3)}\)).
+
+\begin{figure}[tp]
+\begin{subfigure}[t]{0.5\textwidth}
+\hspace{-2em}\scalebox{0.58}{\input{Figures/jss4194_coordinate}}
+\caption{}
+\label{fig:ternary:coord}
+\end{subfigure}
+\begin{subfigure}[t]{0.5\textwidth}
+\hspace{-2em}\scalebox{0.58}{\input{Figures/jss4194_variazioni}}
+\caption{}
+\label{fig:ternary:effAB}
+\end{subfigure}
+\caption{Figure (a) shows how the coordinates of a point \(P=(p_1,p_2,p_3)\) can
+be read in a ternary diagram. Figure (b) shows how a change in the probability
+distribution of a trinomial random variable from \(A=(0.1,0.6,0.3)\) to
+\(B=(0.4,0.4,0.2)\) can be represented, and decomposed in terms of changes of
+ternary coordinates. Both graphs are taken from \cite{santi2019}.}
+\label{fig:ternary}
+\end{figure}
+
+Since all (and only) the admittable probability distributions of a trinomial
+random variable can be drawn as a point of the simplex of the ternary diagram, a
+change in any probability distribution can be represented through an arrow from
+a reference starting point \(A\) towards a final point \(B\).
+Figure~\ref{fig:ternary:effAB} depicts the change of the probability
+distribution just described, and synthesises the basic idea for representing the
+effect of one or more covariates on the probability distribution of the
+dependent variable of a trinomial logit regression.
+
+In order to make notation clear, the trinomial logistic regression is briefly
+introduced; a more detailed discussion of the model and the notation adopted in
+this paper is available in \cite{santi2019}, whereas a wide and in-depth
+dissertation on the multinomial logit regression can be found in
+\cite{agresti2013}.
+
+The multinomial logistic (or logit) regression aims at explaining the
+probability distribution of a multinomial variable by means of a set of
+regressors, which may be either quantitative or qualitative. If the number of
+possible values of the dependent variable equals three, we may refer to it as
+trinomial, and the model as trinomial logit regression.
+
+The multinomial probability distribution belongs to the exponential family
+\citep[pp. 24--25]{lehmann1998}, and, in case of the trinomial distribution, it
+is identified by means of natural parameters \((\eta_2,\eta_3)\in\Real^2\),
+which are defined as follows:
+\begin{equation}
+\label{eq:naturalpar}
+\eta_m=\ln\frac{\pi^{(m)}}{\pi^{(1)}}\,,
+\qquad m=2,3.
+\end{equation}
+
+Thus, the trinomial logit regression models the natural parameters
+\((\eta_2,\eta_3)\in\Real^2\) as a linear transformation of the covariates
+\(x\in\Real^p\):
+\begin{equation}
+\label{eq:linearpred}
+\eta(x)=B^\top x
+=
+\begin{bmatrix}
+\beta^{(2)} & \beta^{(3)}
+\end{bmatrix}^\top x
+=
+\begin{bmatrix}
+x^\top \beta^{(2)} \\
+x^\top \beta^{(3)}
+\end{bmatrix}
+\end{equation}
+where \(\beta^{(2)}\in\Real^p\) and \(\beta^{(3)}\in\Real^p\) are the regression
+coefficients.
+
+Equations~\eqref{eq:naturalpar} and~\eqref{eq:linearpred} justify the
+interpretation of regression coefficients \(\beta_j^{(m)}\) as the effect of a
+unitary change of the \(j\)-th covariate on the logarithm of the ratio between
+\(\pi^{(m)}\) and \(\pi^{(1)}\).
+
+Now, consider a trinomial logit regression on \(p\) covariates
+\(x=(x_1,x_2,\dots,x_p)\) (including a constant term) and a profile
+\(x_0\in\mathcal{X}\subseteq\mathop{\mathrm{\mathbb{R}}}^p\), so that
+\((\pi^{(1)}_{(x_0)},\pi^{(2)}_{(x_0)},\pi^{(3)}_{(x_0)})\) is the probability
+distribution associated to \(x = x_0\). It can be shown
+\citep[see][equation 6]{santi2019} that, when \(x=x_0+\Delta\), the probability
+distribution of the dependent variable changes as follows:
+\begin{equation}
+\label{eq:Delta}
+\pi^{(m)}_{(x_0+\Delta)}=
+\left[1-\sum_{h=2}^3\left(1-\mathrm{e}^{\Delta^\top \beta^{(h)}}\right)\,
+\pi^{(h)}_{(x_0)}\right]^{-1}
+\mathrm{e}^{\Delta^\top \beta^{(m)}}\pi^{(m)}_{(x_0)}\,,
+\end{equation} with \(m=1,2,3\), where
+\(\Delta\in\mathop{\mathrm{\mathbb{R}}}^p\) is the change of covariates, and
+\(\beta^{(1)}=0\in\mathop{\mathrm{\mathbb{R}}}^p\) by construction
+\citep[see][]{santi2019}.
+
+As~\eqref{eq:Delta} shows, the probability distribution after the covariate
+change \(\Delta\) only depends on the probability distribution before change
+\(\pi^{(m)}_{(x_0)}\) (\(m=1,2,3\)), and on the coefficients of the trinomial
+regression, whereas there is not dependence on \(x_0\) other than through
+\(\pi^{(m)}_{(x_0)}\). Relation~\eqref{eq:Delta} is thus the theoretical basis
+which justifies the graphical method proposed in \citet{santi2019}, as it allows
+one to represent and analyse the regression coefficients
+\(\beta^{(2)},\beta^{(3)}\) over the (\(2\)-dimensional) simplex \(S\),
+instead of the (\(k\)-dimensional) space of regressors \(\mathcal{X}\).
+
+In the following, an example of the method is provided in order to
+illustrate some of the capabilities of the package \pkg{plot3logit},
+which are discussed in depth in the next sections of the paper.
+
+A trinomial regression is fitted on self-reported votes for US
+presidential elections in 2016. Data are provided in \citet{dfvsg2017},
+where a broad and detailed questionnaire was administered to a sample
+consisting of 8000 people. In this paper, a dataset where only some
+information collected by \citet{dfvsg2017} is used. The dataset is made
+available through the package \pkg{plot3logit} under the name \code{USvote2016}.
+
+In the following we consider a trinomial logit regression which models the
+self-reported vote (which may take values ``Trump'', ``Clinton'', and
+``Other'') over some voters' characteristics (education level, gender, race, and
+decade when the voter was born). Here there are the \proglang{R} commands for
+fitting the model through the package \pkg{nnet}:
+```{r}
+library("nnet")
+data("USvote2016", package = "plot3logit")
+modVote <- multinom(vote ~ educ + gender + race + birthyr,
+  data = droplevels(USvote2016), trace = FALSE)
+```
+Table~\ref{tab:modVote} shows point estimates and standard errors of
+regression coefficients.
+
+\input{Tables/jss4194_modVote}
+
+Consider, for example, the coefficients on the regressor
+\code{genderFemale}. As the estimates in Table~\ref{tab:modVote} show,
+both coefficients are negative and statistically different from zero,
+meaning that, ceteris paribus, female voters had a preference towards
+Hillary Clinton. Such a preference results in an increase (with respect
+to male voters with the same characteristics) of the probability to vote
+for Hillary Clinton to the detriment of Donald Trump and all other
+candidates. What is hard to assess is the actual effect of gender on the
+probability distribution of voter's choice, Figure
+\ref{fig:USvote2016gender:plain} helps in that by representing the
+effect of covariate \code{genderFemale} through a vector field over a
+ternary diagram.
+
+The direction of arrows in Figure~\ref{fig:USvote2016gender:plain} is
+consistent with the conclusion outlined before, although the diagram
+shows also that the direction is not constant over the simplex. On the
+other hand, arrow lengths enable to assess the magnitude of the effect,
+which is not constant and cannot be directly appraised from estimates in
+Table~\ref{tab:modVote}.
+
+\begin{figure}[p]
+\begin{subfigure}[t]{0.5\textwidth}
+\scalebox{0.5}{\input{Figures/jss4194_genderFemale}}
+\caption{}
+\label{fig:USvote2016gender:plain}
+\end{subfigure}
+\begin{subfigure}[t]{0.5\textwidth}
+\scalebox{0.5}{\input{Figures/jss4194_genderFemale_conf}}
+\caption{}
+\label{fig:USvote2016gender:conf}
+\end{subfigure}
+\caption{Vector field on the effect of gender (covariate \code{genderFemale}) on
+the probability distribution of voter's choice (Figure
+\ref{fig:USvote2016gender:plain}). Figure~\ref{fig:USvote2016gender:conf} shows
+the same vector field with 95\% confidence regions. Coefficient estimates are
+reported in Table~\ref{tab:modVote}.}
+\label{fig:USvote2016gender}
+\end{figure}
+
+Figure~\ref{fig:USvote2016gender:conf} includes also the 95\% confidence
+regions in order to assess also the degree of uncertainty of the
+estimates and how uncertainty on regression parameters determines the
+uncertainty on the effects (note how shapes and sizes of confidence
+regions changes over the simplex).
+
+Confidence regions are particularly useful when the effect of a
+covariate change is analysed for some specific profiles (see Figure
+\ref{fig:USvote2016genderbyrace}), or when multiple effects are compared
+with respect to a single (common) profile, as in Figure
+\ref{fig:USvote2016race}.
+
+\begin{figure}[p]
+\centering
+\scalebox{0.7}{\input{Figures/jss4194_genderbyrace}}
+\caption{Effect of gender on the probability distribution of voter's choice born
+in the Seventies and graduated at the high school, distinguished by racial or
+ethnic group. 95\% confidence regions are drawn. Coefficient estimates are
+reported in Table~\ref{tab:modVote}. Note that only a portion of the simplex is
+represented in this graph.}
+\label{fig:USvote2016genderbyrace}
+\end{figure}
+
+\begin{figure}[tp]
+\centering
+\scalebox{0.7}{\input{Figures/jss4194_race}}
+\caption{Effect of race on the probability distribution of voter's choice with
+respect to a white voter having the same probability of choosing Clinton
+(33.3\%), Trump (33.3\%) or other candidates (33.3\%). 95\% confidence regions
+are drawn. Coefficient estimates are reported in Table~\ref{tab:modVote}.}
+\label{fig:USvote2016race}
+\end{figure}
+
+Figure~\ref{fig:USvote2016genderbyrace} shows the effects of gender on
+five voter profiles distinguished only by the racial/ethnic group they
+belong to. The graph shows how the magnitude of the gender effect
+changes amongst different groups.
+
+Figure~\ref{fig:USvote2016race} shows the effects of covariates on race
+with respect to a white voter having the same probability of choosing
+Clinton (33.3\%), Trump (33.3\%) or other candidates (33.3\%). Ternary
+diagram enables the reader to assess the direction and the magnitude of
+differences of voters' preferences by voters' race as well as the degree
+of uncertainty of the estimates by means of 95\% confidence regions.
+
+In the rest of the paper it is illustrated and discussed how diagrams
+like those in Figure~\ref{fig:USvote2016gender},
+\ref{fig:USvote2016genderbyrace}, and~\ref{fig:USvote2016race} can be
+drawn by means of package \pkg{plot3logit}.
+
+
+
+\section{Features}
+\label{sec:features}
+
+In summary, the package \pkg{plot3logit} can:
+
+\begin{itemize}
+\tightlist
+\item
+  read the trinomial logit models fitted by functions \code{clm} and \code{clm2}
+  of package \code{ordinal} \citep{ordinal}, function \code{multinom} of package
+  \pkg{nnet} \citep{venables2002}, function \code{polr} of package \pkg{MASS}
+  \citep{venables2002}, function \code{mlogit} of package \pkg{mlogit}
+  \citep{mlogit},\footnote{The current version of \pkg{plot3logit} can
+  only read and represent the results of pure trinomial models returned by
+  \code{mlogit()}.} and function \code{vgam} and \code{vglm} of package
+  \pkg{VGAM} \citep{yee2010}. Moreover, estimates obtained from other packages 
+  or software can be passed explicitly through a properly structured list and
+  processed by \pkg{plot3logit};
+\item
+  handle several sintaxes for expressing the covariate changes and represent
+  them graphically. The current implementation enables the covariate changes to
+  be passed to function \code{field3logit} either as numeric vectors, named
+  numeric vectors, or mathematical expressions (through \proglang{R} code);
+\item
+  work both under standard \proglang{R} graphics paradigm through
+  package \pkg{Ternary} \citep{smith2017}, and under the paradigm of the
+  grammar of graphics \citep{wilkinson2005} through packages
+  \pkg{ggtern} \citep{hamilton2018} and \pkg{ggplot2}
+  \citep{wickham2016a}. Moreover, methods \code{as.data.frame},
+  \code{as_tibble}, \code{fortify} and \code{tidy} enable the graphical
+  data to be easily exported in a standardised format which may be used
+  for drawing ternary fields through other packages or software;
+\item
+  fully customise any feature of ternary fields, including position,
+  number, and alignment of arrows;
+\item
+  draw and handle several fields over the same plot, so that the effects
+  of different changes of covariates (possibly) with respect to different
+  profiles can be compared;
+\item
+  compute and draw confidence regions for each effect of covariate
+  change, so that uncertainty about estimates of effects can be shown
+  visually;
+\item
+  quickly compute and draw ternary fields and confidence regions under
+  standard settings through several wrappers which make the code shorter
+  and easier to write and read.
+\end{itemize}
+
+
+
+\section{Computation and representation of vector fields}
+\label{sec:vecfields}
+
+\subsection{Computation of vector fields}
+
+Function \code{field3logit} computes the vector field, which represents the
+effects of covariate changes on the probability distribution of the dependent
+variable, according to a fitted model. It follows that the two most important
+arguments of \code{field3logit} are the parameter estimates of the model
+(argument \code{model}) and the change of covariate values (argument
+\code{delta}). Further arguments (\code{p0}, \code{nstreams}, \code{narrows},
+\code{edge}) define other characteristics of the vector field. In this section
+it is illustrated how all these arguments can be set.
+
+
+
+\subsubsection{Read model estimates}
+
+Model estimates are passed to \code{field3logit} by means of argument
+\code{model}; when the trinomial logit model is fitted through any of these
+functions:
+\begin{itemize}
+\item\code{clm}, \code{clm2} of package \pkg{ordinal} \citep{ordinal}
+\item\code{multinom} of package \pkg{nnet} \citep{venables2002}
+\item\code{polr} of package \pkg{MASS} \citep{venables2002}
+\item\code{mlogit} of package \pkg{mlogit} \citep{mlogit}
+\item\code{vgam}, \code{vglm} of package \pkg{VGAM} \citep{yee2010}
+\end{itemize}
+\code{field3logit} internally invokes the generic \code{extract3logit} which
+automatically extracts all relevant information from the objects returned by
+those functions.\footnote{The vignette of the package illustrates some examples
+where a model is fitted by means of each command listed above, and the result
+is passed to \code{field3logit}. Type \code{vignette("plot3logit-overview")}
+to browse it.}
+
+On the other hand, if estimates are not available as output of the previous
+functions, they may be passed to argument \code{model} as a named list
+consisting of the following components (the order is not relevant):
+\begin{itemize}
+\item\code{B}: matrix of regression coefficients. It should be a numeric matrix
+(or any coercible object) with two columns if the model is cardinal, with only
+one column if the model is ordinal. The number of rows should be equal to the
+number of covariates and the names of covariates should be added as row names.
+The intercepts should be included only in case of categorical models, whereas
+column names, if provided, are ignored.
+\item\code{alpha}: intercepts of ordinal models. It should be a numerical vector
+of length two if the the model is ordinal, otherwise this component should be
+either set to \code{NULL} or missing.
+\item\code{levels}: vector of possible values of the dependent variable.  It
+should be a character vector of length three, whose first element is interpreted
+as the reference level, whereas the second and the third elements are associated
+to the first and second columns of matrix \code{B} respectively.
+\item\code{vcovB}: covariance matrix of regression coefficients. This component
+is required only if the computation of confidence regions is needed (see Section
+\ref{sec:confregions}); it  should be a numeric matrix (or any coercible object)
+where the number of rows and columns equals the number of elements of \code{B}.
+Rows and columns should be ordered according to the labels of the dependent
+variable (slower index), and then to the covariates (faster index).
+\end{itemize}
+
+Here it is an example on how the list should be defined in case of a
+categorical trinomial logit regression with four covariates (a constant
+term, \(X_1\), \(X_2\) and \(X_3\)) and where the dependent variable
+takes values ``Class A'' (reference level), ``Class B'', ``Class C'':
+```{r}
+fittedModel <- list(B = matrix(c(2, 0.3, -0.2, 0.2, 1, 0.1, -0.4, -0.3),
+  ncol = 2, dimnames = list(c("(Intercept)", "X1", "X2", "X3"))),
+  levels = c("Class A", "Class B", "Class C"))
+```
+
+The list \code{fittedModel} may be passed directly to \code{field3logit} as
+argument \code{model}, anyway, if \code{fittedModel} is passed to
+\code{extract3logit}, an object of class "\code{model3logit}" is returned:
+```{r, message=FALSE}
+library("plot3logit")
+extract3logit(fittedModel)
+```
+and can then be passed to \code{field3logit} as argument \code{model}.
+
+When invoked, \code{extract3logit} creates a "\code{model3logit}" object and
+checks the consistency of the information provided, anyway, there is no
+advantage in calling \code{extract3logit} explicitly, as \code{field3logit} does
+it in any case on argument \code{model}.
+
+It is also possible to define new S3 methods for generic \code{extract3logit}.
+The code of the new method should collect the information about the fitted
+model and define a list consisting of the components described above, to which
+should be added also the following:
+\begin{itemize}
+\item\code{readfrom}: character with information about the function that returned the
+estimates in the form \code{package::function} (for example \code{nnet::multinom},
+\code{MASS::polr}, \dots).
+\end{itemize}
+
+Once the list has been generated, it should be passed to function
+\code{extract3logit.default}, which creates a (complete and standardised)
+"\code{model3logit}" object and checks on completeness and consistency of the
+information provided. The output of \code{extract3logit.default} should then
+be returned as the output of the new method.
+
+
+
+\subsubsection{Specification of covariate changes}
+
+The change of regressor values may be expressed in three different ways.
+
+Firstly, it may be passed to \code{field3logit} explicitly as a numeric
+vector where each component specifies the change of the corresponding
+regressor. The vector is thus the same denoted by \(\Delta\) in
+Equation~\eqref{eq:Delta}.
+
+Consider, for example, the effect of the dummy variable
+\code{genderFemale}, which is the seventh covariate (including the
+constant term) of the model stored in \code{modVote}. The vector
+\(\Delta\) should be defined as follows:
+```{r}
+Delta <- rep(0, 17)
+Delta[7] <- 1
+Delta
+```
+then the \code{field3logit} function enables the vector field in Figure
+\ref{fig:USvote2016gender:plain} to be computed as follows:
+```{r, message=FALSE}
+field3logit(model = modVote, delta = Delta)
+```
+
+As an alternative, the change of covariates can be passed to argument
+\code{delta} as a named numeric vector where only non-zero changes of covariates
+are specified:
+```{r}
+field3logit(model = modVote, delta = c(genderFemale = 1, raceBlack = 1))
+```
+
+
+Finally, the change of covariates can be passed to argument
+\code{delta} in the form of a character expression in \proglang{R}
+language. The expression is then evaluated using the covariate names and
+the implicit vector \(\Delta\) is computed. For example, the vector
+field in Figure~\ref{fig:USvote2016gender:plain} has been generated
+through the following command:
+```{r}
+field3logit(model = modVote, delta = "genderFemale")
+```
+
+It is worth noting that attribute \code{Effect} of the
+"\code{multifield3logit}" object obtained from the former command coincides
+with attribute \code{Explicit effect} of the latter "\code{field3logit}"
+object.
+
+The use of named numeric vectors and \proglang{R} code (passed as a
+\code{character}) for expressing changes of covariates makes the
+\code{field3logit} function easy to use, especially when changes are fractional
+or involve several covariates. Consider, for example, the following two
+equivalent commands based on the object \code{fittedModel} previously generated:
+```{r, eval=FALSE}
+field3logit(model = fittedModel, delta = c(X1 = 0.5, X2 = -2, X3 = 1))
+```
+```{r}
+field3logit(model = fittedModel, delta = "0.5 * X1 + X3 - 2 * X2")
+```
+
+The code is easy-to-read, easy-to-write, and does not depend on the
+order that covariates have in the formula of the fitted model, unlike
+what happens when the explicit vector of covariate changes is passed to
+\code{field3logit}.
+
+
+In conclusion, if covariate names include some non-alphanumeric character or
+start with a number, both the syntax based on named vector and the syntax based
+on \proglang{R} expressions can still be used, provided that the name of the
+covariate is delimited by single backticks (ASCII decimal code: 96).
+Here it is an example:
+```{r}
+field3logit(modVote, delta = "genderFemale + `birthyr[1940,1950)`")
+```
+
+
+\subsubsection{Set up the vector field}
+
+In addition to \code{model} and \code{delta}, arguments \code{p0},
+\code{nstreams}, \code{narrows} and \code{edge} enable the user to
+define how many arrows the vector field should consist of, and where
+they should be placed within the simplex of the ternary plot.
+
+Figure~\ref{fig:field4params} shows four different variations (using
+package \pkg{Ternary} instead of \pkg{ggtern}, see Section
+\ref{sec:vecfields:graphics}) of the field drawn in Figure
+\ref{fig:USvote2016gender:plain}, and the following is the \proglang{R}
+code that generated Figure~\ref{fig:field4params}:
+```{r, eval=FALSE}
+ptsAB <- list(A = c(0.3, 0.4, 0.3), B = c(0.5, 0.1, 0.4))
+par(mfrow = c(2, 2), cex = 0.5, mar = rep(0, 4))
+# Top-left
+plot(field3logit(modVote, "genderFemale", edge = 0.1))
+# Top-right
+plot(field3logit(modVote, "genderFemale", nstreams = 4))
+# Bottom-left
+plot(field3logit(modVote, "genderFemale", p0 = ptsAB))
+TernaryPoints(ptsAB)
+TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
+# Bottom-right
+plot(field3logit(modVote, "genderFemale", p0 = ptsAB, narrows = 1))
+TernaryPoints(ptsAB)
+TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
+```
+
+\begin{figure}[t]
+\centering
+```{r, echo=FALSE, fig=TRUE, height = 4, width=4}
+ptsAB <- list(A = c(0.3, 0.4, 0.3), B = c(0.5, 0.1, 0.4))
+par(mfrow = c(2, 2), cex = 0.5, mar = rep(0, 4))
+# Top-left
+plot(field3logit(modVote, "genderFemale", edge = 0.1))
+# Top-right
+plot(field3logit(modVote, "genderFemale", nstreams = 4))
+# Bottom-left
+plot(field3logit(modVote, "genderFemale", p0 = ptsAB))
+TernaryPoints(ptsAB)
+TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
+# Bottom-right
+plot(field3logit(modVote, "genderFemale", p0 = ptsAB, narrows = 1))
+TernaryPoints(ptsAB)
+TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
+```
+\caption{Vector fields on the effect of covariate \code{genderFemale} (see
+Figure~\ref{fig:USvote2016gender:plain}) generated by \code{field3logit} with
+different values of argument \code{edge} (top-left), \code{nstreams}
+(top-right), \code{p0} (bottom-left), \code{p0} and \code{narrows}
+(bottom-right).}
+\label{fig:field4params}
+\end{figure}
+
+The top-left graph in Figure~\ref{fig:field4params} shows the effect of argument
+\code{edge}, which sets the minimum distance between the starting and the ending
+point of each arrow of the field from the sides of the simplex. Vector field
+represented in Figure~\ref{fig:USvote2016gender:plain} has been generated using
+the default value of \code{edge}~(0.01), whereas the top-left diagram in
+Figure~\ref{fig:field4params} has been generated with \code{edge = 0.1}.
+
+As diagram in Figure~\ref{fig:USvote2016gender:plain} clearly shows, arrows of
+ternary fields are arranged along some stream lines. Argument \code{nstreams}
+sets the number of stream lines to draw (default value is~8).
+\code{field3logit}, when it generates the field, automatically spreads the
+stream lines over the simplex in order to produce a field which is graphically
+optimal. Top-right diagram in Figure~\ref{fig:field4params} shows the vector
+field on the effect of \code{genderFemale} (see
+Figure~\ref{fig:USvote2016gender:plain}) where \code{nstreams = 4}.
+
+Argument \code{p0} enables one to set the starting points of the stream
+lines, in order to customise the behaviour of \code{field3logit}.
+Argument \code{p0} should be structured as a \code{list} whose
+components are \code{numeric} vectors of ternary coordinates (see object
+\code{ptsAB}, defined before). Bottom-left graph in Figure
+\ref{fig:field4params} shows an example where points
+\(A=(0.3, 0.4, 0.3)\) and \(B=(0.5, 0.1, 0.4)\) are set as starting
+points of two stream lines.
+
+Finally, argument \code{narrows} sets the maximum number of arrows which should
+be computed for each stream line.\footnote{If the stream line reaches the edge
+of the simplex, the actual number of arrows may be smaller than \code{narrows}.}
+Bottom-right graph in Figure~\ref{fig:field4params} shows the same field drawn
+in the bottom-left graph, but \code{narrows = 1}. Default value of
+\code{narrows} is \code{Inf}, so that arrows are added to a stream line until
+the edge set through argument \code{edge} has been reached.
+
+
+
+\subsection{Representation of vector fields}
+\label{sec:vecfields:graphics}
+
+The vector fields computed by \code{field3logit} may be represented through
+functions provided by package \pkg{Ternary} \citep{smith2017} which is based on
+standard \proglang{R} graphics, or functions of package \pkg{ggtern}
+\citep{hamilton2018}, which extends package \pkg{ggplot2} \citep{wickham2016a}
+to ternary diagrams, and it is based on the programming paradigm referred to as
+``grammar of graphics'' \citep[see e.g.,][]{wickham2016a, wickham2016b}
+illustrated in \citet{wilkinson2005}.
+
+
+\subsubsection[Plotting by means of package Ternary]{Plotting by means of package \pkg{Ternary}}
+
+Two functions of \pkg{plot3logit} enable to draw vector fields of
+"\code{field3logit}" objects through package \pkg{Ternary}.
+
+Function \code{TernaryField} takes a "\code{field3logit}" object as first
+argument and permits the vector field to be added to an existing ternary
+diagram created by function \code{TernaryPlot} of package \pkg{Ternary}.
+Both name and argument structure of \code{TernaryField} are consistent
+with other functions defined in package \pkg{Ternary} (such as
+\code{TernaryPoint}, \code{TernaryPolygon}, \dots).
+
+The S3 method of generic \code{plot} takes a "\code{field3logit}" object
+as first argument and may either draw the ternary diagram from scratch
+(if argument \code{add} is set to \code{FALSE}), or add the vector field
+to an existing ternary plot (if \code{add = TRUE}), and in that case it
+basically works as a wrapper of \code{TernaryField}.
+
+Some examples of the graphical rendering of vector fields drawn by means
+of package \pkg{Ternary} are shown in Figure~\ref{fig:field4params}.
+
+Clearly, package \pkg{plot3logit} does not limit in any way the customisation of
+the graphs made available by methods of standard \proglang{R} graphics and by
+package \pkg{Ternary} (see manuals of \pkg{plot3logit} and \pkg{Ternary} for
+details).
+
+
+
+\subsubsection[Plotting by means of package ggtern]{Plotting by means of package \pkg{ggtern}}
+
+Vector fields of "\code{field3logit}" objects can be drawn through package
+\pkg{ggtern} by means of the constructor \code{gg3logit}, the statistics
+\code{stat_field3logit}, \code{stat_conf3logit}, \code{stat_3logit}, and
+the S3 method of generic \code{autoplot} for class "\code{field3logit}".
+
+As opposed to \pkg{ggplot2} (and thus \pkg{ggtern}) philosophy, which
+only accepts "\code{data.frame}"s (or any other object of child classes,
+such as "\code{tibble}") as input for argument \code{data}, package
+\pkg{plot3logit} handles both "\code{data.frame}"s and "\code{field3logit}"
+objects.
+
+This choice has been made in order to make the code simple, as if a
+"\code{field3logit}" object is passed to \code{gg3logit}, the conversion
+to a \code{data.frame} and the initialisation of aesthetic parameters
+(through the function \code{aes}) passed to argument \code{mapping} are
+carried out automatically.
+
+On the contrary, if a \code{data.frame} (or any coercible object,
+including objects of child classes) is passed to argument \code{data} of
+\code{gg3logit}, the following aesthetics must be specified:
+
+\begin{itemize}
+\tightlist
+\item
+  \code{x}, \code{y}, \code{z} are required by:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \code{stat_field3logit} as ternary coordinates of the starting
+    points of the arrows;
+  \item
+    \code{stat_conf3logit} as ternary coordinates of the points on the
+    edge of confidence regions (see Section~\ref{sec:confregions});
+  \end{itemize}
+\item
+  \code{xend}, \code{yend}, \code{zend} are required by
+  \code{stat_field3logit} as ternary coordinates of the ending points of
+  the arrows;
+\item
+  \code{group} is always required as it identifies the groups of the graphical
+  objects (arrows and their confidence regions);
+\item
+  \code{type} is always required as it specifies the type of graphical
+  object (arrows or confidence regions) the row of the \code{data.frame} refers
+  to;
+\end{itemize}
+
+Furthermore, the following variables of a fortified "\code{field3logit}" or a
+"\code{multifield3logit}" object (see next section)\footnote{An object is referred
+to as \emph{fortified} whenever it is processed by the method \code{fortify}
+\cite[see e.g.,][]{wickham2016a}, and thus it is structured as a
+\code{data.frame} which contains the information available in the original
+object. By extension, an object may be referred to as \emph{fortified} whenever
+it is processed through functions such as \code{as.data.frame},
+\code{as\_tibble}, \code{tidy}.} may be useful for defining other standard
+aesthetics (such as \code{fill}, \code{colour}, \ldots):
+
+\begin{itemize}
+\tightlist
+\item
+  \code{label} identifies a field through a label, thus it is useful for
+  distinguishing the fields in a "\code{multifield3logit}" object.
+\item
+  \code{idarrow} identifies each group of graphical objects (arrows and
+  their confidence regions) \emph{within} every field. Unlike variable
+  \code{group}, \code{idarrow} is not a global identifier of graphical
+  objects.
+\end{itemize}
+
+"\code{multifield3logit}" objects and confidence regions are illustrated
+in depth in the next sections of the paper.
+
+As a first example on function \code{gg3logit}, it follows the
+\proglang{R} code for plotting the ternary diagram in Figure
+\ref{fig:USvote2016gender:plain}:
+```{r, eval=FALSE}
+fieldFemale <- field3logit(modVote, "genderFemale")
+gg3logit(fieldFemale) + stat_field3logit()
+```
+
+According to the previous code, when a "\code{field3logit}" object is
+passed to \code{gg3logit}, the syntax is particularly short, as no
+aestetic has to be set. On the contrary, if a fortified
+"\code{field3logit}" object is passed to \code{gg3logit}, several
+aesthetics have to be initialised and the code is longer and less easy to
+read.
+
+In order to compare the two syntaxes, consider the structure of the
+fortified object\break \code{fieldFemale}:\footnote{The seed of random number
+generator is set (through \code{set.seed}) in order to make the results of \code{fortify} fully reproducible. If the seed is not set, the labels of
+columns \code{idarrow} and \code{group} may be different at each execution of \code{fortify}.}
+```{r}
+fortfieldFemale <- fortify(field3logit(modVote, "genderFemale"))
+fortfieldFemale
+```
+
+If \code{fortfieldFemale} is passed to \code{gg3logit}, the code for
+drawing the diagram in Figure~\ref{fig:USvote2016gender:plain} becomes
+considerably longer:
+```{r, eval=FALSE}
+gg3logit(fortfieldFemale, aes(x = Clinton, y = Trump, z = Other,
+  xend = Clinton_end, yend = Trump_end, zend = Other_end, group = group,
+  type = type)) + stat_field3logit()
+```
+
+The simplicity of the former syntax is apparent, whereas the latter does
+not provide any practical advantage in terms of greater flexibility,
+notwithstanding the greater verbosity. This is the reason why the former
+syntax has been implemented, even though it deviates from orthodox
+\pkg{ggplot2} philosophy, that requires that only "\code{data.frame}"
+objects can be passed to argument \code{data}.
+
+
+\subsubsection{Plotting by means of other packages/software}
+
+
+Besides the integration with packages \pkg{Ternary} and \pkg{ggtern}, package
+\pkg{plot3logit} guarantees a full downstream compatibility with other
+\proglang{R} packages or other applications through the S3 methods of generics
+\code{as.data.frame}, \code{as_tibble} \citep[package \pkg{tibble},][]{tibble},
+\code{fortify} \citep[package \pkg{ggplot2},][]{wickham2016a}, and \code{tidy}
+\citep[package \pkg{broom},][]{broom} for classes "\code{field3logit}" and
+"\code{multifield3logit}". All four methods are equivalent, except that
+\code{as.data.frame} returns a \code{data.frame}, whereas the others return a
+\code{tibble}.
+
+The mentioned methods enable the graphical information (arrows, confidence
+regions and labels) of a "\code{field3logit}" or a "\code{multifield3logit}" object
+to be exported in a standardised table which can be read by any other
+\proglang{R} package or can be stored on disk through standard \proglang{R}
+commands (such as \code{write.csv}, for example) and then be read by
+applications other than \proglang{R}.
+
+
+
+\subsection{Handling multiple fields}
+
+When the results of a multinomial regression are analysed, the comparison
+between the effects of various changes in covariate values may be of interest.
+Figure~\ref{fig:USvote2016race} shows how this kind of comparisons may be
+carried out by means of ternary plots.
+
+Each arrow in Figure~\ref{fig:USvote2016race} is associated to a distinct change
+in the value of one covariate, thus, diagram in Figure~\ref{fig:USvote2016race}
+may be interpreted as a superimposition of five vector fields consisting of a
+single arrow each, and having the same profile as a reference point. This is
+actually the way Figure~\ref{fig:USvote2016race} has been generated.
+
+\code{multifield3logit} is a S3 class which enables "\code{field3logit}" objects
+to be combined, handled, and represented jointly. Besides the standard
+constructor \code{multifield3logit}, objects of class "\code{multifield3logit}"
+can be created and combined through the operator \code{"+"}.\footnote{The
+package makes available also the S3 methods of generics \code{"["} and
+\code{"[<-"} of class "\code{multifield3logit}" for extracting and replacing the
+"\code{field3logit}" objects the "\code{multifield3logit}" objects consist of. ---
+See the help of \pkg{plot3logit} for details and further information.}
+
+The following code shows how covariate effects of dummies \code{raceBlack} and
+\code{raceHispanic} are combined in a "\code{multifield3logit}" object, when a
+a single reference profile such that
+\((\pi^{(1)},\pi^{(2)},\pi^{(3)})=(1/3,\,1/3,\,1/3)\) is considered:
+```{r}
+refprofile <- list(c(1/3, 1/3, 1/3))
+
+fieldBlack <- field3logit(model = modVote, delta = "raceBlack",
+  label = "Black", p0 = refprofile, narrows = 1)
+
+fieldHispanic <- field3logit(model = modVote, delta = "raceHispanic",
+  label = "Hispanic", p0 = refprofile, narrows = 1)
+
+mfieldrace <- fieldBlack + fieldHispanic
+mfieldrace
+```
+
+The previous example permits also the usage of argument \code{label} to
+be clarified, as it is used by graphical functions for distinguishing
+and labelling the elements of a "\code{multifield3logit}" object according
+to the "\code{field3logit}" objects they belong to. This is the reason
+why, if a single "\code{field3logit}" object is defined and used, there is
+in general no need for initialising the argument \code{label}, whose
+default value is an empty character (\code{""}).
+
+The operator \code{"+"} permits several (two or more) "\code{field3logit}" objects
+to be combined at once, and "\code{field3logit}" objects to be included into an
+existing "\code{multifield3logit}" object:\footnote{Technically, the operator
+\code{"+"} has been implemented as a S3 method of class "\code{Hfield3logit}"
+to which both "\code{multifield3logit}" and "\code{field3logit}" objects belong.
+This permits a correct method dispatch for generic \code{"+"}, which is not
+possible if it is invoked for two objects of different classes
+("\code{field3logit}" and "\code{multifield3logit}"). This is the only reason why
+class "\code{Hfield3logit}" has been defined.}
+```{r}
+fieldAsian <- field3logit(model = modVote, delta = "raceAsian",
+  label = "Asian", p0 = refprofile, narrows = 1)
+
+mfieldrace <- mfieldrace + fieldAsian
+mfieldrace
+```
+
+When several vector fields have to be generated and combined in a
+"\code{multifield3logit}" object, the syntax showed above is unnecessary
+long and in some cases pleonastic. For this reason, it is possible to
+rely on function \code{field3logit} by means of the syntax described
+below.
+
+Assume that we are interested in comparing the effects of all dummies on race in
+the model on United States (US) elections. Let us thus define a list whose
+elements are lists where only varying arguments to be passed to function \code{field3logit} are
+specified as named components:
+```{r}
+race_effects <- list(
+  list(delta = "raceBlack", label = "Black"),
+  list(delta = "raceHispanic", label = "Hispanic"),
+  list(delta = "raceAsian", label = "Asian"),
+  list(delta = "raceMixed", label = "Mixed"),
+  list(delta = "raceOther", label = "Other")
+)
+```
+If \code{race_effects} is passed to argument \code{delta} of \code{field3logit},
+in this way:
+```{r}
+mfieldrace <- field3logit(model = modVote, delta = race_effects,
+  p0 = refprofile, narrows = 1)
+
+mfieldrace
+```
+the function \code{field3logit} is run once for every element of
+\code{race_effects}, and the set of "\code{field3logit}" objects are combined into
+a single object of class "\code{multifield3logit}". When \code{field3logit} is
+applied to each element of \code{race_effects}, the arguments specified in the
+parent call of \code{field3logit} are used as default values, which are then
+overwritten by those specified in each element of \code{race_effects}.
+
+The expedient just described enables the "\code{multifield3logit}" objects
+to be generated through a short and efficient syntax even if several
+"\code{field3logit}" objects are involved.
+
+The syntax just described, however, can be simplified further when the fields to
+be generated involve dummy variables of the same qualitative covariate (encoded
+as \code{factor}). In that case, argument \code{delta} should indicate the name
+of the original covariate between delimiters \code{<\,<} and \code{>\,>}, and
+\code{field3logit} will create a "\code{multifield3logit}" object where each field
+corresponds to the effect of each dummy variable.
+
+The following code shows how the previous commands can be simplified further:
+```{r}
+field3logit(model = modVote, delta = "<<race>>", p0 = refprofile,
+  narrows = 1)
+```
+
+If more than one regressor is included between delimiters \code{<\,<}, \code{>\,>},
+all combinations between dummies are generated, and if only some of the fields
+are actually needed, the\break "\code{multifield3logit}" object can be subsetted
+through the S3 method \code{"["}.
+
+Finally, a peculiar behaviour of argument \code{label} is worth of being
+reported. When a\break "\code{multifield3logit}" object is generated by
+\code{field3logit}, argument \code{label} works as a prefix of the labels of
+each vector field. It follows that, if no label is set within argument
+\code{delta}, all labels can be set directly through argument \code{label}:
+```{r}
+field3logit(model = modVote, delta = c("raceBlack", "raceAsian"),
+  label = c("BLACK", "ASIAN"))
+```
+
+On the other hand, when argument \code{delta} uses delimiters \code{<\,<},
+\code{>\,>}, argument \code{label} can easily help in automatic generation of
+meaningful labels:
+```{r}
+mfdecade <- field3logit(modVote, "<<birthyr>>", label = "Born in ")
+mfdecade
+```
+In any case, if some labels need to be redefined, the S3 method
+\code{"labels<-"} will do the job:
+```{r}
+labels(mfdecade)
+labels(mfdecade) <- c("Fourties", "Fifties", "Sixties", "Seventies",
+  "Eighties and Nineties")
+mfdecade
+```
+
+
+The ways "\code{multifield3logit}" objects are graphically represented are
+similar to those of "\code{field3logit}" objects, thus S3 method of
+generics \code{plot} draws a "\code{multifield3logit}" object through
+package \pkg{Ternary}, whereas functions \code{autoplot},
+\code{gg3logit}, \code{stat_field3logit} make the ternary diagrams
+through the package \pkg{ggtern}. The only remarkable difference in case
+of function \code{gg3logit} and its statistics is in the variable
+\code{label} which enables various aesthetics to be set accordingly to
+the vector field of the "\code{multifield3logit}" object.
+
+For example, the following code generates the diagram of Figure
+\ref{fig:USvote2016race} (without confidence regions):
+```{r, eval=FALSE}
+gg3logit(mfieldrace, aes(colour = label)) + stat_field3logit() + 
+  labs(colour = "Race (ref.: White)")
+```
+
+
+
+
+
+
+\section{Confidence regions}
+\label{sec:confregions}
+
+Confidence regions of the effects of covariates on the probability
+distribution of the dependent variable are not considered in
+\citet{santi2019}, however they greatly enrich the information a ternary
+diagram can provide, and help the interpretation of regression results.
+For these reasons, they have been implemented in package \pkg{plot3logit}.
+Section~\ref{sec:confregions:comp} illustrates how they are
+mathematically derived and how they can be computed through package
+\pkg{plot3logit}, whereas Section~\ref{sec:confregions:graph} shows how
+they can be represented graphically.
+
+
+\subsection{Computation}
+\label{sec:confregions:comp}
+
+Consider a probability distribution \(\pi_0\) over the simplex \(S\) defined in
+Equation~\eqref{eq:simplex}. The confidence region \(\mathcal{R}\subseteq S\)
+for a change \(\Delta\in\Real^p\) in the values of covariates may be defined as
+it follows:
+\begin{equation}
+\label{eq:confRpi}
+\Pr((\pi_0+\hat\delta^{(\pi)})\in\mathcal{R}) = 1-\alpha
+\end{equation}
+where \(\hat\delta^{(\pi)}\) is the point estimator of the change of the
+probability distribution \(\pi_0\).
+
+According to Equation~\eqref{eq:naturalpar}, the link function
+\(g\colon S\to\mathop{\mathrm{\mathbb{R}}}^2\) of the tinomial logit model and
+its inverse \(g^\leftarrow\colon\mathop{\mathrm{\mathbb{R}}}^2\to S\) may be
+defined as:
+\begin{gather*}
+g(\pi)=g([\pi_1,\pi_2,\pi_3]^\top)
+=\left[
+\ln\frac{\pi_2}{\pi_1}\,,\quad
+\ln\frac{\pi_3}{\pi_1}
+\right]^\top\,,\\
+g^\leftarrow(\eta)=g^\leftarrow([\eta_2,\eta_3]^\top)
+=\left[
+\frac{1}{1+\mathrm{e}^{\eta_2}+\mathrm{e}^{\eta_3}}\,,\qquad
+\frac{\mathrm{e}^{\eta_2}}{1+\mathrm{e}^{\eta_2}+\mathrm{e}^{\eta_3}}\,,\quad
+\frac{\mathrm{e}^{\eta_3}}{1+\mathrm{e}^{\eta_2}+\mathrm{e}^{\eta_3}}
+\right]^\top\,.
+\end{gather*}
+
+Bijectivity of \(g\) enables confidence region~\eqref{eq:confRpi} to be restated
+over the natural parametric space:
+\begin{equation}
+\label{eq:confReta}
+\Pr((g(\pi_0)+\hat\delta)\in g^\leftarrow(\mathcal{R})) = 1-\alpha\,,
+\end{equation}
+where \(\hat\delta\) is the point estimator of the change of natural parameters,
+and
+\(g^\leftarrow(\mathcal{R})\overset{\text{def}}{=}\{g^\leftarrow(r)\colon r\in\mathcal{R}\}\).
+
+Let \(B=[\beta^{(2)}, \beta^{(3)}]\in\mathop{\mathrm{\mathbb{R}}}^{k\times2}\)
+be the matrix of regression coefficients defined in~\eqref{eq:linearpred}, and
+let \(\hat{B}\in\mathop{\mathrm{\mathbb{R}}}^{k\times2}\) be the point estimate
+of \(B\). The effect of a change \(\Delta\in\mathop{\mathrm{\mathbb{R}}}^k\) of
+covariate vector \(x\in\mathop{\mathrm{\mathbb{R}}}^k\) on natural parameters
+\(\eta=[\eta_2,\eta_3]\) can then be expressed through the vector
+\(\delta\in\mathop{\mathrm{\mathbb{R}}}^2\) as follows:
+\[
+\delta=B^\top\Delta=(I_2\otimes\Delta)^\top\,\text{vec}(B)\,,
+\]
+where \(I_2\) is the identity matrix of order \(2\), \(\otimes\) is the
+Kronecker product, and \(\text{vec}(B)\in\mathop{\mathrm{\mathbb{R}}}^{2k}\) is
+the vectorisation of \(B\).
+
+If the point estimate of the variance-covariance matrix of
+\(\text{vec}(B)\) is \(\hat\Xi\), the variance-covariance matrix of
+\(\hat\delta=\hat{B}^\top\Delta\) is:
+\[
+(I_2\otimes\Delta)^\top\,\hat\Xi\,(I_2\otimes\Delta)\,,
+\]
+it follows that a \((1-\alpha)\)-confidence region for \(\delta\) can be
+obtained from the following condition on the Wald statistics
+\citep{lee2002,severini2000}:
+\begin{equation}
+\label{eq:confregionineq}
+(\delta-\hat\delta)^\top
+[(I_2\otimes\Delta)^\top\,\hat\Xi\,(I_2\otimes\Delta)]^{-1}
+(\delta-\hat\delta)
+\leq\chi^2_2(1-\alpha)\,,
+\end{equation}
+\(\chi^2_2(1-\alpha)\) being the quantile function of the probability
+distribution \(\chi^2_2\) \citep[see also][]{wooldridge2010}.
+
+The confidence region of \(\delta\) can then be mapped to the simplex \(S\) with
+respect to the reference probability distribution \(\pi_0\) by means of the
+inverse link function \(g^\leftarrow\). Hence, the confidence region
+\(\mathcal{R}\) can be found as it follows:
+\begin{equation}
+\label{eq:confregionS}
+\mathcal{R}=\{g^\leftarrow(g(\pi_0)+\delta)\colon
+\delta\text{ satisfies~\eqref{eq:confregionineq}}\}\,.
+\end{equation}
+
+Clearly, the edge of the confidence region~\eqref{eq:confregionS} can be found
+by considering those points associated to the values \(\delta\) which satisfy
+condition~\eqref{eq:confregionineq} exactly (i.e., with equality instead of
+inequality).
+
+The package \pkg{plot3logit} enables confidence regions to be computed
+in two ways, by means of function \code{field3logit} or through function
+\code{add_confregions}.
+
+Function \code{field3logit} computes the confidence regions for all the
+arrows in the field according to the value passed to argument
+\code{conf}. If \code{conf} is not set or if it is set to \code{NA}
+(default value), confidence regions are not computed. Clearly, the
+computation is possible only if the variance-covariance matrix of the
+estimates is available. When computed, confidence regions are part of
+the "\code{field3logit}" object returned by \code{field3logit}.
+
+Function \code{add_confregions} enables confidence regions to be computed on a
+"\code{field3logit}" or a "\code{multifield3logit}" object, if not present.
+Otherwise, it may be used to update confidence regions of a "\code{field3logit}"
+or a "\code{multifield3logit}" object according to a new confidence level. Since
+\code{add_confregions} returns an object of class "\code{field3logit}" (or
+"\code{multifield3logit}") equipped with confidence regions, it can be run as
+follows:
+```{r, eval=FALSE}
+mfieldrace <- add_confregions(mfieldrace)
+```
+
+By default, argument \code{conf} is set to 0.95, thus 95\% confidence regions
+are computed, if not differently specified. As in case of \code{field3logit},
+confidence regions can be computed only if variance-covariance matrix of
+coefficient estimates is available.
+
+Both function \code{field3logit} and \code{add_confregions} have an
+argument named \code{npoints} which allows the user to set the number of
+points used for drawing the edges of confidence regions.
+
+
+
+\subsection{Representation}
+\label{sec:confregions:graph}
+
+Confidence regions can be drawn both through package \pkg{Ternary} and
+\pkg{ggtern}.
+
+In the former case, the S3 method of generic \code{plot} works for both
+"\code{field3logit}" and\break "\code{multifield3logit}" objects, and it creates a new
+ternary plot if argument \code{add} is set to \code{FALSE} (default value),
+whilst adds a vector field(s) to an existing ternary plot if \code{add} is set
+to \code{TRUE}. As in the case of vector fields, confidence regions of a
+"\code{field3logit}" object can be drawn through the function \code{TernaryField}
+(see the help for details).
+
+If package \pkg{ggtern} is used, confidence regions of "\code{field3logit}" and
+"\code{multifield3logit}" objects can be drawn through the statistic
+\code{stat_conf3logit}, which works analogously to \code{stat_field3logit}.
+
+The following code generates the diagram of Figure~\ref{fig:USvote2016race}:
+```{r, eval=FALSE}
+gg3logit(mfieldrace) + stat_field3logit(aes(colour = label)) + 
+  stat_conf3logit(aes(fill = label)) +
+  labs(colour = "Race (ref.: White)", fill = "Race (ref.: White)")
+```
+whereas the following code generates the diagram of
+Figure~\ref{fig:USvote2016genderbyrace} from scratch:
+```{r, eval=FALSE}
+library("tidyverse")
+
+tibble(race = levels(USvote2016$race), educ = "High school grad.",
+    gender = "Male", birthyr = "[1970,1980)"
+  ) %>%
+  mutate(delta = "genderFemale", label = race) %>%
+  group_by(delta, label) %>%
+  nest() %>%
+  mutate(p0 = map(data, ~list(predict(modVote, .x, type = "probs")))) %>%
+  select(-data) %>%
+  transpose -> gender_by_race
+
+mfieldGbyR <- field3logit(modVote, gender_by_race, narrows = 1,
+  conf = 0.95)
+
+gg3logit(mfieldGbyR) + stat_field3logit(aes(colour = label)) +
+  stat_conf3logit(aes(fill = label)) + tern_limits(T = 0.8, R = 0.8) +
+  labs(colour = "Profile", fill = "Profile")
+```
+
+
+\section{Wrappers}
+\label{sec:wrappers}
+
+Package \pkg{plot3logit} includes two wrappers which aims at simplifying
+the syntax when a \footnote{The seed of random number generator is set (through \code{set.seed}) in order to make the results of \code{fortify} fully reproducible. If the seed is not set, the labels of columns \code{idarrow} and \code{group} will be different at each execution of \code{fortify}.}
+is drawn through package \pkg{ggtern}.
+
+The first wrapper is \code{stat_3logit} which is a wrapper for:
+```{r, eval=FALSE}
+stat_field3logit() + stat_conf3logit()
+```
+\code{stat_3logit} has arguments \code{mapping_field} and
+\code{mapping_conf} which enables one to specify the aesthetic mappings
+for \code{stat_field3logit} and \code{stat_conf3logit} respectively,
+whereas arguments \code{params_field} and \code{params_conf} allow one
+to set the graphical parameters of the two layers.
+
+The second wrapper is \code{autoplot} which is a wrapper for:
+```{r, eval=FALSE}
+gg3logit() + stat_3logit()
+```
+and thus for
+```{r, eval=FALSE}
+gg3logit() + stat_field3logit() + stat_conf3logit()
+```
+
+Just like in case of \code{stat_3logit}, \code{autoplot} has arguments
+\code{mapping_field}, \code{mapping_conf}, \code{params_field},
+\code{params_conf} with the same role described before.
+
+In order to provide an example, the code for drawing the graph in
+Figure~\ref{fig:USvote2016race} is reported both with and without wrappers.
+
+The following command:
+```{r, eval=FALSE}
+gg3logit(mfieldrace) + stat_field3logit(aes(colour = label)) + 
+  stat_conf3logit(aes(fill = label))
+```
+is then equivalent to the following:
+```{r, eval=FALSE}
+gg3logit(mfieldrace) + stat_3logit(aes(colour = label), aes(fill = label))
+```
+which, in turn, is equivalent to this:
+```{r, eval=FALSE}
+autoplot(mfieldrace, mapping_field = aes(colour = label),
+  mapping_conf = aes(fill = label))
+```
+
+
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+Package \pkg{plot3logit} implements the ternary diagrams proposed in
+\citet{santi2019} for interpreting the coefficient estimates of a trinomial
+logit regression. The package has been implemented so as to make it easy to use
+without losing flexibility. Upstream and downstream compatibility of the package
+enables the user to read model estimates whatever is the package/software that
+computed them, whereas the implementation of graphical functions based both on
+standard \proglang{R} graphics and \pkg{ggplot2}-based graphics, as well as the
+export methods (\code{as.data.frame}, \code{as_tibble}, \code{fortify},
+\code{tidy}), provides several graphical tools for drawing the random fields,
+but does not prevent the user to adopt other graphical packages, or applications
+other than \proglang{R}.
+
+
+
+\section*{Acknowledgments}
+
+We thank the editor, Yves Croissant, and Jonas Schöley for their valuable
+comments and suggestions, that significantly improved both the package
+\pkg{plot3logit} and this article.
+
+
+

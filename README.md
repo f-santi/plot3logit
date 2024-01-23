@@ -15,7 +15,8 @@ changes), and the package permits both cases to be handled in a
 user-friendly way. Theoretical and methodological details are
 illustrated and discussed in Santi, Dickson, and Espa (2019), whereas a
 detailed illustration of the package and its features is available in
-Santi et al. (2022).
+Santi et al. (2022) or in the main vignette of the package (based on
+Santi et al. 2022).
 
 The package can read the results of **both categorical and ordinal
 trinomial logit** regression fitted by various functions (see the next
@@ -40,10 +41,10 @@ vignette('plot3logit-overview', package = 'plot3logit')
 ```
 
 The paper published on *Journal of Statistical Software* (Santi et al.
-2022) can be read as a pdf vignette by typing:
+2022) is also available as a package vignette (updated):
 
 ``` r
-vignette('plot3logit-jss', package = 'plot3logit')
+vignette('plot3logit-main', package = 'plot3logit')
 ```
 
 ## Compatibility
