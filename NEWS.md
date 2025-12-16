@@ -1,22 +1,11 @@
 
-# plot3logit 3.1.4.9000
+# plot3logit 3.2.0
 
 
 ## Major changes
 
-* 
-
-
-
-## Minor changes
-
-* 
-
-
-
-## Typos and other marginal changes
-
-* 
+* Revised the vignettes and included the vignette based on JSS as a Rnw file
+  which is (now) indexed.
 
 
 
