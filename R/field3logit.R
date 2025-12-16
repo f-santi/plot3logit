@@ -123,9 +123,10 @@ is_simplified_field3logit <- function(x) {
 #' for plotting through the package [`ggtern`][ggtern::ggtern_package] based on the
 #' grammar of graphics.
 #' 
-#' Methods [as.data.frame()], [as_tibble()], [fortify()] and [tidy()] permits
-#' the graphical information of a `field3logit` object to be exported in a
-#' standardised format (either a `data.frame` or a `tibble`).
+#' Methods [as.data.frame()], [`as_tibble()`][as_tibble.field3logit],
+#' [fortify()][fortify.field3logit] and [tidy()] permits the graphical
+#' information of a `field3logit` object to be exported in a standardised format
+#' (either a `data.frame` or a `tibble`).
 #' 
 #' See \insertCite{santi2022;textual}{plot3logit} for details and examples.
 #'

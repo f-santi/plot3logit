@@ -29,7 +29,7 @@
 #'
 #' Graphical representation based on **standard graphics** is made available
 #' through the package `Ternary` \insertCite{smith2017}{plot3logit} by function
-#' [TernaryField()] and in particular by the method [`plot`][plot.field3logit]
+#' [TernaryField()] and in particular by the method [`plot()`][plot.field3logit]
 #' of `field3logit` class.
 #'
 #' Since version 2.0.0, `plot3logit` can also compute and draw confidence

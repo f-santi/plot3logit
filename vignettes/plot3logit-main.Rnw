@@ -1,7 +1,8 @@
-%\VignetteIndexEntry{Ternary Plots for Interpreting Trinomial Regression Models}
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{plot3logit: Ternary Plots for Interpreting Trinomial Regression Models}
 %\VignettePackage{plot3logit}
-  
-\documentclass[nojss]{jss}
+
+\documentclass[nojss,article]{jss}
 
 %% Recommended packages
 \usepackage{thumbpdf}
@@ -28,8 +29,15 @@
 
 %% Sweave potions
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\SweaveOpts{engine=R, eps=FALSE, keep.source = FALSE}
-<<preliminaries, echo=FALSE, results=hide>>=
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+engine='R', tidy=FALSE
+)
+@
+
+<<preliminaries, echo=FALSE, results='hide'>>=
 options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 library("MASS")
 library(plot3logit)
@@ -43,7 +51,7 @@ library(plot3logit)
 %% - Separate authors by \And or \AND (in \author) or by comma (in \Plainauthor).
 %% - \AND starts a new line, \And does not.
 \author{Flavio Santi~\orcidlink{0000-0002-2014-1981}\\University of Trento
-   \And Maria Michela Dickson~\orcidlink{0000-0002-4307-0469}\\University of Trento
+   \And Maria Michela Dickson~\orcidlink{0000-0002-4307-0469}\\University of Padua
    \AND Giuseppe Espa~\orcidlink{0000-0002-0331-3630}\\University of Trento
    \And Diego Giuliani~\orcidlink{0000-0002-7198-6714}\\University of Trento}
 \Plainauthor{Flavio Santi, Maria Michela Dickson, Giuseppe Espa, Diego Giuliani}
@@ -87,7 +95,7 @@ than \proglang{R}.
 %%   (in the same first line, separated by comma).
 \Address{
   Flavio Santi\\
-  Department of Economics and Management\\
+  Department of Economics and Management \\
   University of Trento\\
   Via Inama 5 \\
   38122 Trento (TN), Italy\\
@@ -95,7 +103,14 @@ than \proglang{R}.
 }
 
 \begin{document}
-\SweaveOpts{concordance=FALSE}
+
+<<include=FALSE>>=
+library(knitr)
+opts_chunk$set(
+concordance=FALSE
+)
+@
+
 
 
 \section{Introduction}
@@ -446,7 +461,7 @@ In summary, the package \pkg{plot3logit} can:
 \begin{itemize}
 \tightlist
 \item
-  Read the trinomial logit models fitted by functions \code{clm} and \code{clm2}
+  read the trinomial logit models fitted by functions \code{clm} and \code{clm2}
   of package \code{ordinal} \citep{ordinal}, function \code{multinom} of package
   \pkg{nnet} \citep{venables2002}, function \code{polr} of package \pkg{MASS}
   \citep{venables2002}, function \code{mlogit} of package \pkg{mlogit}
@@ -455,40 +470,39 @@ In summary, the package \pkg{plot3logit} can:
   \code{mlogit()}.} and function \code{vgam} and \code{vglm} of package
   \pkg{VGAM} \citep{yee2010}. Moreover, estimates obtained from other packages 
   or software can be passed explicitly through a properly structured list and
-  processed by \pkg{plot3logit}.
+  processed by \pkg{plot3logit};
 \item
-  Handle several sintaxes for expressing the covariate changes and represent
+  handle several sintaxes for expressing the covariate changes and represent
   them graphically. The current implementation enables the covariate changes to
   be passed to function \code{field3logit} either as numeric vectors, named
-  numeric vectors, or mathematical expressions (through \proglang{R} code).
+  numeric vectors, or mathematical expressions (through \proglang{R} code);
 \item
-  Work both under standard \proglang{R} graphics paradigm through
+  work both under standard \proglang{R} graphics paradigm through
   package \pkg{Ternary} \citep{smith2017}, and under the paradigm of the
   grammar of graphics \citep{wilkinson2005} through packages
   \pkg{ggtern} \citep{hamilton2018} and \pkg{ggplot2}
   \citep{wickham2016a}. Moreover, methods \code{as.data.frame},
   \code{as_tibble}, \code{fortify} and \code{tidy} enable the graphical
   data to be easily exported in a standardised format which may be used
-  for drawing ternary fields through other packages or software.
+  for drawing ternary fields through other packages or software;
 \item
-  Fully customise any feature of ternary fields, including position,
-  number, and alignment of arrows.
+  fully customise any feature of ternary fields, including position,
+  number, and alignment of arrows;
 \item
-  Draw and handle several fields over the same plot, so that the effects
+  draw and handle several fields over the same plot, so that the effects
   of different changes of covariates (possibly) with respect to different
-  profiles can be compared.
+  profiles can be compared;
 \item
-  Compute and draw confidence regions for each effect of covariate
+  compute and draw confidence regions for each effect of covariate
   change, so that uncertainty about estimates of effects can be shown
-  visually.
+  visually;
 \item
-  Quickly compute and draw ternary fields and confidence regions under
+  quickly compute and draw ternary fields and confidence regions under
   standard settings through several wrappers which make the code shorter
   and easier to write and read.
 \end{itemize}
 
 
-\pagebreak
 
 \section{Computation and representation of vector fields}
 \label{sec:vecfields}
@@ -512,11 +526,11 @@ Model estimates are passed to \code{field3logit} by means of argument
 \code{model}; when the trinomial logit model is fitted through any of these
 functions:
 \begin{itemize}
-\item\code{clm}, \code{clm2} of package \pkg{ordinal} \citep{ordinal}.
-\item\code{multinom} of package \pkg{nnet} \citep{venables2002}.
-\item\code{polr} of package \pkg{MASS} \citep{venables2002}.
-\item\code{mlogit} of package \pkg{mlogit} \citep{mlogit}.
-\item\code{vgam}, \code{vglm} of package \pkg{VGAM} \citep{yee2010}.
+\item\code{clm}, \code{clm2} of package \pkg{ordinal} \citep{ordinal}
+\item\code{multinom} of package \pkg{nnet} \citep{venables2002}
+\item\code{polr} of package \pkg{MASS} \citep{venables2002}
+\item\code{mlogit} of package \pkg{mlogit} \citep{mlogit}
+\item\code{vgam}, \code{vglm} of package \pkg{VGAM} \citep{yee2010}
 \end{itemize}
 \code{field3logit} internally invokes the generic \code{extract3logit} which
 automatically extracts all relevant information from the objects returned by
@@ -529,20 +543,20 @@ On the other hand, if estimates are not available as output of the previous
 functions, they may be passed to argument \code{model} as a named list
 consisting of the following components (the order is not relevant):
 \begin{itemize}
-\item\code{B}: Matrix of regression coefficients. It should be a numeric matrix
+\item\code{B}: matrix of regression coefficients. It should be a numeric matrix
 (or any coercible object) with two columns if the model is cardinal, with only
 one column if the model is ordinal. The number of rows should be equal to the
 number of covariates and the names of covariates should be added as row names.
 The intercepts should be included only in case of categorical models, whereas
 column names, if provided, are ignored.
-\item\code{alpha}: Intercepts of ordinal models. It should be a numerical vector
+\item\code{alpha}: intercepts of ordinal models. It should be a numerical vector
 of length two if the the model is ordinal, otherwise this component should be
 either set to \code{NULL} or missing.
-\item\code{levels}: Vector of possible values of the dependent variable.  It
+\item\code{levels}: vector of possible values of the dependent variable.  It
 should be a character vector of length three, whose first element is interpreted
 as the reference level, whereas the second and the third elements are associated
 to the first and second columns of matrix \code{B} respectively.
-\item\code{vcovB}: Covariance matrix of regression coefficients. This component
+\item\code{vcovB}: covariance matrix of regression coefficients. This component
 is required only if the computation of confidence regions is needed (see Section
 \ref{sec:confregions}); it  should be a numeric matrix (or any coercible object)
 where the number of rows and columns equals the number of elements of \code{B}.
@@ -682,11 +696,15 @@ code that generated Figure~\ref{fig:field4params}:
 <<eval = FALSE>>=
 ptsAB <- list(A = c(0.3, 0.4, 0.3), B = c(0.5, 0.1, 0.4))
 par(mfrow = c(2, 2), cex = 0.5, mar = rep(0, 4))
+# Top-left
 plot(field3logit(modVote, "genderFemale", edge = 0.1))
+# Top-right
 plot(field3logit(modVote, "genderFemale", nstreams = 4))
+# Bottom-left
 plot(field3logit(modVote, "genderFemale", p0 = ptsAB))
 TernaryPoints(ptsAB)
 TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
+# Bottom-right
 plot(field3logit(modVote, "genderFemale", p0 = ptsAB, narrows = 1))
 TernaryPoints(ptsAB)
 TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
@@ -694,14 +712,18 @@ TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
 
 \begin{figure}[t]
 \centering
-<<visualization, echo=FALSE, fig=TRUE, height = 4, width=4>>=
+<<visualization, echo=FALSE, fig.height=4, fig.width=4>>=
 ptsAB <- list(A = c(0.3, 0.4, 0.3), B = c(0.5, 0.1, 0.4))
 par(mfrow = c(2, 2), cex = 0.5, mar = rep(0, 4))
+# Top-left
 plot(field3logit(modVote, "genderFemale", edge = 0.1))
+# Top-right
 plot(field3logit(modVote, "genderFemale", nstreams = 4))
+# Bottom-left
 plot(field3logit(modVote, "genderFemale", p0 = ptsAB))
 TernaryPoints(ptsAB)
 TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
+# Bottom-right
 plot(field3logit(modVote, "genderFemale", p0 = ptsAB, narrows = 1))
 TernaryPoints(ptsAB)
 TernaryText(ptsAB, labels = names(ptsAB), pos = 1)
@@ -821,22 +843,22 @@ including objects of child classes) is passed to argument \code{data} of
   \tightlist
   \item
     \code{stat_field3logit} as ternary coordinates of the starting
-    points of the arrows.
+    points of the arrows;
   \item
     \code{stat_conf3logit} as ternary coordinates of the points on the
-    edge of confidence regions (see Section~\ref{sec:confregions}).
+    edge of confidence regions (see Section~\ref{sec:confregions});
   \end{itemize}
 \item
   \code{xend}, \code{yend}, \code{zend} are required by
   \code{stat_field3logit} as ternary coordinates of the ending points of
-  the arrows.
+  the arrows;
 \item
   \code{group} is always required as it identifies the groups of the graphical
-  objects (arrows and their confidence regions).
+  objects (arrows and their confidence regions);
 \item
   \code{type} is always required as it specifies the type of graphical
   object (arrows or confidence regions) the row of the \code{data.frame} refers
-  to.
+  to;
 \end{itemize}
 
 Furthermore, the following variables of a fortified `\code{field3logit}` or a
@@ -880,7 +902,7 @@ aesthetics have to be initialised and the code is longer and less easy to
 read.
 
 In order to compare the two syntaxes, consider the structure of the
-fortified object\break \code{fieldFemale}:\footnote{The seed of random number
+fortified object \code{fieldFemale}:\footnote{The seed of random number
 generator is set (through \code{set.seed}) in order to make the results of \code{fortify} fully reproducible. If the seed is not set, the labels of
 columns \code{idarrow} and \code{group} may be different at each execution of \code{fortify}.}
 <<>>=
@@ -957,10 +979,13 @@ a single reference profile such that
 \((\pi^{(1)},\pi^{(2)},\pi^{(3)})=(1/3,\,1/3,\,1/3)\) is considered:
 <<>>=
 refprofile <- list(c(1/3, 1/3, 1/3))
+
 fieldBlack <- field3logit(model = modVote, delta = "raceBlack",
   label = "Black", p0 = refprofile, narrows = 1)
+
 fieldHispanic <- field3logit(model = modVote, delta = "raceHispanic",
   label = "Hispanic", p0 = refprofile, narrows = 1)
+
 mfieldrace <- fieldBlack + fieldHispanic
 mfieldrace
 @
@@ -985,6 +1010,7 @@ class `\code{Hfield3logit}` has been defined.}
 <<>>=
 fieldAsian <- field3logit(model = modVote, delta = "raceAsian",
   label = "Asian", p0 = refprofile, narrows = 1)
+
 mfieldrace <- mfieldrace + fieldAsian
 mfieldrace
 @
@@ -1013,6 +1039,7 @@ in this way:
 <<>>=
 mfieldrace <- field3logit(model = modVote, delta = race_effects,
   p0 = refprofile, narrows = 1)
+
 mfieldrace
 @
 the function \code{field3logit} is run once for every element of
@@ -1041,11 +1068,11 @@ field3logit(model = modVote, delta = "<<race>>", p0 = refprofile,
 
 If more than one regressor is included between delimiters \code{<\,<}, \code{>\,>},
 all combinations between dummies are generated, and if only some of the fields
-are actually needed, the\break `\code{multifield3logit}` object can be subsetted through
+are actually needed, the `\code{multifield3logit}` object can be subsetted through
 the S3 method \code{"["}.
 
 Finally, a peculiar behaviour of argument \code{label} is worth of being
-reported. When a\break `\code{multifield3logit}` object is generated by
+reported. When a `\code{multifield3logit}` object is generated by
 \code{field3logit}, argument \code{label} works as a prefix of the labels of
 each vector field. It follows that, if no label is set within argument
 \code{delta}, all labels can be set directly through argument \code{label}:
@@ -1106,8 +1133,6 @@ mathematically derived and how they can be computed through package
 \pkg{plot3logit}, whereas Section~\ref{sec:confregions:graph} shows how
 they can be represented graphically.
 
-
-% \pagebreak
 
 \subsection{Computation}
 \label{sec:confregions:comp}
@@ -1261,6 +1286,7 @@ whereas the following code generates the diagram of
 Figure~\ref{fig:USvote2016genderbyrace} from scratch:
 <<eval=FALSE>>=
 library("tidyverse")
+
 tibble(race = levels(USvote2016$race), educ = "High school grad.",
     gender = "Male", birthyr = "[1970,1980)"
   ) %>%
@@ -1270,8 +1296,10 @@ tibble(race = levels(USvote2016$race), educ = "High school grad.",
   mutate(p0 = map(data, ~list(predict(modVote, .x, type = "probs")))) %>%
   select(-data) %>%
   transpose -> gender_by_race
+
 mfieldGbyR <- field3logit(modVote, gender_by_race, narrows = 1,
   conf = 0.95)
+
 gg3logit(mfieldGbyR) + stat_field3logit(aes(colour = label)) +
   stat_conf3logit(aes(fill = label)) + tern_limits(T = 0.8, R = 0.8) +
   labs(colour = "Profile", fill = "Profile")
@@ -1282,7 +1310,7 @@ gg3logit(mfieldGbyR) + stat_field3logit(aes(colour = label)) +
 \label{sec:wrappers}
 
 Package \pkg{plot3logit} includes two wrappers which aims at simplifying
-the syntax when a `\code{field3logit}` or a `\code{multifield3logit}` object
+the syntax when a \footnote{The seed of random number generator is set (through \code{set.seed}) in order to make the results of \code{fortify} fully reproducible. If the seed is not set, the labels of columns \code{idarrow} and \code{group} will be different at each execution of \code{fortify}.}
 is drawn through package \pkg{ggtern}.
 
 The first wrapper is \code{stat_3logit} which is a wrapper for:
